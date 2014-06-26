@@ -4,7 +4,9 @@
 //
 //  Created by Sjors Provoost on 26-06-14.
 
-//import CryptoCoin
+// List of methods that should be supported:
+// http://cryptocoinjs.com/modules/crypto/ecurve/  (under Point)
+// Use Swift style syntax where possible. E.g. not point.add(point), but point + point
 
 struct ECPoint {
     let curve: ECurve

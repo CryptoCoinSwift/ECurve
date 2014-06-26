@@ -17,6 +17,23 @@ class ECurveTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
     }
+    
+    func testInitWithDomain() {
+        let curve = ECurve(domain: .Secp256k1)
+        XCTAssertEqual(curve.domain!, .Secp256k1);
+
+    }
+    
+    func testInitWithParams() {
+        let a = ECurve(domain: .Secp256k1)
+        
+        let domain: EllipticCurveDomain = .Secp256k1
+        
+        let b = ECurve(field: domain.field, g: domain.g, gX: domain.gX, gY: domain.gY, a: domain.a, b: domain.b, n: domain.n, h: domain.h)
+
+        XCTAssertTrue(a == b);
+    }
+    
 
     func testBasePoint() {
         let curve = ECurve(domain: .Secp256k1)

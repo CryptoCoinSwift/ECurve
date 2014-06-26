@@ -4,11 +4,14 @@
 //
 //  Created by Sjors Provoost on 26-06-14.
 //
+//  Example domain from: https://github.com/cryptocoinjs/ecurve/blob/master/test/curve.js
 
 import XCTest
 import CryptoCoin
 
 class ECPointTests: XCTestCase {
+    
+    var curve = ECurve(domain: .Secp256k1) // Use example curve instead
     
     override func setUp() {
         super.setUp()
@@ -20,7 +23,7 @@ class ECPointTests: XCTestCase {
     
     func testInitWithG() {
         // Initialize the point G of a secp256k1 curve on itself.
-        let curve = ECurve(domain: .Secp256k1)
+        curve = ECurve(domain: .Secp256k1)
         
         let g = ECPoint(x: EllipticCurveDomain.Secp256k1.gX, y: EllipticCurveDomain.Secp256k1.gY, curve: curve)
         

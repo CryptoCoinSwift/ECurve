@@ -30,11 +30,12 @@
 enum EllipticCurveDomain {
     case Secp256k1
 
-    var p: UInt256 {
+    var field: FiniteField {
         switch self {
-        case .Secp256k1: //  Koblitz curve secp256k1
-            return UInt256(hexStringValue: "fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f")
-        }       // 2^256 - 2^32 - 2^9 - 2^8 - 2^7 - 2^6 - 2^4 - 1
+        case .Secp256k1:
+            // 2^256 - 2^32 - 2^9 - 2^8 - 2^7 - 2^6 - 2^4 - 1
+            return FiniteField.PrimeField(p: UInt256(hexStringValue: "fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f"))
+        }
     }
     
     //  The curve E: y^2 + x^3 + ax +b over Fp.
