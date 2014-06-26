@@ -28,6 +28,7 @@ class ECPointTests: XCTestCase {
         XCTAssertTrue(g.x == EllipticCurveDomain.Secp256k1.gX, "Gx equality");
     }
     
+    
 //    func testInitWithCompressedPoint() {
 //        let curve = ECurve(domain: .Secp256k1)
 //        let x = UInt256(hexStringValue: "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")

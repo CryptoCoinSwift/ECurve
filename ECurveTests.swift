@@ -18,7 +18,14 @@ class ECurveTests: XCTestCase {
         super.tearDown()
     }
 
-    func testSomething() {
-        XCTAssertEqual(1, 1, "Cogito ergo sum")
+    func testBasePoint() {
+        let curve = ECurve(domain: .Secp256k1)
+        
+        let a = ECPoint(x: EllipticCurveDomain.Secp256k1.gX, y: EllipticCurveDomain.Secp256k1.gY, curve: curve)
+        
+        let b = curve.basePoint
+        
+        XCTAssertTrue(a == b, "Basepoint");
+
     }
  }

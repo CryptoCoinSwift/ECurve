@@ -12,6 +12,10 @@ struct ECurve {
     init(domain: EllipticCurveDomain) {
         self.domain = domain
     }
+    
+    var basePoint: ECPoint {
+        return ECPoint(x: domain.gX, y: domain.gY, curve: self)
+    }
 }
 
 func == (lhs: ECurve, rhs: ECurve) -> Bool {
