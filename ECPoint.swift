@@ -20,6 +20,7 @@ struct ECPoint {
     }
     
 //    http://nmav.gnutls.org/2012/01/do-we-need-elliptic-curve-point.html
+//    https://bitcointalk.org/index.php?topic=237260.0
 //
 //    init(compressedPointHexString: String, curve: ECurve) {
 //        self.curve = curve
