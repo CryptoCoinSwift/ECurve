@@ -25,7 +25,7 @@
 //           b: UInt256(hexStringValue: "7")
 //           ....)
 
-import CryptoCoin
+//import CryptoCoin
 
 enum EllipticCurveDomain {
     case Secp256k1
@@ -53,10 +53,10 @@ enum EllipticCurveDomain {
     }
     
     // The base point G in compressed form is:
-    var g: UInt256 {
+    var g: String {
         switch self {
         case .Secp256k1:
-            return UInt256(hexStringValue: "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")
+            return "0279BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798"
         }
     }
     

@@ -4,11 +4,17 @@
 //
 //  Created by Sjors Provoost on 26-06-14.
 
-import CryptoCoin
+//import CryptoCoin
 
 struct ECurve {
-    func whatever ()->() {
-        let curve: EllipticCurveDomain = .Secp256k1;
-        let a = curve.a
+    let domain: EllipticCurveDomain
+    
+    init(domain: EllipticCurveDomain) {
+        self.domain = domain
     }
 }
+
+func == (lhs: ECurve, rhs: ECurve) -> Bool {
+    return lhs.domain == rhs.domain
+}
+
