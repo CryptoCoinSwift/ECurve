@@ -110,6 +110,15 @@ func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
   
 }
 
+func += (inout lhs: ECPoint, rhs: ECPoint) -> () {
+    lhs = lhs + rhs
+}
+
+
+func *= (inout lhs: ECPoint, rhs: UInt256) -> () {
+    lhs = rhs * lhs
+}
+
 func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     if rhs.isInfinity {
         return rhs
@@ -139,15 +148,19 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
 
     }
     
-    assert(false, "TODO: implement multiplication")
-
-//    tally: Point = Infinity
-//    increment: Point = P
-//    for each bit in lhs (least sign. first)  (limit to number of significant bits)
-//      if bit == 1 {
-//        tally += increment
-//      increment *= 2
+    let P = rhs
     
-    return rhs
+    var tally = P.curve.infinity
+    var increment = P
+    
+    for var i=0; i < lhs.highestBit; i++  {
+        if UInt256.singleBitAt(255 - i) & lhs != 0 {
+            tally += increment
+        }
+        
+        increment *= 2
+    }
+    
+    return tally
 }
 

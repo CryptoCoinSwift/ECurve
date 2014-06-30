@@ -127,13 +127,24 @@ class ECPointTests: XCTestCase {
 
         result = Q + P
         XCTAssertTrue(sum == result, result.description);
+        
+        result = curve[5,3] + curve[0,0]
+        XCTAssertTrue(result == curve[9,10], result.description);
+
+        
+        
     }
     
     func testDouble() {
-        let P = curve[5,3]
+        var P = curve[5,3]
         let double = curve[5,8]
         var result = 2 * P
         XCTAssertTrue(double == result, result.description);
+        
+        P = curve[9,10]
+        result = 2 * P
+        
+        XCTAssertTrue(result == curve[5,8], result.description);
     }
 
     //    func testDoubleNegatives() {
@@ -167,9 +178,16 @@ class ECPointTests: XCTestCase {
         
     func testMultiply() {
         let P = curve[9,10]
-        let product = curve[5,3]
-        var result = 4 * P
-        XCTAssertTrue(product == result, result.description);
+
+        
+        var result = 3 * P
+        XCTAssertTrue(result == curve[0,0], result.description);
+        
+        result = 4 * P
+        XCTAssertTrue(result == curve[5,3], result.description);
+        
+        result = 5 * P
+        XCTAssertTrue(result == curve[9,1], result.description);
     }
     
     
