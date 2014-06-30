@@ -19,7 +19,7 @@ struct ECurve {
     let b: UInt256
     
     let n: UInt256
-    let h: UInt256
+    let h: UInt256?
     
     init(domain: EllipticCurveDomain) {
         self.domain = domain
@@ -34,7 +34,7 @@ struct ECurve {
         self.h = domain.h
     }
     
-    init(field: FiniteField, g: String?, gX: UInt256, gY: UInt256, a: UInt256, b: UInt256, n: UInt256, h: UInt256) {
+    init(field: FiniteField, g: String?, gX: UInt256, gY: UInt256, a: UInt256, b: UInt256, n: UInt256, h: UInt256?) {
         self.field = field
         
         self.gX = gX

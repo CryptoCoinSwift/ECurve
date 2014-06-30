@@ -13,7 +13,13 @@ class ECPointTests: XCTestCase {
     
     var field = FiniteField.PrimeField(p: 11)
     
-    var curve = ECurve(field: FiniteField.PrimeField(p: 11), g: nil, gX: UInt256(44), gY: UInt256(55), a: UInt256(22), b: UInt256(22), n: UInt256(66), h: UInt256(77))
+    var curve = ECurve(field: FiniteField.PrimeField(p: 11), g: nil, gX: UInt256(8), gY: UInt256(6), a: UInt256(1), b: UInt256(0), n: UInt256(12), h: nil)
+    
+    // y^2 = x^3 + x (in terms of finite field arithmatic)
+    // E.g. for the base point: (x = 8, y=6)
+    // y^2 = y * y = 6 * 6 = 36 % 11 = 3
+    // x^3 = x * (x * x) = 8 * (8 * 8) = 8 * (64 % 11) = 8 * 9 = 6
+    // 3 == (6 + 8) % 11 = 3
     
     override func setUp() {
         super.setUp()
