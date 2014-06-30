@@ -42,7 +42,7 @@ struct ECPoint : Printable {
         if self.isInfinity {
           return "Infinity"
         } else {
-          return self.x!.value.description + self.y!.value.description
+          return "(\(self.x!.value.description), \( self.y!.value.description ))"
         }
     }
 }
@@ -67,13 +67,31 @@ func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
     assert(rhs.x, "rhs x set")
     assert(rhs.y, "rhs y set")
 
+    if lhs == rhs { // P == Q
+        return 2 * lhs
+    }
     
-    if lhs.x! == rhs.x! && lhs.y! + rhs.y! == lhs.curve.field.int(0) {
+    if lhs.x! == rhs.x! && lhs.y! + rhs.y! == lhs.curve.field.int(0) { // P(x,y) == Q(x, -y)
         return lhs.curve.infinity
     }
     
-    // Won't work if you try to add two normal values...
+    // TODO: default add
+    
+    
     return lhs
   
+}
+
+func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
+    
+    if lhs == 2 {
+        assert(false, "TODO: implement doubling")
+
+        return rhs
+    }
+    
+    assert(false, "TODO: implement multiplication")
+
+    return rhs
 }
 

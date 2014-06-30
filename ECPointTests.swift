@@ -97,4 +97,35 @@ class ECPointTests: XCTestCase {
         XCTAssertTrue(sum == inf, sum.description);
 
     }
+    
+    func testAdd() {
+        let P = curve[5,3]
+        let Q = curve[9,10]
+        let sum = curve[9,1]
+        let result = P + Q
+        println(result)
+        XCTAssertTrue(sum == result, result.description);
+
+    }
+    
+//    func testDouble {
+//        
+//    }
+
+    
+//    func testAddSelfIsDouble {
+//        let P = curve[5,8]
+//        let sum = P + P // This should be done through doubling
+//        let double = 2 * P
+////        let answer = 2 * [5,8] =
+//        
+//        XCTAssertTrue(sum == answer, sum.description);
+//        XCTAssertTrue(sum == double, sum.description);
+//
+//    }
+    
+// func test Multiply() {
+// }
+    
+    
 }
