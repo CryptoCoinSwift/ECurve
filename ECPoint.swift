@@ -63,9 +63,17 @@ func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
     }
     
     assert(lhs.x, "lhs x set")
+    let x₁ = lhs.x!
+    
     assert(lhs.y, "lhs y set")
+    let y₁ = lhs.y!
+
     assert(rhs.x, "rhs x set")
+    let x₂ = rhs.x!
+
     assert(rhs.y, "rhs y set")
+    let y₂ = rhs.y!
+
 
     if lhs == rhs { // P == Q
         return 2 * lhs
@@ -75,10 +83,13 @@ func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
         return lhs.curve.infinity
     }
     
-    // TODO: default add
+    let common = (y₂ - y₁) / (x₂ - x₁)
     
+    let x₃ = common * common - x₁ - x₂
     
-    return lhs
+    let y₃ = common * (x₁ - x₃) - y₁
+    
+    return ECPoint(x: x₃, y: y₃, curve: lhs.curve)
   
 }
 
