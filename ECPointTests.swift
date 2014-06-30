@@ -85,4 +85,16 @@ class ECPointTests: XCTestCase {
 //        XCTAssertEqual(sum, P, sumDescription);
 
     }
+    
+    func testNegatives() {
+        // (x,y) + (x,-y) = ∞
+        
+        let inf = curve.infinity
+        let a = curve[5,8]
+        let b = curve[5,3] // Negative: [5, -8] = [5, 3]
+        
+        let sum = a + b
+        XCTAssertTrue(sum == inf, sum.description);
+
+    }
 }

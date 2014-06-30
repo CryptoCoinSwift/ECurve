@@ -56,8 +56,24 @@ func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
     
     if lhs.isInfinity {
         return rhs
-    } else { // Won't work if you try to add two normal values...
+    }
+    
+    if rhs.isInfinity {
         return lhs
     }
+    
+    assert(lhs.x, "lhs x set")
+    assert(lhs.y, "lhs y set")
+    assert(rhs.x, "rhs x set")
+    assert(rhs.y, "rhs y set")
+
+    
+    if lhs.x! == rhs.x! && lhs.y! + rhs.y! == lhs.curve.field.int(0) {
+        return lhs.curve.infinity
+    }
+    
+    // Won't work if you try to add two normal values...
+    return lhs
+  
 }
 
