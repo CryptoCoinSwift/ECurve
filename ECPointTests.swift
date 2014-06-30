@@ -11,7 +11,9 @@ import CryptoCoin
 
 class ECPointTests: XCTestCase {
     
-    var curve = ECurve(domain: .Secp256k1) // Use example curve instead
+    var field = FiniteField.PrimeField(p: 11)
+    
+    var curve = ECurve(field: FiniteField.PrimeField(p: 11), g: nil, gX: UInt256(44), gY: UInt256(55), a: UInt256(22), b: UInt256(22), n: UInt256(66), h: UInt256(77))
     
     override func setUp() {
         super.setUp()
