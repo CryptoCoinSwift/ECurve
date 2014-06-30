@@ -8,12 +8,12 @@
 // http://cryptocoinjs.com/modules/crypto/ecurve/  (under Point)
 // Use Swift style syntax where possible. E.g. not point.add(point), but point + point
 
-struct ECPoint {
+struct ECPoint : Printable {
     let curve: ECurve
-    let x: UInt256?
-    let y: UInt256?
+    let x: FFInt?
+    let y: FFInt?
     
-    init(x: UInt256?, y: UInt256?, curve: ECurve) {
+    init(x: FFInt?, y: FFInt?, curve: ECurve) {
         self.curve = curve
         
         self.x = x
@@ -37,8 +37,27 @@ struct ECPoint {
     var isInfinity: Bool {
         return x == nil && y == nil
     }
+    
+    var description: String {
+        if self.isInfinity {
+          return "Infinity"
+        } else {
+          return self.x!.value.description + self.y!.value.description
+        }
+    }
 }
 
 func == (lhs: ECPoint, rhs: ECPoint) -> Bool {
     return lhs.curve == rhs.curve && lhs.x == rhs.x && lhs.y == rhs.y
 }
+
+func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
+    assert(lhs.curve == rhs.curve, "Can't add points on different curves")
+    
+    if lhs.isInfinity {
+        return rhs
+    } else { // Won't work if you try to add two normal values...
+        return lhs
+    }
+}
+

@@ -13,7 +13,7 @@ class ECPointTests: XCTestCase {
     
     var field = FiniteField.PrimeField(p: 11)
     
-    var curve = ECurve(field: FiniteField.PrimeField(p: 11), g: nil, gX: UInt256(8), gY: UInt256(6), a: UInt256(1), b: UInt256(0), n: UInt256(12), h: nil)
+    var curve = ECurve(field: FiniteField.PrimeField(p: 11), g: nil, gX: FiniteField.PrimeField(p: 11).int(8), gY: FiniteField.PrimeField(p: 11).int(6), a: UInt256(1), b: UInt256(0), n: UInt256(12), h: nil)
     
     // y^2 = x^3 + x (in terms of finite field arithmatic)
     // E.g. for the base point: (x = 8, y=6)
@@ -35,7 +35,7 @@ class ECPointTests: XCTestCase {
         
         let g = ECPoint(x: EllipticCurveDomain.Secp256k1.gX, y: EllipticCurveDomain.Secp256k1.gY, curve: curve)
         
-        XCTAssertEqual(g.x!.toHexString, EllipticCurveDomain.Secp256k1.gX.toHexString, "Gx hex");
+        XCTAssertEqual(g.x!.value.toHexString, EllipticCurveDomain.Secp256k1.gX.value.toHexString, "Gx hex");
         XCTAssertTrue(g.x! == EllipticCurveDomain.Secp256k1.gX, "Gx equality");
     }
     
@@ -58,12 +58,31 @@ class ECPointTests: XCTestCase {
         XCTAssertTrue(a.isInfinity, "and beyond!")
     }
     
-    func TestAddInfinity() {
+    func testInitWithSubscript() {
+        let P = curve[5,8]
+        
+        XCTAssertTrue(true, "")
+    }
+    
+    func testAddInfinity() {
         // See e.g. page 80 in Guide to Elliptic Curve Cryptography, Hankerson e.a.
         // P + ∞ = ∞ + P = P
         let inf = curve.infinity
+        let P: ECPoint = curve[5,8]
         
-        let P = curve[5,8]
+        var sum: ECPoint = inf + P
+        var sumDescription: String = sum.description
+        
+        XCTAssertTrue(sum == P, sumDescription);
+        
+//        XCTAssertEqual(sum, P, sumDescription);
     
+        sum = P + inf
+        sumDescription = sum.description
+        
+        XCTAssertTrue(sum == P, sumDescription);
+
+//        XCTAssertEqual(sum, P, sumDescription);
+
     }
 }

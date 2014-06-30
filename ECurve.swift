@@ -12,8 +12,8 @@ struct ECurve {
     let field: FiniteField
     
     let g: String? // Compressed
-    let gX: UInt256
-    let gY: UInt256
+    let gX: FFInt
+    let gY: FFInt
     
     let a: UInt256
     let b: UInt256
@@ -34,7 +34,7 @@ struct ECurve {
         self.h = domain.h
     }
     
-    init(field: FiniteField, g: String?, gX: UInt256, gY: UInt256, a: UInt256, b: UInt256, n: UInt256, h: UInt256?) {
+    init(field: FiniteField, g: String?, gX: FFInt, gY: FFInt, a: UInt256, b: UInt256, n: UInt256, h: UInt256?) {
         self.field = field
         
         self.gX = gX
@@ -55,7 +55,7 @@ struct ECurve {
     }
     
     subscript(x: UInt256, y: UInt256) -> ECPoint {
-        return ECPoint(x: x, y: y, curve: self)
+        return ECPoint(x: FFInt(value: x, field: self.field), y: FFInt(value: y, field: self.field), curve: self)
     }
     
     // The compiler won't let me...

@@ -62,17 +62,17 @@ enum EllipticCurveDomain {
     }
     
     // Base point expressed in X and Y coordinates (uncompressed form with 04 left out of the beginning)
-    var gX: UInt256 {
+    var gX: FFInt {
     switch self {
     case .Secp256k1:
-        return UInt256(hexStringValue: "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")
+        return field.int(UInt256(hexStringValue: "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798"))
         }
     }
     
-    var gY: UInt256 {
+    var gY: FFInt {
     switch self {
     case .Secp256k1:
-        return UInt256(hexStringValue: "483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8")
+        return field.int(UInt256(hexStringValue: "483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8"))
         }
     }
     
