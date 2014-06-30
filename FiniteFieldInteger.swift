@@ -60,7 +60,6 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
             return field.int(overflowDiff % p)
         }
     }
-    
 }
 
 func * (lhs: FFInt, rhs: FFInt) -> FFInt {
@@ -74,4 +73,33 @@ func * (lhs: FFInt, rhs: FFInt) -> FFInt {
     }
     
 }
+
+func / (lhs: FFInt, rhs: FFInt) -> FFInt {
+    assert(lhs.field == rhs.field, "Can't divide integers from different fields")
+    assert(lhs.value == 1, "Only inverse (1/x) supported")
+    
+    let field = lhs.field
+    switch field {
+    case let .PrimeField(p):
+        // Extremely inefficient algoritm:
+        for var i = UInt256.allZeros;  i < UInt256.max; i++ {
+            let one = field.int(UInt256([0,0,0,0,0,0,0,1]))
+            if rhs * field.int(i) == one {
+                return field.int(i)
+            }
+        }
+        
+        assert(false, "Inverse not found")
+
+        return field.int(UInt256.allZeros)
+    }
+    
+}
+
+func / (lhs: Int, rhs: FFInt) -> FFInt {
+    assert(lhs == 1, "Only inverse (1/x) supported")
+    
+    return rhs.field.int(1) / rhs
+}
+
 

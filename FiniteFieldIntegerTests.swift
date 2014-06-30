@@ -91,9 +91,16 @@ class FFIntTests: XCTestCase {
         let p = FiniteField.PrimeField(p: 11)
         let a = p.intWithDec("5")
         
-        let inverse = p.intWithDec("9") // 9  * 5 = 45 -> 45 % 9 = 1
+        let c: FFInt = p.intWithDec("9") // 9  * 5 = 45 -> 45 % 9 = 1
         
-//        XCTAssertEqual(1 / a, inverse, inverse.description);
+        var inverse: FFInt = p.int(UInt256([0,0,0,0,0,0,0,1])) / a
+        
+        XCTAssertEqual(inverse, c, c.description);
+        
+        // Simplified form:
+        inverse = 1 / a
+        XCTAssertEqual(inverse, c, inverse.description);
+        
     }
     
 
