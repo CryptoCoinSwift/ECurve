@@ -54,6 +54,10 @@ struct ECurve {
         return ECPoint.infinity(self)
     }
     
+    subscript(x: UInt256, y: UInt256) -> ECPoint {
+        return ECPoint(x: x, y: y, curve: self)
+    }
+    
     // The compiler won't let me...
     // let ∞ = infinity
 }

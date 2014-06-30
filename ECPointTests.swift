@@ -58,4 +58,12 @@ class ECPointTests: XCTestCase {
         XCTAssertTrue(a.isInfinity, "and beyond!")
     }
     
+    func TestAddInfinity() {
+        // See e.g. page 80 in Guide to Elliptic Curve Cryptography, Hankerson e.a.
+        // P + ∞ = ∞ + P = P
+        let inf = curve.infinity
+        
+        let P = curve[5,8]
+    
+    }
 }
