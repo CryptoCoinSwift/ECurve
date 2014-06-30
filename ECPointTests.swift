@@ -166,7 +166,10 @@ class ECPointTests: XCTestCase {
     }
         
     func testMultiply() {
-
+        let P = curve[9,10]
+        let product = curve[5,3]
+        var result = 4 * P
+        XCTAssertTrue(product == result, result.description);
     }
     
     
