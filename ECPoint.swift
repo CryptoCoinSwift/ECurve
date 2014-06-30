@@ -37,8 +37,6 @@ struct ECPoint {
     var isInfinity: Bool {
         return x == nil && y == nil
     }
-    
-    
 }
 
 func == (lhs: ECPoint, rhs: ECPoint) -> Bool {

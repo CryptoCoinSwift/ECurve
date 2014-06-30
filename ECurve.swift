@@ -53,6 +53,9 @@ struct ECurve {
     var infinity: ECPoint {
         return ECPoint.infinity(self)
     }
+    
+    // The compiler won't let me...
+    // let ∞ = infinity
 }
 
 func == (lhs: ECurve, rhs: ECurve) -> Bool {
