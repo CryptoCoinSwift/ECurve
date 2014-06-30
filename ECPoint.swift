@@ -16,9 +16,8 @@ struct ECPoint {
     init(x: UInt256, y: UInt256, curve: ECurve) {
         self.curve = curve
         
-        // I don't fully undersand or trust Swift arrays
-        self.x = UInt256(mostSignificantOf8UInt32First: x.smallerIntegers.copy())
-        self.y = UInt256(mostSignificantOf8UInt32First: y.smallerIntegers.copy())
+        self.x = x
+        self.y = y
     }
     
 //    http://nmav.gnutls.org/2012/01/do-we-need-elliptic-curve-point.html
