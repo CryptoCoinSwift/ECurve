@@ -90,10 +90,10 @@ class ECPointTests: XCTestCase {
         // (x,y) + (x,-y) = ∞
         
         let inf = curve.infinity
-        let a = curve[5,8]
-        let b = curve[5,3] // Negative: [5, -8] = [5, 3]
+        let P = curve[5,8]
+        let Q = curve[5,3] // Negative: [5, -8] = [5, 3]
         
-        let sum = a + b
+        let sum = P + Q
         XCTAssertTrue(sum == inf, sum.description);
 
     }
