@@ -103,6 +103,25 @@ class FFIntTests: XCTestCase {
         
     }
     
+    func testDivide() {
+        let p = FiniteField.PrimeField(p: 11)
+        let a = p.intWithDec("5")
+        let b = p.intWithDec("2")
+        
+        let c: FFInt = p.intWithDec("7") // 2 * (1/5) ->
+                                         // 1 / 5 = 9 
+                                         // 2 * 9 = 18 -> 18 % 11 = 7
+        
+        var inverse: FFInt = b / a
+        
+        XCTAssertEqual(inverse, c, c.description);
+        
+        // Simplified form:
+        inverse = 2 / a
+        XCTAssertEqual(inverse, c, inverse.description);
+        
+    }
+    
 
     
 }

@@ -76,7 +76,8 @@ func * (lhs: FFInt, rhs: FFInt) -> FFInt {
 
 func / (lhs: FFInt, rhs: FFInt) -> FFInt {
     assert(lhs.field == rhs.field, "Can't divide integers from different fields")
-    assert(lhs.value == 1, "Only inverse (1/x) supported")
+    
+    var inverseRhs: FFInt?
     
     let field = lhs.field
     switch field {
@@ -85,21 +86,24 @@ func / (lhs: FFInt, rhs: FFInt) -> FFInt {
         for var i = UInt256.allZeros;  i < UInt256.max; i++ {
             let one = field.int(UInt256([0,0,0,0,0,0,0,1]))
             if rhs * field.int(i) == one {
-                return field.int(i)
+                inverseRhs = field.int(i)
+                break;
             }
         }
         
-        assert(false, "Inverse not found")
-
-        return field.int(UInt256.allZeros)
+        if let inverse = inverseRhs {
+            return lhs * inverse
+        } else {
+            assert(false, "Inverse not found")
+            return lhs.field.int(0)
+        }
+        
     }
     
 }
 
 func / (lhs: Int, rhs: FFInt) -> FFInt {
-    assert(lhs == 1, "Only inverse (1/x) supported")
-    
-    return rhs.field.int(1) / rhs
+    return rhs.field.int(UInt256(lhs)) * (rhs.field.int(1) / rhs)
 }
 
 
