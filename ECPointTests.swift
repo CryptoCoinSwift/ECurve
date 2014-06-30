@@ -35,8 +35,8 @@ class ECPointTests: XCTestCase {
         
         let g = ECPoint(x: EllipticCurveDomain.Secp256k1.gX, y: EllipticCurveDomain.Secp256k1.gY, curve: curve)
         
-        XCTAssertEqual(g.x.toHexString, EllipticCurveDomain.Secp256k1.gX.toHexString, "Gx hex");
-        XCTAssertTrue(g.x == EllipticCurveDomain.Secp256k1.gX, "Gx equality");
+        XCTAssertEqual(g.x!.toHexString, EllipticCurveDomain.Secp256k1.gX.toHexString, "Gx hex");
+        XCTAssertTrue(g.x! == EllipticCurveDomain.Secp256k1.gX, "Gx equality");
     }
     
     
@@ -52,5 +52,10 @@ class ECPointTests: XCTestCase {
 //        XCTAssertTrue(a == b, "Decompress point");
 //    }
     
+    func testInitWithInfinity() {
+        let a = curve.infinity
+        
+        XCTAssertTrue(a.isInfinity, "and beyond!")
+    }
     
 }

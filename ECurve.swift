@@ -49,6 +49,10 @@ struct ECurve {
     var basePoint: ECPoint {
         return ECPoint(x: gX, y: gY, curve: self)
     }
+    
+    var infinity: ECPoint {
+        return ECPoint.infinity(self)
+    }
 }
 
 func == (lhs: ECurve, rhs: ECurve) -> Bool {
