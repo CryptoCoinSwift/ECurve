@@ -30,6 +30,13 @@ func == (lhs: FFInt, rhs: FFInt) -> Bool {
     return lhs.field == rhs.field && lhs.value == rhs.value
 }
 
+@prefix func - (rhs: FFInt) -> FFInt {
+    let field = rhs.field
+    switch field {
+    case let .PrimeField(p):
+        return field.int(0) - rhs
+    }}
+
 func + (lhs: FFInt, rhs: FFInt) -> FFInt {
     assert(lhs.field == rhs.field, "Can't add integers from different fields")
     

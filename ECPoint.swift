@@ -51,6 +51,23 @@ func == (lhs: ECPoint, rhs: ECPoint) -> Bool {
     return lhs.curve == rhs.curve && lhs.x == rhs.x && lhs.y == rhs.y
 }
 
+@prefix func - (rhs: ECPoint) -> ECPoint {
+    if rhs.isInfinity {
+        return rhs
+    }
+    
+    assert(rhs.x, "x set")
+    let x₁ = rhs.x!
+    
+    assert(rhs.y, "y set")
+    let y₁ = rhs.y!
+    
+    let y₃ = -y₁
+    
+    return ECPoint(x: x₁, y: y₃, curve: rhs.curve)
+
+}
+
 func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
     assert(lhs.curve == rhs.curve, "Can't add points on different curves")
     
@@ -94,15 +111,43 @@ func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
 }
 
 func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
+    if rhs.isInfinity {
+        return rhs
+    }
+    
+    if lhs == 0 {
+        return rhs.curve.infinity
+    }
+    
+    assert(rhs.x, "lhs x set")
+    let x₁ = rhs.x!
+    
+    assert(rhs.y, "lhs y set")
+    let y₁ = rhs.y!
     
     if lhs == 2 {
-        assert(false, "TODO: implement doubling")
+        let two = rhs.curve.field.int(2)
+        let three = rhs.curve.field.int(3)
+        let a = rhs.curve.field.int(rhs.curve.a)
+        let common = (three * x₁ * x₁ + a) / (two * y₁)
+        
+        let x₃ = common * common - rhs.curve.field.int(2) * x₁
+        
+        let y₃ = common * (x₁ - x₃) - y₁
+        
+        return ECPoint(x: x₃, y: y₃, curve: rhs.curve)
 
-        return rhs
     }
     
     assert(false, "TODO: implement multiplication")
 
+//    tally: Point = Infinity
+//    increment: Point = P
+//    for each bit in lhs (least sign. first)  (limit to number of significant bits)
+//      if bit == 1 {
+//        tally += increment
+//      increment *= 2
+    
     return rhs
 }
 

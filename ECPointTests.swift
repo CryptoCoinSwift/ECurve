@@ -86,7 +86,17 @@ class ECPointTests: XCTestCase {
 
     }
     
-    func testNegatives() {
+    func negate() {
+        let P = curve[5,8]
+        let Q = curve[5,3] // Negative: [5, -8] = [5, 3]
+        
+        let minusP = -P
+        
+        XCTAssertTrue(minusP == Q, minusP.description);
+
+    }
+    
+    func testAddNegatives() {
         // (x,y) + (x,-y) = ∞
         
         let inf = curve.infinity
@@ -95,7 +105,17 @@ class ECPointTests: XCTestCase {
         
         let sum = P + Q
         XCTAssertTrue(sum == inf, sum.description);
+        
+    }
+    
+    func testAddNegated() {
+        // P + -P = ∞
+        let inf = curve.infinity
 
+        let P = curve[5,8]
+        let sum = P + -P
+        
+        XCTAssertTrue(sum == inf, sum.description);
     }
     
     func testAdd() {
@@ -116,20 +136,38 @@ class ECPointTests: XCTestCase {
         XCTAssertTrue(double == result, result.description);
     }
 
+    //    func testDoubleNegatives() {
+    //        // P(x,y) + Q(x,-y) = ∞
+    //        // if P = -P then P(x,y) + P(x,-y) = ∞
+    //        
+    //        // This doesn't happen in a p=11 field.
+    //        
+    //        let inf = curve.infinity
+    //        let P = curve[.....,....]
+    //        let minusP = -P
+    //        
+    //        XCTAssertTrue(P == minusP, "");
+    //        
+    //        let double  = 2 * P
+    //        
+    //        XCTAssertTrue(double == inf, double.description);
+    //        
+    //    }
     
-//    func testAddSelfIsDouble {
-//        let P = curve[5,8]
-//        let sum = P + P // This should be done through doubling
-//        let double = 2 * P
-////        let answer = 2 * [5,8] =
-//        
-//        XCTAssertTrue(sum == answer, sum.description);
-//        XCTAssertTrue(sum == double, sum.description);
-//
-//    }
-    
-// func test Multiply() {
-// }
+    func testAddSelfIsDouble() {
+        let P = curve[5,3]
+        let sum = P + P // This should be done through doubling
+        let double = 2 * P
+        let answer = curve[5,8]
+        
+        XCTAssertTrue(double == answer, double.description);
+        XCTAssertTrue(sum == double, sum.description);
+
+    }
+        
+    func testMultiply() {
+
+    }
     
     
 }
