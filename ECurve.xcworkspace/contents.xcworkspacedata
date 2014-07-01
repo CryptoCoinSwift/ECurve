@@ -5,6 +5,6 @@
       location = "container:ECurve.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../UInt256/UInt256.xcodeproj">
+      location = "group:UInt256/UInt256.xcodeproj">
    </FileRef>
 </Workspace>
