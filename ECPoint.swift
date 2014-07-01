@@ -157,7 +157,7 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
         if UInt256.singleBitAt(255 - i) & lhs != 0 {
             tally += increment
         }
-        
+                
         increment *= 2
     }
     

@@ -29,7 +29,7 @@ class ECurveTests: XCTestCase {
         
         let domain: EllipticCurveDomain = .Secp256k1
         
-        let b = ECurve(field: domain.field, g: domain.g, gX: domain.gX, gY: domain.gY, a: domain.a, b: domain.b, n: domain.n, h: domain.h)
+        let b = ECurve(field: domain.field, gX: domain.gX, gY: domain.gY, a: domain.a, b: domain.b, n: domain.n, h: domain.h)
 
         XCTAssertTrue(a == b);
     }
@@ -40,7 +40,7 @@ class ECurveTests: XCTestCase {
         
         let a = ECPoint(x: EllipticCurveDomain.Secp256k1.gX, y: EllipticCurveDomain.Secp256k1.gY, curve: curve)
         
-        let b = curve.basePoint
+        let b = curve.G
         
         XCTAssertTrue(a == b, "Basepoint");
 

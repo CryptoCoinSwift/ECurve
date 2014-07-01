@@ -4,14 +4,12 @@
 //
 //  Created by Sjors Provoost on 26-06-14.
 
-//import CryptoCoin
-
 struct ECurve {
     let domain: EllipticCurveDomain?
     
     let field: FiniteField
     
-    let g: String? // Compressed
+    // let G: ECPoint // ECPoint refers to an ECurve, so this would create a cycle
     let gX: FFInt
     let gY: FFInt
     
@@ -25,29 +23,35 @@ struct ECurve {
         self.domain = domain
         
         self.field = domain.field
-        self.gX = domain.gX
-        self.gY = domain.gY
-        self.g = domain.g
         self.a = domain.a
         self.b = domain.b
         self.n = domain.n
         self.h = domain.h
+        
+    self.gX = domain.gX
+    self.gY = domain.gY
+
+
+        //        self.G = ECPoint(x: domain.gX, y: domain.gY, curve: nil)
+
     }
     
-    init(field: FiniteField, g: String?, gX: FFInt, gY: FFInt, a: UInt256, b: UInt256, n: UInt256, h: UInt256?) {
+    init(field: FiniteField, gX: FFInt, gY: FFInt, a: UInt256, b: UInt256, n: UInt256, h: UInt256?) {
         self.field = field
         
-        self.gX = gX
-        self.gY = gY
-        self.g = g
         self.a = a
         self.b = b
         self.n = n
         self.h = h
+
+        self.gX = gX
+        self.gY = gY
+        
+
     }
     
-    var basePoint: ECPoint {
-        return ECPoint(x: gX, y: gY, curve: self)
+    var G: ECPoint {
+        return ECPoint(x: gX, y:gY, curve: self)
     }
     
     var infinity: ECPoint {
@@ -67,6 +71,6 @@ func == (lhs: ECurve, rhs: ECurve) -> Bool {
         return true
     }
     
-    return lhs.gX == rhs.gX && lhs.gY == rhs.gY &&  lhs.a == rhs.a &&  lhs.b == rhs.b &&  lhs.n == rhs.n &&  lhs.h == rhs.h
+    return lhs.G == rhs.G &&  lhs.a == rhs.a &&  lhs.b == rhs.b &&  lhs.n == rhs.n &&  lhs.h == rhs.h
 }
 

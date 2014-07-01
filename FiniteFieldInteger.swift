@@ -15,6 +15,16 @@ struct FFInt : Printable, Equatable {
         self.field = field
     }
     
+    init(_ hex: String, _ field: FiniteField) {
+        self.value = UInt256(hexStringValue: hex)
+        self.field = field
+    }
+    
+    init(dec: String, _ field: FiniteField) {
+        self.value = UInt256(decimalStringValue: dec)
+        self.field = field
+    }
+    
     // For testing with smaller values: takes two integers and assumes a Prime Field.
     init(val: Int, p: Int) {
         self.value = UInt256(decimalStringValue: val.description)
