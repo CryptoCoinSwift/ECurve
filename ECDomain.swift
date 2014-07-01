@@ -27,6 +27,8 @@
 
 //import CryptoCoin
 
+import UInt256
+
 enum EllipticCurveDomain {
     case Secp256k1
 

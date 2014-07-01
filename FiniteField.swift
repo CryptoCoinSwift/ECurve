@@ -5,6 +5,8 @@
 //  Created by Sjors Provoost on 26-06-14.
 //
 
+import UInt256
+
 enum FiniteField : Printable {
     case PrimeField(p: UInt256)
     
