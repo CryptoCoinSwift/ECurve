@@ -1,0 +1,3 @@
+[submodule "UInt256"]
+	path = UInt256
+	url = git@github.com:CryptoCoinSwift/UInt256.git
