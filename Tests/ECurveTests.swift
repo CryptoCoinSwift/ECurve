@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import CryptoCoin
+import ECurve
 
 class ECurveTests: XCTestCase {
 

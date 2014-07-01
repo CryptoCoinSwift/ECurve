@@ -25,8 +25,6 @@
 //           b: UInt256(hexStringValue: "7")
 //           ....)
 
-//import CryptoCoin
-
 import UInt256
 
 enum EllipticCurveDomain {

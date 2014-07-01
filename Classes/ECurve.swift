@@ -73,6 +73,6 @@ func == (lhs: ECurve, rhs: ECurve) -> Bool {
         return true
     }
     
-    return lhs.G == rhs.G &&  lhs.a == rhs.a &&  lhs.b == rhs.b &&  lhs.n == rhs.n &&  lhs.h == rhs.h
+    return lhs.G.x == rhs.G.x && lhs.G.y == rhs.G.y && lhs.a == rhs.a &&  lhs.b == rhs.b &&  lhs.n == rhs.n &&  lhs.h == rhs.h
 }
 
