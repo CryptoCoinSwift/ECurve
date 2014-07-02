@@ -105,6 +105,31 @@ class FFIntTests: XCTestCase {
         
         XCTAssertEqual(a * b, product, product.description);
     }
+    
+    func testMultiplyBigRemainder() {
+        // This will take forever if you search the modulo by subtracting
+        // p from the remainder in a loop.
+    
+        let p = FiniteField.PrimeField(p: UInt256(hexStringValue: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F"))
+        
+        let a = p.int(UInt256(hexStringValue: "6D3B337CED96330500E127C16B95211507D3F691896A7A8C0DD7841244E84A99"))
+    
+        let b = p.int(UInt256(hexStringValue: "79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798"))
+ 
+        let (productTupleLeft, productTupleRight) = (UInt256(hexStringValue: "33F23902074835C68CC1630F5EA81161C3720765CC78C137D6434422659760CC"),UInt256(hexStringValue: "493EF0F253A03B4AB649EA632C432258F7886805422976F65A3E63DE32D809D8"))
+    
+        let (resLeft, resRight) = a.value * b.value
+        
+        XCTAssertTrue(resLeft == productTupleLeft && resRight == productTupleRight, "");
+        println("Begin multiplication with modulo...")
+        
+        let product = p.int(UInt256(hexStringValue: "8FF2B776AAF6D91942FD096D2F1F7FD9AA2F64BE71462131AA7F067E28FEF8AC"))
+    
+        let result = a * b
+        
+        XCTAssertTrue(result == product, result.description);
+
+    }
 
     
     func testInverse() {

@@ -84,11 +84,15 @@ func * (lhs: FFInt, rhs: FFInt) -> FFInt {
     let field = lhs.field
     switch field {
     case let .PrimeField(p):
+//        println("\( lhs.value.toHexString ) * \( rhs.value.toHexString )...")
         var (productLeft, productRight) = (lhs.value * rhs.value)
+        
+//        println("(\(productLeft.toHexString),\(productRight.toHexString)) modulo \( p.p.toHexString )")
         
         // Calculate product % p using an extremely inefficient algorithm:
         while true {
             if productRight < p && productLeft == 0 {
+//                println("Found modulo")
                 return field.int(productRight)
             }
             
