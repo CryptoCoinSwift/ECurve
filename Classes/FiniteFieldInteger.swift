@@ -67,16 +67,13 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
     let field = lhs.field
     switch field {
     case let .PrimeField(p):
-        // Can't use UInt256's substract method, because it doesn't allow overflow
-        //   let diff = (lhs.value - rhs.value) % p
-        
-        let (overflowDiff, didOverflow) = UInt256.subtract(lhs.value, rhs: rhs.value, allowOverFlow: true)
+        let result = lhs.value &- rhs.value
                 
-        if didOverflow {
-            return field.int((overflowDiff % p + ((p - 1) - (UInt256.max % p))) % p)
+        if rhs.value > lhs.value { // Overflow
+            return field.int((result % p + ((p - 1) - (UInt256.max % p))) % p)
 
         } else {
-            return field.int(overflowDiff % p)
+            return field.int(result % p)
         }
     }
 }
