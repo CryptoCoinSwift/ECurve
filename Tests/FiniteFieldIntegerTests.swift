@@ -88,6 +88,25 @@ class FFIntTests: XCTestCase {
         XCTAssertEqual(a * b, product, product.description);
     }
     
+    func testMultiplyBig() {
+        // 2^256 - 189 is prime.
+        let p = FiniteField.PrimeField(p: UInt256(hexStringValue: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF43"))
+        
+        let a = p.int(UInt256(hexStringValue: "8888888888888888888888888888888888888888888888888888888888888888"))
+        let b = p.intWithDec("2")
+        
+       // 2 *
+       //     0x   8888888888888888888888888888888888888888888888888888888888888888 =
+       //     0x 1 1111111111111111111111111111111111111111111111111111111111111110
+       // Modulo 2^256 - 189:
+       //     0x   11111111111111111111111111111111111111111111111111111111111111cd
+        
+        let product = p.int(UInt256(hexStringValue: "11111111111111111111111111111111111111111111111111111111111111cd"))
+        
+        XCTAssertEqual(a * b, product, product.description);
+    }
+
+    
     func testInverse() {
         let p = FiniteField.PrimeField(p: 11)
         let a = p.intWithDec("5")

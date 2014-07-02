@@ -84,8 +84,24 @@ func * (lhs: FFInt, rhs: FFInt) -> FFInt {
     let field = lhs.field
     switch field {
     case let .PrimeField(p):
-        let product = (lhs.value * rhs.value) % p
-        return field.int(product)
+        var (productLeft, productRight) = (lhs.value * rhs.value)
+        
+        // Calculate product % p using an extremely inefficient algorithm:
+        while true {
+            if productRight < p && productLeft == 0 {
+                return field.int(productRight)
+            }
+            
+            let willUnderflow = p > productRight
+            productRight = productRight &- p
+            
+            if willUnderflow {
+                productLeft--
+            }
+            
+            
+        }
+        
     }
     
 }
