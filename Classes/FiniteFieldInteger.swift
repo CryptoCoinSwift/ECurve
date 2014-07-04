@@ -84,28 +84,9 @@ func * (lhs: FFInt, rhs: FFInt) -> FFInt {
     let field = lhs.field
     switch field {
     case let .PrimeField(p):
-//        println("\( lhs.value.toHexString ) * \( rhs.value.toHexString )...")
-        var (productLeft, productRight) = (lhs.value * rhs.value)
+        let product: (UInt256, UInt256) = lhs.value * rhs.value
         
-//        println("(\(productLeft.toHexString),\(productRight.toHexString)) modulo \( p.p.toHexString )")
-        
-        // Calculate product % p using an extremely inefficient algorithm:
-        while true {
-            if productRight < p && productLeft == 0 {
-//                println("Found modulo")
-                return field.int(productRight)
-            }
-            
-            let willUnderflow = p > productRight
-            productRight = productRight &- p
-            
-            if willUnderflow {
-                productLeft--
-            }
-            
-            
-        }
-        
+        return field.int(product % p.p)
     }
     
 }
@@ -113,33 +94,32 @@ func * (lhs: FFInt, rhs: FFInt) -> FFInt {
 func / (lhs: FFInt, rhs: FFInt) -> FFInt {
     assert(lhs.field == rhs.field, "Can't divide integers from different fields")
     
-    var inverseRhs: FFInt?
     
     let field = lhs.field
     switch field {
     case let .PrimeField(p):
-        // Extremely inefficient algoritm:
-        for var i = UInt256.allZeros;  i < UInt256.max; i++ {
-            let one = field.int(UInt256([0,0,0,0,0,0,0,1]))
-            if rhs * field.int(i) == one {
-                inverseRhs = field.int(i)
-                break;
-            }
-        }
+        let inverse: UInt256 = rhs.value.modInverse(p.p)
+        let (a,b) = lhs.value * inverse
+        let res: UInt256 = (a,b) % p.p
         
-        if let inverse = inverseRhs {
-            return lhs * inverse
-        } else {
-            assert(false, "Inverse not found")
-            return lhs.field.int(0)
-        }
-        
+        return field.int(res)
     }
     
 }
 
 func / (lhs: Int, rhs: FFInt) -> FFInt {
-    return rhs.field.int(UInt256(lhs)) * (rhs.field.int(1) / rhs)
+    assert(lhs >= 0, "Positive integer expected")
+    
+    if lhs == 0 {
+        return rhs.field.int(0)
+    }
+    
+    let inverse = rhs.field.int(1) / rhs
+    if lhs == 1 {
+        return inverse
+    } else {
+        return rhs.field.int(UInt256(lhs)) * inverse
+    }
 }
 
 

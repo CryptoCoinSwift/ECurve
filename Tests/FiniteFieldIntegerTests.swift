@@ -84,8 +84,11 @@ class FFIntTests: XCTestCase {
         let b = p.intWithDec("8")
         
         let product = p.intWithDec("7") // 5 * 8 = 40 -> 40 % 11 = 7
+        let result = a * b
         
-        XCTAssertEqual(a * b, product, product.description);
+        
+        XCTAssertEqual(result, product, result.description);
+    
     }
     
     func testMultiplyBig() {
@@ -121,7 +124,6 @@ class FFIntTests: XCTestCase {
         let (resLeft, resRight) = a.value * b.value
         
         XCTAssertTrue(resLeft == productTupleLeft && resRight == productTupleRight, "");
-        println("Begin multiplication with modulo...")
         
         let product = p.int(UInt256(hexStringValue: "8FF2B776AAF6D91942FD096D2F1F7FD9AA2F64BE71462131AA7F067E28FEF8AC"))
     
@@ -138,7 +140,7 @@ class FFIntTests: XCTestCase {
         
         let c: FFInt = p.intWithDec("9") // 9  * 5 = 45 -> 45 % 9 = 1
         
-        var inverse: FFInt = p.int(UInt256([0,0,0,0,0,0,0,1])) / a
+        var inverse: FFInt = p.int(1) / a
         
         XCTAssertEqual(inverse, c, c.description);
         
@@ -153,17 +155,17 @@ class FFIntTests: XCTestCase {
         let a = p.intWithDec("5")
         let b = p.intWithDec("2")
         
-        let c: FFInt = p.intWithDec("7") // 2 * (1/5) ->
+        let div: FFInt = p.intWithDec("7") // 2 * (1/5) ->
                                          // 1 / 5 = 9 
                                          // 2 * 9 = 18 -> 18 % 11 = 7
         
-        var inverse: FFInt = b / a
+        var result: FFInt = b / a
         
-        XCTAssertEqual(inverse, c, c.description);
+        XCTAssertEqual(div, result, result.description);
         
         // Simplified form:
-        inverse = 2 / a
-        XCTAssertEqual(inverse, c, inverse.description);
+        result = 2 / a
+        XCTAssertEqual(div, result, result.description);
         
     }
     

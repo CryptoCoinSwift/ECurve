@@ -148,23 +148,23 @@ class ECPointTests: XCTestCase {
         XCTAssertTrue(result == curve[5,8], result.description);
     }
 
-    //    func testDoubleNegatives() {
-    //        // P(x,y) + Q(x,-y) = ∞
-    //        // if P = -P then P(x,y) + P(x,-y) = ∞
-    //        
-    //        // This doesn't happen in a p=11 field.
-    //        
-    //        let inf = curve.infinity
-    //        let P = curve[.....,....]
-    //        let minusP = -P
-    //        
-    //        XCTAssertTrue(P == minusP, "");
-    //        
-    //        let double  = 2 * P
-    //        
-    //        XCTAssertTrue(double == inf, double.description);
-    //        
-    //    }
+//    func testDoubleNegatives() {
+//        // P(x,y) + Q(x,-y) = ∞
+//        // if P = -P then P(x,y) + P(x,-y) = ∞
+//        
+//        // This doesn't happen in a p=11 field.
+//        
+//        let inf = curve.infinity
+//        let P = curve[.....,....]
+//        let minusP = -P
+//        
+//        XCTAssertTrue(P == minusP, "");
+//        
+//        let double  = 2 * P
+//        
+//        XCTAssertTrue(double == inf, double.description);
+//        
+//    }
     
     func testAddSelfIsDouble() {
         let P = curve[5,3]
