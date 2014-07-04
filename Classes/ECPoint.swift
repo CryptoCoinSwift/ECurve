@@ -138,15 +138,17 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     let y₁ = rhs.y!
     
     if lhs == 2 {
+        println("Double...")
+
         let two = rhs.curve.field.int(2)
         let three = rhs.curve.field.int(3)
         let a = rhs.curve.field.int(rhs.curve.a)
         
-//        println("Calculate common...")
+        println("Calculate common...")
         
         let common = (three * x₁ * x₁ + a) / (two * y₁)
         
-//        println("Calculate x₃...")
+        println("Calculate x₃...")
 
         
         let x₃ = common * common - rhs.curve.field.int(2) * x₁
@@ -162,7 +164,7 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     var tally = P.curve.infinity
     var increment = P
     
-//    println("Start multiplication...")
+    println("Start multiplication...")
     
     for var i=0; i < lhs.highestBit; i++  {
         println("i = \( i )")
@@ -170,7 +172,6 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
             println("Addition")
             tally += increment
         }
-        println("Double")
         increment *= 2
     }
     

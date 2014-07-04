@@ -123,17 +123,27 @@ class ECPointTests: XCTestCase {
         let P = curve[5,3]
         let Q = curve[9,10]
         let sum = curve[9,1]
-        var result = P + Q
+        let result = P + Q
         XCTAssertTrue(sum == result, result.description);
+    }
+    
+    func testAddIsTransitive() {
+        let P = curve[5,3]
+        let Q = curve[9,10]
+        let sum = curve[9,1]
 
-        result = Q + P
+        let result = Q + P
         XCTAssertTrue(sum == result, result.description);
         
-        result = curve[5,3] + curve[0,0]
+    }
+    
+    func testAddZeroZero() {
+        let P = curve[5,3]
+        let Q = curve[9,10]
+        let sum = curve[9,1]
+        
+        let result = curve[5,3] + curve[0,0]
         XCTAssertTrue(result == curve[9,10], result.description);
-
-        
-        
     }
     
     func testDouble() {
@@ -141,9 +151,11 @@ class ECPointTests: XCTestCase {
         let double = curve[5,8]
         var result = 2 * P
         XCTAssertTrue(double == result, result.description);
-        
-        P = curve[9,10]
-        result = 2 * P
+    }
+    
+    func testDoubleOther() {
+        let  P = curve[9,10]
+        let result = 2 * P
         
         XCTAssertTrue(result == curve[5,8], result.description);
     }
@@ -179,17 +191,35 @@ class ECPointTests: XCTestCase {
         
     func testMultiply() {
         let P = curve[9,10]
-
         
         var result = 3 * P
         XCTAssertTrue(result == curve[0,0], result.description);
+    }
+    
+    func testMultiplyFourAndFive() {
+        let P = curve[9,10]
         
-        result = 4 * P
+        var result = 4 * P
         XCTAssertTrue(result == curve[5,3], result.description);
         
         result = 5 * P
         XCTAssertTrue(result == curve[9,1], result.description);
     }
     
-    
+//    func testMultiplyBig() {
+//        curve = ECurve(domain: .Secp256k1)
+//    
+//        let a = UInt256(decimalStringValue: "19898843618908353587043383062236220484949425084007183071220218307100305431102")
+//    
+//        let b = curve.G
+//    
+//        let productX = FFInt(dec: "83225686012142088543596389522774768397204444195709443235253141114409346958144", curve.field)
+//        let productY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
+//        
+//        let product = ECPoint(x: productX, y: productY, curve: curve)
+//        
+//        let result = a * b
+//        
+//        XCTAssertTrue(result == product, result.description);
+//    }
 }
