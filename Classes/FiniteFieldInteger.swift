@@ -52,11 +52,17 @@ func == (lhs: FFInt, rhs: FFInt) -> Bool {
 func + (lhs: FFInt, rhs: FFInt) -> FFInt {
     assert(lhs.field == rhs.field, "Can't add integers from different fields")
     
+    if (rhs.value == 0) { return lhs }
+    
     let field = lhs.field
     switch field {
     case let .PrimeField(p):
-        let sum = (lhs.value + rhs.value) % p
-        return field.int(sum)
+        let rhsMod = p.p - rhs.value
+        if (lhs.value >= rhsMod) {
+            return field.int(lhs.value - rhsMod)
+        } else {
+            return field.int(p.p - rhsMod + lhs.value)
+        }
     }
 
 }
@@ -67,13 +73,11 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
     let field = lhs.field
     switch field {
     case let .PrimeField(p):
-        let result = lhs.value &- rhs.value
-                
-        if rhs.value > lhs.value { // Overflow
-            return field.int((result % p + ((p - 1) - (UInt256.max % p))) % p)
-
+        if(lhs.value >= rhs.value) {
+            return field.int(lhs.value - rhs.value)
         } else {
-            return field.int(result % p)
+            return field.int(p - rhs.value + lhs.value )
+
         }
     }
 }
