@@ -121,6 +121,10 @@ func *= (inout lhs: ECPoint, rhs: UInt256) -> () {
     lhs = rhs * lhs
 }
 
+func * (lhs: Int, rhs: ECPoint) -> ECPoint {
+    return UInt256(lhs) * rhs
+}
+
 func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
     if rhs.isInfinity {
@@ -151,7 +155,7 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
         println("Calculate x₃...")
 
         
-        let x₃ = common * common - rhs.curve.field.int(2) * x₁
+        let x₃ = common * common - 2 * x₁
         
         let y₃ = common * (x₁ - x₃) - y₁
         

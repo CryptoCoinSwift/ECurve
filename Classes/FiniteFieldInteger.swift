@@ -82,6 +82,11 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
     }
 }
 
+func * (lhs: Int, rhs: FFInt) -> FFInt {
+    return rhs.field.int(UInt256(lhs)) * rhs
+}
+
+
 func * (lhs: FFInt, rhs: FFInt) -> FFInt {
     assert(lhs.field == rhs.field, "Can't multiply integers from different fields")
     
