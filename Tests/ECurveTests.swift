@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import ECurve
+import ECurveMac
 
 class ECurveTests: XCTestCase {
 

@@ -7,8 +7,8 @@
 //  Example field from https://github.com/cryptocoinjs/ecurve/blob/master/test/curve.js
 
 import XCTest
-import ECurve
-import UInt256
+import ECurveMac
+import UInt256Mac
 
 class FFIntTests: XCTestCase {
 

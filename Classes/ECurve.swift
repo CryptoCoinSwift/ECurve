@@ -4,7 +4,7 @@
 //
 //  Created by Sjors Provoost on 26-06-14.
 
-import UInt256
+import UInt256Mac
 
 struct ECurve {
     let domain: EllipticCurveDomain?

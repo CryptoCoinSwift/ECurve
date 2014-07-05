@@ -25,7 +25,7 @@
 //           b: UInt256(hexStringValue: "7")
 //           ....)
 
-import UInt256
+import UInt256Mac
 
 enum EllipticCurveDomain {
     case Secp256k1
