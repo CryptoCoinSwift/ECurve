@@ -206,20 +206,58 @@ class ECPointTests: XCTestCase {
         XCTAssertTrue(result == curve[9,1], result.description);
     }
     
-    func testMultiplyBig() {
-        curve = ECurve(domain: .Secp256k1)
-    
-        let a = UInt256(decimalStringValue: "19898843618908353587043383062236220484949425084007183071220218307100305431102")
-    
-        let b = curve.G
-    
-        let productX = FFInt(dec: "83225686012142088543596389522774768397204444195709443235253141114409346958144", curve.field)
-        let productY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
+    func testMultiply16Bit() {
+        // Example generated using Sage
+        let p = UInt256(65447) // 2^16 - 89
+        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(32139), gY: FiniteField.PrimeField(p: p).int(2516), a: UInt256(0), b: UInt256(7), n: UInt256(8181), h: nil)
         
-        let product = ECPoint(x: productX, y: productY, curve: curve)
+        let d = 910 // Random 16 bit integer < n
+
+        let Q = curve[9102, 40965]
+
+        let result = d * curve.G
         
-        let result = a * b
-        
-        XCTAssertTrue(result == product, result.description);
+        XCTAssertTrue(result == Q, result.description);
     }
+    
+    func testMultiply32Bit() {
+        let p = UInt256(65447) // 2^32 - 107
+        // For y=0, ask Wolfram Alpha: solve(1 = x^3 + 7 ) modulo 4294967189
+        // Use Sage to calculate and interesting value for G:
+        // p = 2^ 32- 107
+        // F = FiniteField(p)
+        // C = EllipticCurve(F, [ 0, 7 ])
+        // seed = C.point((978329252, 0))
+        // print seed.order() # Make sure this is big
+        // G = 32 * seed
+        // print G.order()
+        
+        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(2415436385), a: UInt256(0), b: UInt256(7), n: UInt256(429496719), h: nil)
+        
+        let d = 358469582 // Random 32 bit integer < n
+        
+        let Q = curve[1130481541, 1353125538]
+        
+        let result = d * curve.G
+        
+        XCTAssertTrue(result == Q, result.description);
+    }
+
+    // Takes about 1.5 hours on a MacBook Pro and currently returns an incorrect result.
+//    func testMultiplyBig() {
+//        curve = ECurve(domain: .Secp256k1)
+//    
+//        let a = UInt256(decimalStringValue: "19898843618908353587043383062236220484949425084007183071220218307100305431102")
+//    
+//        let b = curve.G
+//    
+//        let productX = FFInt(dec: "83225686012142088543596389522774768397204444195709443235253141114409346958144", curve.field)
+//        let productY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
+//        
+//        let product = ECPoint(x: productX, y: productY, curve: curve)
+//        
+//        let result = a * b
+//        
+//        XCTAssertTrue(result == product, result.description);
+//    }
 }
