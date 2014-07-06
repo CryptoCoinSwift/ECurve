@@ -213,28 +213,28 @@ class ECurveTests: XCTestCase {
     }
     
     
-//    func testMultiply32Bit() {
-//        let p = UInt256(decimalStringValue: "4294967189") // 2^32 - 107
-//        // For y=0, ask Wolfram Alpha: solve(1 = x^3 + 7 ) modulo 4294967189
-//        // Use Sage to calculate and interesting value for G:
-//        // p = 2^ 32- 107
-//        // F = FiniteField(p)
-//        // C = EllipticCurve(F, [ 0, 7 ])
-//        // seed = C.point((978329252, 0))
-//        // print seed.order() # Make sure this is big
-//        // G = 32 * seed
-//        // print G.order()
-//        
-//        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(UInt256(decimalStringValue: "2415436385")), a: 0, b: 7, n: UInt256(decimalStringValue: "429496719"), h: nil)
-//        
-//        let d = 358469582 // Random 32 bit integer < n
-//        
-//        let Q = curve[1130481541, 1353125538]
-//        
-//        let result = d * curve.G
-//        
-//        XCTAssertTrue(result == Q, result.description);
-//    }
+    func testMultiply32Bit() {
+        let p = UInt256(decimalStringValue: "4294967189") // 2^32 - 107
+        // For y=0, ask Wolfram Alpha: solve(1 = x^3 + 7 ) modulo 4294967189
+        // Use Sage to calculate and interesting value for G:
+        // p = 2^ 32- 107
+        // F = FiniteField(p)
+        // C = EllipticCurve(F, [ 0, 7 ])
+        // seed = C.point((978329252, 0))
+        // print seed.order() # Make sure this is big
+        // G = 32 * seed
+        // print G.order()
+        
+        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(UInt256(decimalStringValue: "2415436385")), a: 0, b: 7, n: UInt256(decimalStringValue: "429496719"), h: nil)
+        
+        let d = 358469582 // Random 32 bit integer < n
+        
+        let Q = curve[1130481541, 1353125538]
+        
+        let result = d * curve.G
+        
+        XCTAssertTrue(result == Q, result.description);
+    }
     
     func testDouble32Bit() {
         let p = UInt256(decimalStringValue: "4294967189") // Careful: this will silently overflow: UInt256(4294967189)
