@@ -127,7 +127,7 @@ func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
     
     let common = (y₂ - y₁) / (x₂ - x₁)
     
-    let x₃ = common * common - x₁ - x₂
+    let x₃ = common ^^ 2 - x₁ - x₂
     
     let y₃ = common * (x₁ - x₃) - y₁
     
@@ -167,9 +167,9 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     if lhs == 2 {
         let a = rhs.curve.field.int(rhs.curve.a)
         
-        let common = (3 * x₁ * x₁ + a) / (2 * y₁)
+        let common = (3 * x₁ ^^ 2 + a) / (2 * y₁)
         
-        let x₃ = common * common - 2 * x₁
+        let x₃ = common ^^ 2 - 2 * x₁
         
         let y₃ = common * (x₁ - x₃) - y₁
         

@@ -82,10 +82,36 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
     }
 }
 
+@infix func ^^ (lhs: FFInt, rhs: Int) -> FFInt {
+    switch rhs {
+    case 0:
+        return lhs.field.int(1)
+    case 1:
+        return lhs
+    case let k where k > 1:
+        var res = lhs
+        for i in 1..k {
+            res *= lhs
+        }
+        return res
+    case let k where k < 0:
+        assert(false, "Negative power not supported")
+        return lhs.field.int(0)
+        
+    default:
+        assert(false, "Logical error")
+        return lhs.field.int(0)
+
+    }
+}
+
 func * (lhs: Int, rhs: FFInt) -> FFInt {
     return rhs.field.int(UInt256(lhs)) * rhs
 }
 
+func *= (inout lhs: FFInt, rhs: FFInt) -> () {
+    lhs = lhs * rhs
+}
 
 func * (lhs: FFInt, rhs: FFInt) -> FFInt {
     assert(lhs.field == rhs.field, "Can't multiply integers from different fields")
