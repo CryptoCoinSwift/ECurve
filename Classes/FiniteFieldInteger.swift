@@ -140,7 +140,8 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
 }
 
 func * (lhs: Int, rhs: FFInt) -> FFInt {
-    return rhs.field.int(UInt256(lhs)) * rhs
+    let lhsInt: UInt256 = UInt256(UInt32(lhs))
+    return rhs.field.int(lhsInt) * rhs
 }
 
 func * (lhs: UInt256, rhs: FFInt) -> FFInt {
@@ -180,7 +181,7 @@ func / (lhs: FFInt, rhs: FFInt) -> FFInt {
     case let .PrimeField(p):
         assert(lhs.value < p.p, "Input value must be smaller than p")
         assert(rhs.value < p.p, "Input value must be smaller than p")
-        
+                
         let inverse: UInt256 = rhs.value.modInverse(p.p)
         
         return lhs * inverse
@@ -190,8 +191,10 @@ func / (lhs: FFInt, rhs: FFInt) -> FFInt {
 
 func / (lhs: Int, rhs: FFInt) -> FFInt {
     assert(lhs >= 0, "Positive integer expected")
-    
-    return rhs.field.int(UInt256(lhs)) / rhs
+   
+    let lhsInt: UInt256 = UInt256(UInt32(lhs))
+
+    return rhs.field.int(lhsInt) / rhs
 
 }
 

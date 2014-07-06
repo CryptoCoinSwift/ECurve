@@ -213,6 +213,9 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
 // Convenience method. Mostly so that doubling a point doesn't require lhs to
 // be cast in and out of UInt256.
 func * (lhs: Int, rhs: ECPoint) -> ECPoint {
+    
+    let lhsInt: UInt256 = UInt256(UInt32(lhs))
+
     if rhs.isInfinity {
         return rhs
     }
@@ -225,5 +228,5 @@ func * (lhs: Int, rhs: ECPoint) -> ECPoint {
         return rhs.double
     }
     
-    return UInt256(lhs) * rhs
+    return lhsInt * rhs
 }

@@ -212,42 +212,39 @@ class ECurveTests: XCTestCase {
         XCTAssertTrue(result == Q, result.description);
     }
     
-// Divide by 0 crash:
     
-//    func testMultiply32Bit() {
-//        let p = UInt256(4294967189) // 2^32 - 107
-//        // For y=0, ask Wolfram Alpha: solve(1 = x^3 + 7 ) modulo 4294967189
-//        // Use Sage to calculate and interesting value for G:
-//        // p = 2^ 32- 107
-//        // F = FiniteField(p)
-//        // C = EllipticCurve(F, [ 0, 7 ])
-//        // seed = C.point((978329252, 0))
-//        // print seed.order() # Make sure this is big
-//        // G = 32 * seed
-//        // print G.order()
-//        
-//        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(2415436385), a: 0, b: 7, n: 429496719, h: nil)
-//        
-//        let d = 358469582 // Random 32 bit integer < n
-//        
-//        let Q = curve[1130481541, 1353125538]
-//        
-//        let result = d * curve.G
-//        
-//        XCTAssertTrue(result == Q, result.description);
-//    }
-    
-// Divide by 0 crash:
+    func testMultiply32Bit() {
+        let p = UInt256(decimalStringValue: "4294967189") // 2^32 - 107
+        // For y=0, ask Wolfram Alpha: solve(1 = x^3 + 7 ) modulo 4294967189
+        // Use Sage to calculate and interesting value for G:
+        // p = 2^ 32- 107
+        // F = FiniteField(p)
+        // C = EllipticCurve(F, [ 0, 7 ])
+        // seed = C.point((978329252, 0))
+        // print seed.order() # Make sure this is big
+        // G = 32 * seed
+        // print G.order()
+        
+        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(UInt256(decimalStringValue: "2415436385")), a: 0, b: 7, n: UInt256(decimalStringValue: "429496719"), h: nil)
+        
+        let d = 358469582 // Random 32 bit integer < n
+        
+        let Q = curve[1130481541, 1353125538]
+        
+        let result = d * curve.G
+        
+        XCTAssertTrue(result == Q, result.description);
+    }
     
     func testDouble32Bit() {
-        let p = UInt256(4294967189)
+        let p = UInt256(decimalStringValue: "4294967189") // Careful: this will silently overflow: UInt256(4294967189)
         
-        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(2415436385), a: 0, b: 7, n: 429496719, h: nil)
+        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(UInt256(decimalStringValue: "2415436385")), a: 0, b: 7, n: UInt256(decimalStringValue: "429496719"), h: nil)
         
         var double = curve[1252069803, 278016963]
         
         XCTAssertTrue(double.curve.G.x!.value == 1244414049)
-        XCTAssertTrue(double.curve.G.y!.value == 2415436385)
+        XCTAssertTrue(double.curve.G.y!.value ==  UInt256(decimalStringValue: "2415436385"))
         
         var result = 2 * curve.G
         XCTAssertTrue(result == double, result.description);
@@ -260,12 +257,12 @@ class ECurveTests: XCTestCase {
     }
     
     func testAdd32Bit() {
-        let p = UInt256(4294967189)
+        let p = UInt256(decimalStringValue: "4294967189")
         
-        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(2415436385), a: 0, b: 7, n: 429496719, h: nil)
+        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(UInt256(decimalStringValue: "2415436385")), a: 0, b: 7, n: UInt256(decimalStringValue: "429496719"), h: nil)
         
         var a = curve[1130481541, 1353125538]
-        var sum  = curve[3531337424, 137601932]
+        var sum  = curve[UInt256(decimalStringValue: "3531337424"), UInt256(decimalStringValue: "137601932")]
         
         var result = curve.G + a
         
@@ -273,7 +270,7 @@ class ECurveTests: XCTestCase {
         
         a = curve[978329252, 1]
         let b = curve[2015765350, 2147483445] // 2 * a
-        sum = curve[2661831627, 2993780686]    // 3 * a
+        sum = curve[UInt256(decimalStringValue: "2661831627"), UInt256(decimalStringValue: "2993780686")]    // 3 * a
         
         result = a + b
         XCTAssertTrue(result == sum, result.description);
@@ -282,20 +279,23 @@ class ECurveTests: XCTestCase {
 
     
     // Takes about 12 minutes on a MacBook Pro and currently returns an incorrect result.
-    //    func testMultiplyBig() {
-    //        curve = ECurve(domain: .Secp256k1)
-    //
-    //        let a = UInt256(decimalStringValue: "19898843618908353587043383062236220484949425084007183071220218307100305431102")
-    //
-    //        let b = curve.G
-    //
-    //        let productX = FFInt(dec: "83225686012142088543596389522774768397204444195709443235253141114409346958144", curve.field)
-    //        let productY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
-    //
-    //        let product = ECPoint(x: productX, y: productY, curve: curve)
-    //        
-    //        let result = a * b
-    //        
-    //        XCTAssertTrue(result == product, result.description);
-    //    }
+        func testMultiplyBig() {
+            curve = ECurve(domain: .Secp256k1)
+    
+            let a = UInt256(decimalStringValue: "19898843618908353587043383062236220484949425084007183071220218307100305431102")
+    
+            let b = curve.G
+    
+            let productX = FFInt(dec: "83225686012142088543596389522774768397204444195709443235253141114409346958144", curve.field)
+            let productY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
+    
+            let product = ECPoint(x: productX, y: productY, curve: curve)
+            
+            XCTAssertTrue(b.curve.G.x!.value.toHexString ==   "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")
+            XCTAssertTrue(b.curve.G.y!.value.toHexString  == "483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8")
+            
+            let result = a * b
+            
+            XCTAssertTrue(result == product, result.description);
+        }
  }
