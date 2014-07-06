@@ -60,7 +60,21 @@ class FFIntTests: XCTestCase {
         XCTAssertEqual(a + b, sum, sum.description);
 
     }
-
+    
+    func testAddBigger() {
+        let p = FiniteField.PrimeField(p: 65447)
+        
+        var a = p.intWithDec("35301")
+        var b = p.intWithDec("1389")
+        var sum = p.intWithDec("36690")
+        XCTAssertEqual(a + b, sum, sum.description);
+        
+        // This should crash:
+//        a = p.intWithDec("65448") // > p
+//        b = p.intWithDec("1")
+//        a + b
+    }
+    
     func testSubtract() {
         let p = FiniteField.PrimeField(p: 11)
         var a = p.intWithDec("2")

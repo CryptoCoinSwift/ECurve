@@ -57,7 +57,12 @@ func + (lhs: FFInt, rhs: FFInt) -> FFInt {
     let field = lhs.field
     switch field {
     case let .PrimeField(p):
+        assert(lhs.value < p.p, "Input value must be smaller than p")
+        assert(rhs.value < p.p, "Input value must be smaller than p")
+
         let rhsMod = p.p - rhs.value
+        
+        
         if (lhs.value >= rhsMod) {
             return field.int(lhs.value - rhsMod)
         } else {
@@ -73,6 +78,9 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
     let field = lhs.field
     switch field {
     case let .PrimeField(p):
+        assert(lhs.value < p.p, "Input value must be smaller than p")
+        assert(rhs.value < p.p, "Input value must be smaller than p")
+        
         if(lhs.value >= rhs.value) {
             return field.int(lhs.value - rhs.value)
         } else {

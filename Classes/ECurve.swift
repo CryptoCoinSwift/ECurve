@@ -125,7 +125,10 @@ func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
         return lhs.curve.infinity
     }
     
-    let common = (y₂ - y₁) / (x₂ - x₁)
+    let numerator = (y₂ - y₁)
+    let denomenator = (x₂ - x₁)
+    
+    let common = numerator / denomenator // (y₂ - y₁) / (x₂ - x₁)
     
     let x₃ = common ^^ 2 - x₁ - x₂
     
