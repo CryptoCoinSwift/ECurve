@@ -20,9 +20,9 @@
 //
 //  enum EllipticCurveDomain (p: UInt256, a: UInt256,  b: UInt256, ...) {
 //    case Secp256k1(
-//           p: UInt256(hexStringValue: "fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f"),
-//           a: UInt256.allZeros
-//           b: UInt256(hexStringValue: "7")
+//           p: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f,
+//           a: 0
+//           b: 7)
 //           ....)
 
 import UInt256Mac

@@ -62,17 +62,30 @@ class FFIntTests: XCTestCase {
     }
     
     func testAddBigger() {
-        let p = FiniteField.PrimeField(p: 65447)
+        var field = FiniteField.PrimeField(p: 65447)
         
-        var a = p.intWithDec("35301")
-        var b = p.intWithDec("1389")
-        var sum = p.intWithDec("36690")
+        var a = field.intWithDec("35301")
+        var b = field.intWithDec("1389")
+        var sum = field.intWithDec("36690")
         XCTAssertEqual(a + b, sum, sum.description);
         
         // This should crash:
 //        a = p.intWithDec("65448") // > p
 //        b = p.intWithDec("1")
 //        a + b
+        
+        field = EllipticCurveDomain.Secp256k1.field
+        
+        a =   field.int(UInt256(0x9b992796, 0x19237faf, 0x0c13c344, 0x614c46a9, 0xe7357341, 0xc6e4e042, 0xa9b1311a, 0x8622deaa))
+        
+        b =   field.int(UInt256(0xe7f1caa6, 0x36baa277, 0x9cfd6cf9, 0x696cf826, 0xf013db03, 0x7aa08f3d, 0x5c2dfaf9, 0xdb5d255b))
+        
+        // a + b > p
+        
+        sum = field.int(UInt256(0x838af23c, 0x4fde2226, 0xa911303d, 0xcab93ed0, 0xd7494e45, 0x41856f80, 0x05df2c15, 0x618007d6))
+        
+        XCTAssertEqual(a + b, sum, sum.description);
+
     }
     
     func testSubtract() {
@@ -93,23 +106,36 @@ class FFIntTests: XCTestCase {
     }
     
     func testSubtractBigger() {
-        let p = FiniteField.PrimeField(p: 65447)
-        var a = p.intWithDec("36690")
-        var b = p.intWithDec("1389")
+        var field = FiniteField.PrimeField(p: 65447)
+        var a = field.intWithDec("36690")
+        var b = field.intWithDec("1389")
         
-        var diff = p.intWithDec("35301")
+        var diff = field.intWithDec("35301")
         var result = a - b
         
         XCTAssertEqual(result, diff, result.description);
         
-        a = p.intWithDec("1389")
-        b = p.intWithDec("36690")
+        a = field.intWithDec("1389")
+        b = field.intWithDec("36690")
         
-        diff = p.intWithDec("30146")
+        diff = field.intWithDec("30146")
         
         result = a - b
         
         XCTAssertEqual(result, diff, result.description);
+        
+        field = EllipticCurveDomain.Secp256k1.field
+        
+        a = field.int(UInt256(0x838af23c, 0x4fde2226, 0xa911303d, 0xcab93ed0, 0xd7494e45, 0x41856f80, 0x05df2c15, 0x618007d6))
+        
+        b =   field.int(UInt256(0xe7f1caa6, 0x36baa277, 0x9cfd6cf9, 0x696cf826, 0xf013db03, 0x7aa08f3d, 0x5c2dfaf9, 0xdb5d255b))
+        
+        diff = field.int(UInt256(0x9b992796, 0x19237faf, 0x0c13c344, 0x614c46a9, 0xe7357341, 0xc6e4e042, 0xa9b1311a, 0x8622deaa))
+        
+        result = a - b
+        
+        XCTAssertEqual(result, diff, result.description);
+
     }
 
     func testMultiply() {
@@ -127,10 +153,10 @@ class FFIntTests: XCTestCase {
     
     func testMultiplyBig() {
         // 2^256 - 189 is prime.
-        let p = FiniteField.PrimeField(p: UInt256(hexStringValue: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF43"))
+        let field = FiniteField.PrimeField(p: UInt256(hexStringValue: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF43"))
         
-        let a = p.int(UInt256(hexStringValue: "8888888888888888888888888888888888888888888888888888888888888888"))
-        let b = p.intWithDec("2")
+        let a = field.int(UInt256(hexStringValue: "8888888888888888888888888888888888888888888888888888888888888888"))
+        let b = field.intWithDec("2")
         
        // 2 *
        //     0x   8888888888888888888888888888888888888888888888888888888888888888 =
@@ -138,20 +164,23 @@ class FFIntTests: XCTestCase {
        // Modulo 2^256 - 189:
        //     0x   11111111111111111111111111111111111111111111111111111111111111cd
         
-        let product = p.int(UInt256(hexStringValue: "11111111111111111111111111111111111111111111111111111111111111cd"))
+        let product = field.int(UInt256(hexStringValue: "11111111111111111111111111111111111111111111111111111111111111cd"))
         
         XCTAssertEqual(a * b, product, product.description);
+
+        
+        
     }
     
     func testMultiplyBigRemainder() {
         // This will take forever if you search the modulo by subtracting
         // p from the remainder in a loop.
     
-        let p = FiniteField.PrimeField(p: UInt256(hexStringValue: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F"))
+        var field = FiniteField.PrimeField(p: UInt256(hexStringValue: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F"))
         
-        let a = p.int(UInt256(hexStringValue: "6D3B337CED96330500E127C16B95211507D3F691896A7A8C0DD7841244E84A99"))
+        var a = field.int(UInt256(hexStringValue: "6D3B337CED96330500E127C16B95211507D3F691896A7A8C0DD7841244E84A99"))
     
-        let b = p.int(UInt256(hexStringValue: "79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798"))
+        var b = field.int(UInt256(hexStringValue: "79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798"))
  
         let (productTupleLeft, productTupleRight) = (UInt256(hexStringValue: "33F23902074835C68CC1630F5EA81161C3720765CC78C137D6434422659760CC"),UInt256(hexStringValue: "493EF0F253A03B4AB649EA632C432258F7886805422976F65A3E63DE32D809D8"))
     
@@ -159,10 +188,32 @@ class FFIntTests: XCTestCase {
         
         XCTAssertTrue(resLeft == productTupleLeft && resRight == productTupleRight, "");
         
-        let product = p.int(UInt256(hexStringValue: "8FF2B776AAF6D91942FD096D2F1F7FD9AA2F64BE71462131AA7F067E28FEF8AC"))
+        var product = field.int(UInt256(hexStringValue: "8FF2B776AAF6D91942FD096D2F1F7FD9AA2F64BE71462131AA7F067E28FEF8AC"))
     
-        let result = a * b
+        var result = a * b
         
+        XCTAssertTrue(result == product, result.description);
+        
+        
+        field = EllipticCurveDomain.Secp256k1.field
+        
+        a = field.int(UInt256(0x9b992796, 0x19237faf, 0x0c13c344, 0x614c46a9, 0xe7357341, 0xc6e4e042, 0xa9b1311a, 0x8622deaa))
+        
+         XCTAssertTrue(a.value.toDecimalString == "70379092346064318541386215347774848188860670239569790505179904651624764858026", a.value.toDecimalString)
+        
+        b =   field.int(UInt256(0xe7f1caa6, 0x36baa277, 0x9cfd6cf9, 0x696cf826, 0xf013db03, 0x7aa08f3d, 0x5c2dfaf9, 0xdb5d255b))
+        
+        
+        XCTAssertTrue(b.value.toDecimalString == "104911476799222965565363906294962636581662257028280315064396094226013674612059", b.value.toDecimalString)
+        
+        product = field.int(UInt256(0x896cbfe5, 0xdd327035, 0x9b769bff, 0x82996a89, 0x9b57827b, 0xc19576ab, 0x11704459, 0x9336d1f0))
+        
+        XCTAssertTrue(product.value.toDecimalString == "62159004169578350069197270873198552845709123955558985861847306139118838665712", product.value.toDecimalString)
+        
+        //   62159004169578350069197270873198552845709123955558985861847306139118838665712
+
+        result = a * b
+
         XCTAssertTrue(result == product, result.description);
 
     }
@@ -192,14 +243,29 @@ class FFIntTests: XCTestCase {
     }
     
     func testInverseBigger() {
-        let p = FiniteField.PrimeField(p: 65447)
-        let a = p.intWithDec("35301")
+        var field = FiniteField.PrimeField(p: 65447)
+        var a = field.intWithDec("35301")
         
-        let c = p.intWithDec("40487")
+        var inverse = field.intWithDec("40487")
         
-        var inverse: FFInt = 1 / a
+        var result: FFInt = 1 / a
         
-        XCTAssertEqual(inverse, c, c.description);
+        XCTAssertEqual(result, inverse, result.description);
+        
+        field = EllipticCurveDomain.Secp256k1.field
+        
+        a = field.int(UInt256(0x9b992796, 0x19237faf, 0x0c13c344, 0x614c46a9, 0xe7357341, 0xc6e4e042, 0xa9b1311a, 0x8622deaa))
+        
+        // To make typing easier, try this in Ruby:
+        // 81499394833957831074978817131096643076996054158171543627174210231443581427004.to_s(16).chars.each_slice(8).map(&:join).join(", 0x")
+        
+        inverse = field.int(UInt256(0xb42f05d5, 0xf445d2ea, 0x49e61c6c, 0x570c93f7, 0x826ef85b, 0xd4d3f4ee, 0x913541c5, 0x5221dd3c))
+        
+        XCTAssertTrue(inverse.value.toDecimalString == "81499394833957831074978817131096643076996054158171543627174210231443581427004", inverse.value.toDecimalString)
+
+        result = 1 / a
+        
+        XCTAssertEqual(result, inverse, result.description);
         
     }
     
