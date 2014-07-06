@@ -11,11 +11,11 @@ enum FiniteField : Printable {
     case PrimeField(p: UInt256)
     
     func intWithDec(dec: String) -> FFInt {
-        return FFInt(value: UInt256(decimalStringValue: dec), field: self)
+        return FFInt(UInt256(decimalStringValue: dec), self)
     }
     
     func int(val: UInt256) -> FFInt {
-        return FFInt(value: val, field: self)
+        return FFInt(val, self)
     }
 
     var description: String {

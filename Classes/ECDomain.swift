@@ -34,7 +34,7 @@ enum EllipticCurveDomain {
         switch self {
         case .Secp256k1:
             // 2^256 - 2^32 - 2^9 - 2^8 - 2^7 - 2^6 - 2^4 - 1
-            return FiniteField.PrimeField(p: UInt256(hexStringValue: "fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f"))
+            return FiniteField.PrimeField(p: UInt256(0xffffffff, 0xffffffff, 0xffffffff,0xffffffff, 0xffffffff,0xffffffff, 0xfffffffe,0xfffffc2f))
         }
     }
     
@@ -49,7 +49,7 @@ enum EllipticCurveDomain {
     var b: UInt256 {
         switch self {
         case .Secp256k1:
-            return UInt256(hexStringValue: "07")
+            return UInt256(7)
         }
     }
     
@@ -65,14 +65,14 @@ enum EllipticCurveDomain {
     var gX: FFInt {
     switch self {
     case .Secp256k1:
-        return field.int(UInt256(hexStringValue: "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798"))
+        return field.int(UInt256(0x79be667e, 0xf9dcbbac, 0x55a06295, 0xce870b07, 0x029bfcdb, 0x2dce28d9, 0x59f2815b, 0x16f81798))
         }
     }
     
     var gY: FFInt {
     switch self {
     case .Secp256k1:
-        return field.int(UInt256(hexStringValue: "483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8"))
+        return field.int(UInt256(0x483ada77,0x26a3c465,0x5da4fbfc,0x0e1108a8,0xfd17b448,0xa6855419, 0x9c47d08f,0xfb10d4b8))
         }
     }
     
@@ -80,7 +80,7 @@ enum EllipticCurveDomain {
     var n: UInt256 {
     switch self {
     case .Secp256k1:
-        return UInt256(hexStringValue: "fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141")
+        return UInt256(0xffffffff,0xffffffff,0xffffffff,0xfffffffe,0xbaaedce6,0xaf48a03b,0xbfd25e8c,0xd0364141)
         }
     }
     
@@ -88,7 +88,7 @@ enum EllipticCurveDomain {
     var h: UInt256 {
     switch self {
     case .Secp256k1:
-        return UInt256(hexStringValue: "01")
+        return UInt256(1)
         }
     }
 }

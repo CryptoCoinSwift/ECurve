@@ -281,15 +281,18 @@ class ECurveTests: XCTestCase {
         curve = ECurve(domain: .Secp256k1)
         
         let a = curve.G
-
-        let doubleX = FFInt(dec: "89565891926547004231252920425935692360644145829622209833684329913297188986597", curve.field)
-        let doubleY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
-
+        let x = UInt256(0xc6047f94, 0x41ed7d6d, 0x3045406e,0x95c07cd8,0x5c778e4b,0x8cef3ca7,0xabac09b9,0x5c709ee5)
+        let y = UInt256(0x347bd4bc, 0xec8cfb91, 0x086838b5,0x2a2b0fc4,0x84c461f5,0xfcb22420,0xa77fe183,0x4a841fd8)
+        let doubleX = FFInt(x, curve.field)
+        let doubleY = FFInt(y, curve.field)
+        
+        XCTAssertTrue(doubleX.value.toHexString == "C6047F9441ED7D6D3045406E95C07CD85C778E4B8CEF3CA7ABAC09B95C709EE5" && doubleY.value.toHexString == "347BD4BCEC8CFB91086838B52A2B0FC484C461F5FCB22420A77FE1834A841FD8", "")
+        
         let double = ECPoint(x: doubleX, y: doubleY, curve: curve)
 
         // Check if the points curve parameters are what they should be:
-        XCTAssertTrue(a.curve.G.x!.value.toHexString ==   "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")
-        XCTAssertTrue(a.curve.G.y!.value.toHexString  == "483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8")
+        XCTAssertTrue(a.curve.G.x!.value.toHexString ==   "79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798", a.curve.G.x!.value.toHexString)
+        XCTAssertTrue(a.curve.G.y!.value.toHexString  == "483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8", a.curve.G.y!.value.toHexString)
 
         let result = 2 * a
         

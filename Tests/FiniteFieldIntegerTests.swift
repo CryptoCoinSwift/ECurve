@@ -21,27 +21,27 @@ class FFIntTests: XCTestCase {
     }
 
     func testInit() {
-        let a = FFInt(value: UInt256(decimalStringValue: "5"), field: FiniteField.PrimeField(p: 11))
+        let a = FFInt(UInt256(5), FiniteField.PrimeField(p: 11))
         
         XCTAssertTrue(a != nil, "Should exist");
     }
     
     func testEquality() {
-        let a =  FFInt(value: UInt256(    hexStringValue: "5"), field: FiniteField.PrimeField(p: 11))
-        let b =  FFInt(value: UInt256(decimalStringValue: "5"), field: FiniteField.PrimeField(p: 11))
+        let a =  FFInt(UInt256(5), FiniteField.PrimeField(p: 11))
+        let b =  FFInt(UInt256(5), FiniteField.PrimeField(p: 11))
         
         XCTAssertTrue(a == b, "Should be the same");
     }
     
     func testInitWithDecimalStringAndP() {
-        let a = FFInt(value: UInt256(decimalStringValue: "5"), field: FiniteField.PrimeField(p: 11))
+        let a = FFInt(UInt256(5), FiniteField.PrimeField(p: 11))
         let b = FFInt(val: 5, p: 11)
         
         XCTAssertTrue(a == b, "Should be the same");
     }
     
     func testInitFromField() {
-        let a = FFInt(value: UInt256(decimalStringValue: "5"), field: FiniteField.PrimeField(p: 11))
+        let a = FFInt(UInt256(decimalStringValue: "5"), FiniteField.PrimeField(p: 11))
         let field = FiniteField.PrimeField(p: 11)
         let b = field.intWithDec("5")
         

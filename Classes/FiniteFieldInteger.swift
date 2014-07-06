@@ -12,7 +12,7 @@ struct FFInt : Printable, Equatable {
     let field: FiniteField
     let value: UInt256
     
-    init(value: UInt256, field: FiniteField) {
+    init(_ value: UInt256, _ field: FiniteField) {
         self.value = value
         self.field = field
         

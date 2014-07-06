@@ -61,7 +61,7 @@ struct ECurve {
     }
     
     subscript(x: UInt256, y: UInt256) -> ECPoint {
-        return ECPoint(x: FFInt(value: x, field: self.field), y: FFInt(value: y, field: self.field), curve: self)
+        return ECPoint(x: FFInt(x, self.field), y: FFInt(y, self.field), curve: self)
     }
     
     subscript(x: FFInt, y: FFInt) -> ECPoint {
