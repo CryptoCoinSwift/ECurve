@@ -224,7 +224,7 @@ class ECurveTests: XCTestCase {
         // G = 32 * seed
         // print G.order()
         
-        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(2415436385), a: UInt256(0), b: UInt256(7), n: UInt256(429496719), h: nil)
+        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(2415436385), a: 0, b: 7, n: 429496719, h: nil)
         
         let d = 358469582 // Random 32 bit integer < n
         

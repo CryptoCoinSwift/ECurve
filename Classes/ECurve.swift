@@ -165,11 +165,9 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     let y₁ = rhs.y!
     
     if lhs == 2 {
-        let two = rhs.curve.field.int(2)
-        let three = rhs.curve.field.int(3)
         let a = rhs.curve.field.int(rhs.curve.a)
         
-        let common = (three * x₁ * x₁ + a) / (two * y₁)
+        let common = (3 * x₁ * x₁ + a) / (2 * y₁)
         
         let x₃ = common * common - 2 * x₁
         
