@@ -105,7 +105,7 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
         if(lhs.value >= rhs.value) {
             return field.int(lhs.value - rhs.value)
         } else {
-            return field.int(p - rhs.value + lhs.value )
+            return field.int(p.p - rhs.value + lhs.value )
 
         }
     }
