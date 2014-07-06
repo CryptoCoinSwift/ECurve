@@ -193,29 +193,91 @@ class FFIntTests: XCTestCase {
         var result = a * b
         
         XCTAssertTrue(result == product, result.description);
+    }
+    
+    func testMultiply128bit() {
+        let p = UInt256(0,0,0,0,0xffffffff, 0xffffffff, 0xffffffff, 0xfffffeed) // 2^128 - 275
+        
+        let field: FiniteField = .PrimeField(p: p)
         
         
-        field = EllipticCurveDomain.Secp256k1.field
+        var a = field.int(UInt256(0,0,0,0,0x1344e31a, 0x1645f901, 0x76a5a69a, 0x167177a9))
         
-        a = field.int(UInt256(0x9b992796, 0x19237faf, 0x0c13c344, 0x614c46a9, 0xe7357341, 0xc6e4e042, 0xa9b1311a, 0x8622deaa))
+        XCTAssertTrue(a.value.toDecimalString == "25613014280099286157844823542630283177", a.value.toDecimalString)
+        
+        var b = field.int(UInt256(0,0,0,0,0xf2077f07, 0x0e8ff5f2, 0xe1051bce, 0xae8585f6))
+        
+        
+        XCTAssertTrue(b.value.toDecimalString == "321712097483083014387933714960710206966", b.value.toDecimalString)
+        
+        var product = field.int(UInt256(0,0,0,0,0x28fd4945, 0xfd22c3e9, 0x3a4fd031, 0xe4ce828c))
+        
+        XCTAssertTrue(product.value.toDecimalString == "54484257097591962488775274510905410188", product.value.toDecimalString)
+        
+        var result = a * b
+        
+        XCTAssertTrue(result == product, result.description);
+        
+    }
+    
+//    func testMultiply135bit() { // Requires a tuple of UInt256 for the intermediate product
+//        let p = UInt256(0,0,0,0,0xffffffff, 0xffffffff, 0xffffffff, 0xfffffeed) // 2^128 - 275
+//        
+//        let field: FiniteField = .PrimeField(p: p)
+//        
+//        
+//        var a = field.int(UInt256(0,0,0,0,0x1344e31a, 0x1645f901, 0x76a5a69a, 0x167177a9))
+//        
+//        XCTAssertTrue(a.value.toDecimalString == "25613014280099286157844823542630283177", a.value.toDecimalString)
+//        
+//        var b = field.int(UInt256(0,0,0,0,0xf2077f07, 0x0e8ff5f2, 0xe1051bce, 0xae8585f6))
+//        
+//        
+//        XCTAssertTrue(b.value.toDecimalString == "321712097483083014387933714960710206966", b.value.toDecimalString)
+//        
+//        var product = field.int(UInt256(0,0,0,0,0x28fd4945, 0xfd22c3e9, 0x3a4fd031, 0xe4ce828c))
+//        
+//        XCTAssertTrue(product.value.toDecimalString == "54484257097591962488775274510905410188", product.value.toDecimalString)
+//        
+//        var result = a * b
+//        
+//        XCTAssertTrue(result == product, result.description);
+//        
+//    }
+    
+    func testMultiplySecp256k1() {
+        let field = EllipticCurveDomain.Secp256k1.field
+        
+        var a = field.int(UInt256(0x9b992796, 0x19237faf, 0x0c13c344, 0x614c46a9, 0xe7357341, 0xc6e4e042, 0xa9b1311a, 0x8622deaa))
         
          XCTAssertTrue(a.value.toDecimalString == "70379092346064318541386215347774848188860670239569790505179904651624764858026", a.value.toDecimalString)
         
-        b =   field.int(UInt256(0xe7f1caa6, 0x36baa277, 0x9cfd6cf9, 0x696cf826, 0xf013db03, 0x7aa08f3d, 0x5c2dfaf9, 0xdb5d255b))
+        var b =   field.int(UInt256(0xe7f1caa6, 0x36baa277, 0x9cfd6cf9, 0x696cf826, 0xf013db03, 0x7aa08f3d, 0x5c2dfaf9, 0xdb5d255b))
         
         
         XCTAssertTrue(b.value.toDecimalString == "104911476799222965565363906294962636581662257028280315064396094226013674612059", b.value.toDecimalString)
         
-        product = field.int(UInt256(0x896cbfe5, 0xdd327035, 0x9b769bff, 0x82996a89, 0x9b57827b, 0xc19576ab, 0x11704459, 0x9336d1f0))
+        var product = field.int(UInt256(0x896cbfe5, 0xdd327035, 0x9b769bff, 0x82996a89, 0x9b57827b, 0xc19576ab, 0x11704459, 0x9336d1f0))
         
         XCTAssertTrue(product.value.toDecimalString == "62159004169578350069197270873198552845709123955558985861847306139118838665712", product.value.toDecimalString)
         
-        //   62159004169578350069197270873198552845709123955558985861847306139118838665712
-
-        result = a * b
+        var result = a * b
 
         XCTAssertTrue(result == product, result.description);
+        
+     
+        var (left, right) = (UInt256(0x8cfa2912, 0x94cc8c2c, 0x827a9ef6, 0x977f6b69, 0x1d24b810, 0xf085c437, 0xabd13f27, 0x942da0b5), UInt256(0xede973cf, 0x7a14db61, 0x0dfe857e, 0x382bc650, 0x71af459e, 0x27425f0c, 0x36b67051, 0x0a55b86e))
+        
+        XCTAssertTrue(left.toDecimalString == "63765794040401514026575861164615535099083399945548297837938497193551900549301", left.toDecimalString)
 
+        var (resLeft, resRight) = a.value * b.value
+        // 7383574513814497347731124253804908375952170682808274416762638435971229279588205319424532844206978022789581507672975461171843856808649386561346601762535534 (Ruby and Sage)
+        
+        // 62159004169578350069197270871737050875922348555598422225414031658629658498497 left result
+        // 63765794040401514026575861164615535099083399945548297837938497193551900549301 left target
+        
+        XCTAssertTrue(resLeft == left, resLeft.description);
+        XCTAssertTrue(resRight == right, resRight.description);
     }
 
     
