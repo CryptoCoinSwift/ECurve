@@ -15,22 +15,42 @@ struct FFInt : Printable, Equatable {
     init(value: UInt256, field: FiniteField) {
         self.value = value
         self.field = field
+        
+        switch field {
+        case let .PrimeField(p):
+            assert(value < p.p, "Input value must be smaller than p")
+        }
     }
     
     init(_ hex: String, _ field: FiniteField) {
         self.value = UInt256(hexStringValue: hex)
         self.field = field
+        
+        switch field {
+        case let .PrimeField(p):
+            assert(self.value < p.p, "Input value must be smaller than p")
+        }
     }
     
     init(dec: String, _ field: FiniteField) {
         self.value = UInt256(decimalStringValue: dec)
         self.field = field
+        
+        switch field {
+        case let .PrimeField(p):
+            assert(self.value < p.p, "Input value must be smaller than p")
+        }
     }
     
     // For testing with smaller values: takes two integers and assumes a Prime Field.
     init(val: Int, p: Int) {
         self.value = UInt256(decimalStringValue: val.description)
         self.field = .PrimeField(p: UInt256(decimalStringValue: p.description))
+        
+        switch field {
+        case let .PrimeField(p):
+            assert(self.value < p.p, "Input value must be smaller than p")
+        }
     }
     
     var description: String {
@@ -46,6 +66,7 @@ func == (lhs: FFInt, rhs: FFInt) -> Bool {
     let field = rhs.field
     switch field {
     case let .PrimeField(p):
+        assert(rhs.value < p.p, "Input value must be smaller than p")
         return field.int(0) - rhs
     }}
 
@@ -91,6 +112,11 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
 }
 
 @infix func ^^ (lhs: FFInt, rhs: Int) -> FFInt {
+    switch lhs.field {
+    case let .PrimeField(p):
+        assert(lhs.value < p.p, "Input value must be smaller than p")
+    }
+    
     switch rhs {
     case 0:
         return lhs.field.int(1)
@@ -117,6 +143,14 @@ func * (lhs: Int, rhs: FFInt) -> FFInt {
     return rhs.field.int(UInt256(lhs)) * rhs
 }
 
+func * (lhs: UInt256, rhs: FFInt) -> FFInt {
+    return rhs.field.int(lhs) * rhs
+}
+
+func * (lhs: FFInt, rhs: UInt256) -> FFInt {
+    return lhs * lhs.field.int(rhs)
+}
+
 func *= (inout lhs: FFInt, rhs: FFInt) -> () {
     lhs = lhs * rhs
 }
@@ -127,6 +161,9 @@ func * (lhs: FFInt, rhs: FFInt) -> FFInt {
     let field = lhs.field
     switch field {
     case let .PrimeField(p):
+        assert(lhs.value < p.p, "Input value must be smaller than p")
+        assert(rhs.value < p.p, "Input value must be smaller than p")
+
         let product: (UInt256, UInt256) = lhs.value * rhs.value
         
         return field.int(product % p.p)
@@ -141,11 +178,12 @@ func / (lhs: FFInt, rhs: FFInt) -> FFInt {
     let field = lhs.field
     switch field {
     case let .PrimeField(p):
-        let inverse: UInt256 = rhs.value.modInverse(p.p)
-        let (a,b) = lhs.value * inverse
-        let res: UInt256 = (a,b) % p.p
+        assert(lhs.value < p.p, "Input value must be smaller than p")
+        assert(rhs.value < p.p, "Input value must be smaller than p")
         
-        return field.int(res)
+        let inverse: UInt256 = rhs.value.modInverse(p.p)
+        
+        return lhs * inverse
     }
     
 }
@@ -153,16 +191,8 @@ func / (lhs: FFInt, rhs: FFInt) -> FFInt {
 func / (lhs: Int, rhs: FFInt) -> FFInt {
     assert(lhs >= 0, "Positive integer expected")
     
-    if lhs == 0 {
-        return rhs.field.int(0)
-    }
-    
-    let inverse = rhs.field.int(1) / rhs
-    if lhs == 1 {
-        return inverse
-    } else {
-        return rhs.field.int(UInt256(lhs)) * inverse
-    }
+    return rhs.field.int(UInt256(lhs)) / rhs
+
 }
 
 
