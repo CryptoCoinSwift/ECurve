@@ -76,3 +76,126 @@ func == (lhs: ECurve, rhs: ECurve) -> Bool {
     return lhs.G.x == rhs.G.x && lhs.G.y == rhs.G.y && lhs.a == rhs.a &&  lhs.b == rhs.b &&  lhs.n == rhs.n &&  lhs.h == rhs.h
 }
 
+@prefix func - (rhs: ECPoint) -> ECPoint {
+    if rhs.isInfinity {
+        return rhs
+    }
+    
+    assert(rhs.x, "x set")
+    let x₁ = rhs.x!
+    
+    assert(rhs.y, "y set")
+    let y₁ = rhs.y!
+    
+    let y₃ = -y₁
+    
+    return ECPoint(x: x₁, y: y₃, curve: rhs.curve)
+    
+}
+
+func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
+    assert(lhs.curve == rhs.curve, "Can't add points on different curves")
+    
+    if lhs.isInfinity {
+        return rhs
+    }
+    
+    if rhs.isInfinity {
+        return lhs
+    }
+    
+    assert(lhs.x, "lhs x set")
+    let x₁ = lhs.x!
+    
+    assert(lhs.y, "lhs y set")
+    let y₁ = lhs.y!
+    
+    assert(rhs.x, "rhs x set")
+    let x₂ = rhs.x!
+    
+    assert(rhs.y, "rhs y set")
+    let y₂ = rhs.y!
+    
+    
+    if lhs == rhs { // P == Q
+        return 2 * lhs
+    }
+    
+    if lhs.x! == rhs.x! && lhs.y! + rhs.y! == lhs.curve.field.int(0) { // P(x,y) == Q(x, -y)
+        return lhs.curve.infinity
+    }
+    
+    let common = (y₂ - y₁) / (x₂ - x₁)
+    
+    let x₃ = common * common - x₁ - x₂
+    
+    let y₃ = common * (x₁ - x₃) - y₁
+    
+    return ECPoint(x: x₃, y: y₃, curve: lhs.curve)
+    
+}
+
+func += (inout lhs: ECPoint, rhs: ECPoint) -> () {
+    lhs = lhs + rhs
+}
+
+
+func *= (inout lhs: ECPoint, rhs: UInt256) -> () {
+    lhs = rhs * lhs
+}
+
+func * (lhs: Int, rhs: ECPoint) -> ECPoint {
+    return UInt256(lhs) * rhs
+}
+
+func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
+    
+    if rhs.isInfinity {
+        return rhs
+    }
+    
+    if lhs == 0 {
+        return rhs.curve.infinity
+    }
+    
+    assert(rhs.x, "lhs x set")
+    let x₁ = rhs.x!
+    
+    assert(rhs.y, "lhs y set")
+    let y₁ = rhs.y!
+    
+    if lhs == 2 {
+        let two = rhs.curve.field.int(2)
+        let three = rhs.curve.field.int(3)
+        let a = rhs.curve.field.int(rhs.curve.a)
+        
+        let common = (three * x₁ * x₁ + a) / (two * y₁)
+        
+        let x₃ = common * common - 2 * x₁
+        
+        let y₃ = common * (x₁ - x₃) - y₁
+        
+        return ECPoint(x: x₃, y: y₃, curve: rhs.curve)
+        
+    }
+    
+    let P = rhs
+    
+    var tally = P.curve.infinity
+    var increment = P
+    
+    let lhsBitLength = lhs.highestBit
+    
+    for var i=0; i < lhsBitLength; i++  {
+        if lhsBitLength > 200 && i % 5 == 0 {
+            println("i = \( i  * 100 / 256 )% ")
+        }
+        if UInt256.singleBitAt(255 - i) & lhs != 0 {
+            tally += increment
+        }
+        increment *= 2
+    }
+    
+    
+    return tally
+}
