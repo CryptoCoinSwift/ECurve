@@ -239,21 +239,25 @@ class ECurveTests: XCTestCase {
     
 // Divide by 0 crash:
     
-//    func testDouble32Bit() {
-//        let p = UInt256(4294967189)
-//        
-//        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(2415436385), a: 0, b: 7, n: 429496719, h: nil)
-//        
-//        var double = curve[1252069803, 278016963]
-//        var result = 2 * curve.G
-//        XCTAssertTrue(result == double, result.description);
-//        
-//        var a = curve[978329252, 1]
-//        double = curve[2015765350, 2147483445]
-//        result = 2 * a
-//        XCTAssertTrue(result == double, result.description);
-//
-//    }
+    func testDouble32Bit() {
+        let p = UInt256(4294967189)
+        
+        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(2415436385), a: 0, b: 7, n: 429496719, h: nil)
+        
+        var double = curve[1252069803, 278016963]
+        
+        XCTAssertTrue(double.curve.G.x!.value == 1244414049)
+        XCTAssertTrue(double.curve.G.y!.value == 2415436385)
+        
+        var result = 2 * curve.G
+        XCTAssertTrue(result == double, result.description);
+        
+        var a = curve[978329252, 1]
+        double = curve[2015765350, 2147483445]
+        result = 2 * a
+        XCTAssertTrue(result == double, result.description);
+
+    }
     
     func testAdd32Bit() {
         let p = UInt256(4294967189)

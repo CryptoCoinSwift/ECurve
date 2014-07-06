@@ -64,6 +64,10 @@ struct ECurve {
         return ECPoint(x: FFInt(value: x, field: self.field), y: FFInt(value: y, field: self.field), curve: self)
     }
     
+    subscript(x: FFInt, y: FFInt) -> ECPoint {
+        return ECPoint(x: x, y: y, curve: self)
+    }
+    
     // The compiler won't let me...
     // let ∞ = infinity
 }
@@ -147,9 +151,28 @@ func *= (inout lhs: ECPoint, rhs: UInt256) -> () {
     lhs = rhs * lhs
 }
 
-func * (lhs: Int, rhs: ECPoint) -> ECPoint {
-    return UInt256(lhs) * rhs
+extension ECPoint {
+    var double: ECPoint {
+        let a = curve.field.int(self.curve.a)
+
+        assert(x, "lhs x set")
+        let x₁ = x!
+        
+        assert(y, "lhs y set")
+        let y₁ = y!
+
+            
+        let common = (3 * x₁ ^^ 2 + a) / (2 * y₁)
+        
+        let x₃ = common ^^ 2 - 2 * x₁
+        
+        let y₃ = common * (x₁ - x₃) - y₁
+        
+        return curve[x₃, y₃]
+    }
 }
+
+
 
 func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
@@ -161,22 +184,8 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
         return rhs.curve.infinity
     }
     
-    assert(rhs.x, "lhs x set")
-    let x₁ = rhs.x!
-    
-    assert(rhs.y, "lhs y set")
-    let y₁ = rhs.y!
-    
     if lhs == 2 {
-        let a = rhs.curve.field.int(rhs.curve.a)
-        
-        let common = (3 * x₁ ^^ 2 + a) / (2 * y₁)
-        
-        let x₃ = common ^^ 2 - 2 * x₁
-        
-        let y₃ = common * (x₁ - x₃) - y₁
-        
-        return ECPoint(x: x₃, y: y₃, curve: rhs.curve)
+        return rhs.double
         
     }
     
@@ -199,4 +208,22 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
     
     return tally
+}
+
+// Convenience method. Mostly so that doubling a point doesn't require lhs to
+// be cast in and out of UInt256.
+func * (lhs: Int, rhs: ECPoint) -> ECPoint {
+    if rhs.isInfinity {
+        return rhs
+    }
+    
+    if lhs == 0 {
+        return rhs.curve.infinity
+    }
+    
+    if lhs == 2 {
+        return rhs.double
+    }
+    
+    return UInt256(lhs) * rhs
 }
