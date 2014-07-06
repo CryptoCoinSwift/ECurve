@@ -91,6 +91,26 @@ class FFIntTests: XCTestCase {
         
         XCTAssertEqual(a - b, diff, "\(a.value) - \(b.value) = \(diff.value) != \( (a - b).value)");
     }
+    
+    func testSubtractBigger() {
+        let p = FiniteField.PrimeField(p: 65447)
+        var a = p.intWithDec("36690")
+        var b = p.intWithDec("1389")
+        
+        var diff = p.intWithDec("35301")
+        var result = a - b
+        
+        XCTAssertEqual(result, diff, result.description);
+        
+        a = p.intWithDec("1389")
+        b = p.intWithDec("36690")
+        
+        diff = p.intWithDec("30146")
+        
+        result = a - b
+        
+        XCTAssertEqual(result, diff, result.description);
+    }
 
     func testMultiply() {
         let p = FiniteField.PrimeField(p: 11)
@@ -169,6 +189,18 @@ class FFIntTests: XCTestCase {
         // Simplified form:
         var inverse = 1 / a
         XCTAssertEqual(inverse, c, inverse.description);
+    }
+    
+    func testInverseBigger() {
+        let p = FiniteField.PrimeField(p: 65447)
+        let a = p.intWithDec("35301")
+        
+        let c = p.intWithDec("40487")
+        
+        var inverse: FFInt = 1 / a
+        
+        XCTAssertEqual(inverse, c, c.description);
+        
     }
     
     func testDivide() {
