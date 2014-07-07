@@ -282,11 +282,11 @@ class ECurveTests: XCTestCase {
         
         let a = curve.G
         let x = UInt256(0xc6047f94, 0x41ed7d6d, 0x3045406e,0x95c07cd8,0x5c778e4b,0x8cef3ca7,0xabac09b9,0x5c709ee5)
-        let y = UInt256(0x347bd4bc, 0xec8cfb91, 0x086838b5,0x2a2b0fc4,0x84c461f5,0xfcb22420,0xa77fe183,0x4a841fd8)
+        let y = UInt256(0x1ae168fe, 0xa63dc339, 0xa3c58419, 0x466ceaee, 0xf7f63265, 0x3266d0e1, 0x236431a9, 0x50cfe52a)
         let doubleX = FFInt(x, curve.field)
         let doubleY = FFInt(y, curve.field)
         
-        XCTAssertTrue(doubleX.value.toHexString == "C6047F9441ED7D6D3045406E95C07CD85C778E4B8CEF3CA7ABAC09B95C709EE5" && doubleY.value.toHexString == "347BD4BCEC8CFB91086838B52A2B0FC484C461F5FCB22420A77FE1834A841FD8", "")
+        XCTAssertTrue(doubleX.value.toDecimalString == "89565891926547004231252920425935692360644145829622209833684329913297188986597" && doubleY.value.toDecimalString == "12158399299693830322967808612713398636155367887041628176798871954788371653930", "")
         
         let double = ECPoint(x: doubleX, y: doubleY, curve: curve)
 
@@ -324,21 +324,21 @@ class ECurveTests: XCTestCase {
     
 // Ambition:  < 1 second on iPhone 4S (currently 12 minutes on a MacBook Pro)
     
-//        func testMultiplyBig() {
-//            curve = ECurve(domain: .Secp256k1)
-//    
-//            let a = UInt256(decimalStringValue: "19898843618908353587043383062236220484949425084007183071220218307100305431102")
-//    
-//            let b = curve.G
-//    
-//            let productX = FFInt(dec: "83225686012142088543596389522774768397204444195709443235253141114409346958144", curve.field)
-//            let productY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
-//    
-//            let product = ECPoint(x: productX, y: productY, curve: curve)
-//
-//            
-//            let result = a * b
-//            
-//            XCTAssertTrue(result == product, result.description);
-//        }
+        func testMultiplyBig() {
+            curve = ECurve(domain: .Secp256k1)
+    
+            let a = UInt256(decimalStringValue: "19898843618908353587043383062236220484949425084007183071220218307100305431102")
+    
+            let b = curve.G
+    
+            let productX = FFInt(dec: "83225686012142088543596389522774768397204444195709443235253141114409346958144", curve.field)
+            let productY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
+    
+            let product = ECPoint(x: productX, y: productY, curve: curve)
+
+            
+            let result = a * b
+            
+            XCTAssertTrue(result == product, result.description);
+        }
  }
