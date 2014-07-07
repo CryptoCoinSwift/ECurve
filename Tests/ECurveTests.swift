@@ -322,23 +322,23 @@ class ECurveTests: XCTestCase {
     }
 
     
-// Ambition:  < 1 second on iPhone 4S (currently 12 minutes on a MacBook Pro)
+// Ambition:  < 1 second on iPhone 4S (currently 14 seconds on a MacBook Pro)
     
-        func testMultiplyBig() {
-            curve = ECurve(domain: .Secp256k1)
-    
-            let a = UInt256(decimalStringValue: "19898843618908353587043383062236220484949425084007183071220218307100305431102")
-    
-            let b = curve.G
-    
-            let productX = FFInt(dec: "83225686012142088543596389522774768397204444195709443235253141114409346958144", curve.field)
-            let productY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
-    
-            let product = ECPoint(x: productX, y: productY, curve: curve)
+    func testMultiplyBig() {
+        curve = ECurve(domain: .Secp256k1)
 
-            
-            let result = a * b
-            
-            XCTAssertTrue(result == product, result.description);
-        }
- }
+        let a = UInt256(decimalStringValue: "19898843618908353587043383062236220484949425084007183071220218307100305431102")
+
+        let b = curve.G
+
+        let productX = FFInt(dec: "83225686012142088543596389522774768397204444195709443235253141114409346958144", curve.field)
+        let productY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
+
+        let product = ECPoint(x: productX, y: productY, curve: curve)
+
+        
+        let result = a * b
+        
+        XCTAssertTrue(result == product, result.description);
+    }
+}

@@ -129,41 +129,12 @@ func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
         return lhs.curve.infinity
     }
     
-    println("x₁ = \(x₁.value),y₁ = \(y₁.value)")
-    println("x₂ = \(x₂.value),y₂ = \(y₂.value)")
-    
-    let numerator = (y₂ - y₁)
-    let denominator = (x₂ - x₁)
-    
-    println("numerator = \(numerator.value)")
-    println("denominator = \(denominator.value)")
-    
-    let common = numerator / denominator // (y₂ - y₁) / (x₂ - x₁)
-    
-    println("common = \( common.value )")
-    
-//    let x₃ = common ^^ 2 - x₁ - x₂
-    
-    let common² = common ^^ 2
-    
-    println("common² = \( common².value )")
-
-    let x₃ = common² - x₁ - x₂
-    
-//    let y₃ = common * (x₁ - x₃) - y₁
-    
-    let x₁_minus_x₃ = x₁ - x₃
-    
-    println("x₁ - x₃ = \(x₁_minus_x₃.value)")
-    
-    let product = common * x₁_minus_x₃
-    
-    println("product = \( product.value )")
-    
-    let y₃ = product - y₁
+    let common = (y₂ - y₁) / (x₂ - x₁)
+    let x₃ = common ^^ 2 - x₁ - x₂
+    let y₃ = common * (x₁ - x₃) - y₁
     
     return ECPoint(x: x₃, y: y₃, curve: lhs.curve)
-    
+
 }
 
 func += (inout lhs: ECPoint, rhs: ECPoint) -> () {
@@ -187,9 +158,7 @@ extension ECPoint {
 
             
         let common = (3 * x₁ ^^ 2 + a) / (2 * y₁)
-        
         let x₃ = common ^^ 2 - 2 * x₁
-        
         let y₃ = common * (x₁ - x₃) - y₁
         
         return curve[x₃, y₃]
@@ -219,9 +188,6 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     let lhsBitLength = lhs.highestBit
     
     for var i=0; i < lhsBitLength; i++  {
-        if lhsBitLength > 200 && i % 5 == 0 {
-            println("i = \( i  * 100 / 256 )% ")
-        }
         if UInt256.singleBitAt(255 - i) & lhs != 0 {
             tally += increment
         }
