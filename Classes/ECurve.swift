@@ -129,14 +129,38 @@ func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
         return lhs.curve.infinity
     }
     
+    println("x₁ = \(x₁.value),y₁ = \(y₁.value)")
+    println("x₂ = \(x₂.value),y₂ = \(y₂.value)")
+    
     let numerator = (y₂ - y₁)
-    let denomenator = (x₂ - x₁)
+    let denominator = (x₂ - x₁)
     
-    let common = numerator / denomenator // (y₂ - y₁) / (x₂ - x₁)
+    println("numerator = \(numerator.value)")
+    println("denominator = \(denominator.value)")
     
-    let x₃ = common ^^ 2 - x₁ - x₂
+    let common = numerator / denominator // (y₂ - y₁) / (x₂ - x₁)
     
-    let y₃ = common * (x₁ - x₃) - y₁
+    println("common = \( common.value )")
+    
+//    let x₃ = common ^^ 2 - x₁ - x₂
+    
+    let common² = common ^^ 2
+    
+    println("common² = \( common².value )")
+
+    let x₃ = common² - x₁ - x₂
+    
+//    let y₃ = common * (x₁ - x₃) - y₁
+    
+    let x₁_minus_x₃ = x₁ - x₃
+    
+    println("x₁ - x₃ = \(x₁_minus_x₃.value)")
+    
+    let product = common * x₁_minus_x₃
+    
+    println("product = \( product.value )")
+    
+    let y₃ = product - y₁
     
     return ECPoint(x: x₃, y: y₃, curve: lhs.curve)
     
@@ -171,8 +195,6 @@ extension ECPoint {
         return curve[x₃, y₃]
     }
 }
-
-
 
 func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
@@ -213,6 +235,11 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
 // Convenience method. Mostly so that doubling a point doesn't require lhs to
 // be cast in and out of UInt256.
 func * (lhs: Int, rhs: ECPoint) -> ECPoint {
+    
+    let isInfinity = 1
+    let isInfenity = 2
+    
+    
     
     let lhsInt: UInt256 = UInt256(UInt32(lhs))
 

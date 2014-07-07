@@ -300,12 +300,13 @@ class ECurveTests: XCTestCase {
     }
     
     func testAddBig() {
+        // G + 2G
         curve = ECurve(domain: .Secp256k1)
         
         let a = curve.G
         
         let bX = FFInt(dec: "89565891926547004231252920425935692360644145829622209833684329913297188986597", curve.field)
-        let bY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
+        let bY = FFInt(dec: "12158399299693830322967808612713398636155367887041628176798871954788371653930", curve.field)
         
         let b = ECPoint(x: bX, y: bY, curve: curve)
 
