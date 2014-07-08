@@ -31,7 +31,7 @@ class ECurveTests: XCTestCase {
     
     func testInitWithDomain() {
         let curve = ECurve(domain: .Secp256k1)
-        XCTAssertEqual(curve.domain!, .Secp256k1);
+        XCTAssertEqual(curve.domain!, EllipticCurveDomain.Secp256k1);
 
     }
     

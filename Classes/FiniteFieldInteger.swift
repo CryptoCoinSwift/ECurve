@@ -124,7 +124,7 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
         return lhs
     case let k where k > 1:
         var res = lhs
-        for i in 1..k {
+        for i in 1..<k {
             res *= lhs
         }
         return res
