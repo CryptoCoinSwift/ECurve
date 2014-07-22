@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		A226907D1962E6E800291D7A /* ECurve.h in Headers */ = {isa = PBXBuildFile; fileRef = A226907C1962E6E800291D7A /* ECurve.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A22690831962E6E800291D7A /* ECurve.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A22690771962E6E800291D7A /* ECurve.framework */; };
-		A258B3FE1962E77D00CD0B09 /* ECPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FB1962E77D00CD0B09 /* ECPointTests.swift */; };
-		A258B3FF1962E77D00CD0B09 /* ECurveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FC1962E77D00CD0B09 /* ECurveTests.swift */; };
-		A258B4001962E77D00CD0B09 /* FiniteFieldIntegerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FD1962E77D00CD0B09 /* FiniteFieldIntegerTests.swift */; };
 		A258B4061962E7A600CD0B09 /* ECDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4011962E7A600CD0B09 /* ECDomain.swift */; };
 		A258B4071962E7A600CD0B09 /* ECPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4021962E7A600CD0B09 /* ECPoint.swift */; };
 		A258B4081962E7A600CD0B09 /* ECurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4031962E7A600CD0B09 /* ECurve.swift */; };
@@ -25,9 +22,9 @@
 		A26F77F51968513800C75822 /* ECurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4031962E7A600CD0B09 /* ECurve.swift */; };
 		A26F77F61968513800C75822 /* FiniteField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4041962E7A600CD0B09 /* FiniteField.swift */; };
 		A26F77F71968513800C75822 /* FiniteFieldInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4051962E7A600CD0B09 /* FiniteFieldInteger.swift */; };
-		A26F77F81968517B00C75822 /* ECPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FB1962E77D00CD0B09 /* ECPointTests.swift */; };
-		A26F77F91968518300C75822 /* ECurveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FC1962E77D00CD0B09 /* ECurveTests.swift */; };
-		A26F77FA1968518700C75822 /* FiniteFieldIntegerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FD1962E77D00CD0B09 /* FiniteFieldIntegerTests.swift */; };
+		A2960AB2197E963A002EC55D /* ECPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FB1962E77D00CD0B09 /* ECPointTests.swift */; };
+		A2960AB3197E963A002EC55D /* ECurveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FC1962E77D00CD0B09 /* ECurveTests.swift */; };
+		A2960AB4197E963A002EC55D /* FiniteFieldIntegerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FD1962E77D00CD0B09 /* FiniteFieldIntegerTests.swift */; };
 		A2DCBEAB1968523000BD92DB /* UInt256Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2DCBEAA1968523000BD92DB /* UInt256Mac.framework */; };
 /* End PBXBuildFile section */
 
@@ -377,9 +374,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A258B3FE1962E77D00CD0B09 /* ECPointTests.swift in Sources */,
-				A258B3FF1962E77D00CD0B09 /* ECurveTests.swift in Sources */,
-				A258B4001962E77D00CD0B09 /* FiniteFieldIntegerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,9 +393,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A26F77F81968517B00C75822 /* ECPointTests.swift in Sources */,
-				A26F77F91968518300C75822 /* ECurveTests.swift in Sources */,
-				A26F77FA1968518700C75822 /* FiniteFieldIntegerTests.swift in Sources */,
+				A2960AB2197E963A002EC55D /* ECPointTests.swift in Sources */,
+				A2960AB3197E963A002EC55D /* ECurveTests.swift in Sources */,
+				A2960AB4197E963A002EC55D /* FiniteFieldIntegerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
