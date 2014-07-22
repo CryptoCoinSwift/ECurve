@@ -10,12 +10,12 @@
 
 import UInt256Mac
 
-struct ECPoint : Printable {
-    let curve: ECurve
-    let x: FFInt?
-    let y: FFInt?
+public struct ECPoint : Printable {
+    public let curve: ECurve
+    public let x: FFInt?
+    public let y: FFInt?
     
-    init(x: FFInt?, y: FFInt?, curve: ECurve) {
+    public init(x: FFInt?, y: FFInt?, curve: ECurve) {
         self.curve = curve
         
         self.x = x
@@ -32,15 +32,15 @@ struct ECPoint : Printable {
     //        self.y = UInt256(decimalStringValue: "0")
     //    }
     
-    static func infinity (curve: ECurve) ->  ECPoint {
+    static public func infinity (curve: ECurve) ->  ECPoint {
         return ECPoint(x: nil, y: nil, curve: curve)
     }
     
-    var isInfinity: Bool {
+    public var isInfinity: Bool {
         return x == nil && y == nil
     }
     
-    var description: String {
+    public var description: String {
         if self.isInfinity {
           return "Infinity"
         } else {
@@ -49,6 +49,6 @@ struct ECPoint : Printable {
     }
 }
 
-func == (lhs: ECPoint, rhs: ECPoint) -> Bool {
+public func == (lhs: ECPoint, rhs: ECPoint) -> Bool {
     return lhs.curve == rhs.curve && lhs.x == rhs.x && lhs.y == rhs.y
 }

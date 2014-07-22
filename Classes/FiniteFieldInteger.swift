@@ -8,11 +8,11 @@
 
 import UInt256Mac
 
-struct FFInt : Printable, Equatable {
-    let field: FiniteField
-    let value: UInt256
+public struct FFInt : Printable, Equatable {
+    public let field: FiniteField
+    public let value: UInt256
     
-    init(_ value: UInt256, _ field: FiniteField) {
+    public init(_ value: UInt256, _ field: FiniteField) {
         self.value = value
         self.field = field
         
@@ -22,7 +22,7 @@ struct FFInt : Printable, Equatable {
         }
     }
     
-    init(_ hex: String, _ field: FiniteField) {
+    public init(_ hex: String, _ field: FiniteField) {
         self.value = UInt256(hexStringValue: hex)
         self.field = field
         
@@ -32,7 +32,7 @@ struct FFInt : Printable, Equatable {
         }
     }
     
-    init(dec: String, _ field: FiniteField) {
+    public init(dec: String, _ field: FiniteField) {
         self.value = UInt256(decimalStringValue: dec)
         self.field = field
         
@@ -43,7 +43,7 @@ struct FFInt : Printable, Equatable {
     }
     
     // For testing with smaller values: takes two integers and assumes a Prime Field.
-    init(val: Int, p: Int) {
+    public init(val: Int, p: Int) {
         self.value = UInt256(decimalStringValue: val.description)
         self.field = .PrimeField(p: UInt256(decimalStringValue: p.description))
         
@@ -53,16 +53,16 @@ struct FFInt : Printable, Equatable {
         }
     }
     
-    var description: String {
+    public var description: String {
         return "\( value ) in \( field )"
     }
 }
 
-func == (lhs: FFInt, rhs: FFInt) -> Bool {
+public func == (lhs: FFInt, rhs: FFInt) -> Bool {
     return lhs.field == rhs.field && lhs.value == rhs.value
 }
 
-@prefix func - (rhs: FFInt) -> FFInt {
+@prefix public  func - (rhs: FFInt) -> FFInt {
     let field = rhs.field
     switch field {
     case let .PrimeField(p):
@@ -70,7 +70,7 @@ func == (lhs: FFInt, rhs: FFInt) -> Bool {
         return field.int(0) - rhs
     }}
 
-func + (lhs: FFInt, rhs: FFInt) -> FFInt {
+public func + (lhs: FFInt, rhs: FFInt) -> FFInt {
     assert(lhs.field == rhs.field, "Can't add integers from different fields")
     
     if (rhs.value == 0) { return lhs }
@@ -93,7 +93,7 @@ func + (lhs: FFInt, rhs: FFInt) -> FFInt {
 
 }
 
-func - (lhs: FFInt, rhs: FFInt) -> FFInt {
+public func - (lhs: FFInt, rhs: FFInt) -> FFInt {
     assert(lhs.field == rhs.field, "Can't subtract integers from different fields")
     
     let field = lhs.field
@@ -111,7 +111,7 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
     }
 }
 
-@infix func ^^ (lhs: FFInt, rhs: Int) -> FFInt {
+@infix public func ^^ (lhs: FFInt, rhs: Int) -> FFInt {
     switch lhs.field {
     case let .PrimeField(p):
         assert(lhs.value < p.p, "Input value must be smaller than p")
@@ -139,24 +139,24 @@ func - (lhs: FFInt, rhs: FFInt) -> FFInt {
     }
 }
 
-func * (lhs: Int, rhs: FFInt) -> FFInt {
+public func * (lhs: Int, rhs: FFInt) -> FFInt {
     let lhsInt: UInt256 = UInt256(UInt32(lhs))
     return rhs.field.int(lhsInt) * rhs
 }
 
-func * (lhs: UInt256, rhs: FFInt) -> FFInt {
+public func * (lhs: UInt256, rhs: FFInt) -> FFInt {
     return rhs.field.int(lhs) * rhs
 }
 
-func * (lhs: FFInt, rhs: UInt256) -> FFInt {
+public func * (lhs: FFInt, rhs: UInt256) -> FFInt {
     return lhs * lhs.field.int(rhs)
 }
 
-func *= (inout lhs: FFInt, rhs: FFInt) -> () {
+public func *= (inout lhs: FFInt, rhs: FFInt) -> () {
     lhs = lhs * rhs
 }
 
-func * (lhs: FFInt, rhs: FFInt) -> FFInt {
+public func * (lhs: FFInt, rhs: FFInt) -> FFInt {
     assert(lhs.field == rhs.field, "Can't multiply integers from different fields")
     
     let field = lhs.field
@@ -172,7 +172,7 @@ func * (lhs: FFInt, rhs: FFInt) -> FFInt {
     
 }
 
-func / (lhs: FFInt, rhs: FFInt) -> FFInt {
+public func / (lhs: FFInt, rhs: FFInt) -> FFInt {
     assert(lhs.field == rhs.field, "Can't divide integers from different fields")
     
     
@@ -189,7 +189,7 @@ func / (lhs: FFInt, rhs: FFInt) -> FFInt {
     
 }
 
-func / (lhs: Int, rhs: FFInt) -> FFInt {
+public func / (lhs: Int, rhs: FFInt) -> FFInt {
     assert(lhs >= 0, "Positive integer expected")
    
     let lhsInt: UInt256 = UInt256(UInt32(lhs))

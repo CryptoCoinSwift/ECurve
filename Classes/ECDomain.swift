@@ -27,10 +27,10 @@
 
 import UInt256Mac
 
-enum EllipticCurveDomain {
+public enum EllipticCurveDomain {
     case Secp256k1
 
-    var field: FiniteField {
+    public var field: FiniteField {
         switch self {
         case .Secp256k1:
             // 2^256 - 2^32 - 2^9 - 2^8 - 2^7 - 2^6 - 2^4 - 1
@@ -39,14 +39,14 @@ enum EllipticCurveDomain {
     }
     
     //  The curve E: y^2 + x^3 + ax +b over Fp.
-    var a: UInt256 {
+    public var a: UInt256 {
         switch self {
         case .Secp256k1:
             return UInt256.allZeros
         }
     }
     
-    var b: UInt256 {
+    public var b: UInt256 {
         switch self {
         case .Secp256k1:
             return UInt256(7)
@@ -54,7 +54,7 @@ enum EllipticCurveDomain {
     }
     
     // The base point G in compressed form is:
-    var g: String {
+    public var g: String {
         switch self {
         case .Secp256k1:
             return "0279BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798"
@@ -62,33 +62,33 @@ enum EllipticCurveDomain {
     }
     
     // Base point expressed in X and Y coordinates (uncompressed form with 04 left out of the beginning)
-    var gX: FFInt {
-    switch self {
-    case .Secp256k1:
-        return field.int(UInt256(0x79be667e, 0xf9dcbbac, 0x55a06295, 0xce870b07, 0x029bfcdb, 0x2dce28d9, 0x59f2815b, 0x16f81798))
+    public var gX: FFInt {
+        switch self {
+        case .Secp256k1:
+            return field.int(UInt256(0x79be667e, 0xf9dcbbac, 0x55a06295, 0xce870b07, 0x029bfcdb, 0x2dce28d9, 0x59f2815b, 0x16f81798))
+            }
         }
-    }
     
-    var gY: FFInt {
-    switch self {
-    case .Secp256k1:
-        return field.int(UInt256(0x483ada77,0x26a3c465,0x5da4fbfc,0x0e1108a8,0xfd17b448,0xa6855419, 0x9c47d08f,0xfb10d4b8))
+    public var gY: FFInt {
+        switch self {
+        case .Secp256k1:
+            return field.int(UInt256(0x483ada77,0x26a3c465,0x5da4fbfc,0x0e1108a8,0xfd17b448,0xa6855419, 0x9c47d08f,0xfb10d4b8))
+            }
         }
-    }
     
     // The order n of G
-    var n: UInt256 {
-    switch self {
-    case .Secp256k1:
-        return UInt256(0xffffffff,0xffffffff,0xffffffff,0xfffffffe,0xbaaedce6,0xaf48a03b,0xbfd25e8c,0xd0364141)
+    public var n: UInt256 {
+        switch self {
+        case .Secp256k1:
+            return UInt256(0xffffffff,0xffffffff,0xffffffff,0xfffffffe,0xbaaedce6,0xaf48a03b,0xbfd25e8c,0xd0364141)
+            }
         }
-    }
     
     // The cofactor:
-    var h: UInt256 {
-    switch self {
-    case .Secp256k1:
-        return UInt256(1)
+    public var h: UInt256 {
+        switch self {
+        case .Secp256k1:
+            return UInt256(1)
         }
     }
 }

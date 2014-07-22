@@ -7,18 +7,18 @@
 
 import UInt256Mac
 
-enum FiniteField : Printable {
+public enum FiniteField : Printable {
     case PrimeField(p: UInt256)
     
-    func intWithDec(dec: String) -> FFInt {
+    public func intWithDec(dec: String) -> FFInt {
         return FFInt(UInt256(decimalStringValue: dec), self)
     }
     
-    func int(val: UInt256) -> FFInt {
+    public func int(val: UInt256) -> FFInt {
         return FFInt(val, self)
     }
 
-    var description: String {
+    public var description: String {
         switch self {
         case let .PrimeField(p):
             return "Prime field p = \( p ) "
@@ -26,7 +26,7 @@ enum FiniteField : Printable {
     }
 }
 
-func == (lhs: FiniteField, rhs: FiniteField) -> Bool {
+public func == (lhs: FiniteField, rhs: FiniteField) -> Bool {
     switch lhs {
     case let .PrimeField(p1):
         switch(rhs) {

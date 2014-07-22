@@ -6,22 +6,22 @@
 
 import UInt256Mac
 
-struct ECurve {
-    let domain: EllipticCurveDomain?
+public struct ECurve {
+    public let domain: EllipticCurveDomain?
     
-    let field: FiniteField
+    public let field: FiniteField
     
     // let G: ECPoint // ECPoint refers to an ECurve, so this would create a cycle
-    let gX: FFInt
-    let gY: FFInt
+    public let gX: FFInt
+    public let gY: FFInt
     
-    let a: UInt256
-    let b: UInt256
+    public let a: UInt256
+    public let b: UInt256
     
-    let n: UInt256
-    let h: UInt256?
+    public let n: UInt256
+    public let h: UInt256?
     
-    init(domain: EllipticCurveDomain) {
+    public init(domain: EllipticCurveDomain) {
         self.domain = domain
         
         self.field = domain.field
@@ -38,7 +38,7 @@ struct ECurve {
 
     }
     
-    init(field: FiniteField, gX: FFInt, gY: FFInt, a: UInt256, b: UInt256, n: UInt256, h: UInt256?) {
+    public init(field: FiniteField, gX: FFInt, gY: FFInt, a: UInt256, b: UInt256, n: UInt256, h: UInt256?) {
         self.field = field
         
         self.a = a
@@ -52,19 +52,19 @@ struct ECurve {
 
     }
     
-    var G: ECPoint {
+    public var G: ECPoint {
         return ECPoint(x: gX, y:gY, curve: self)
     }
     
-    var infinity: ECPoint {
+    public var infinity: ECPoint {
         return ECPoint.infinity(self)
     }
     
-    subscript(x: UInt256, y: UInt256) -> ECPoint {
+    public subscript(x: UInt256, y: UInt256) -> ECPoint {
         return ECPoint(x: FFInt(x, self.field), y: FFInt(y, self.field), curve: self)
     }
     
-    subscript(x: FFInt, y: FFInt) -> ECPoint {
+    public subscript(x: FFInt, y: FFInt) -> ECPoint {
         return ECPoint(x: x, y: y, curve: self)
     }
     
@@ -72,7 +72,7 @@ struct ECurve {
     // let ∞ = infinity
 }
 
-func == (lhs: ECurve, rhs: ECurve) -> Bool {
+public func == (lhs: ECurve, rhs: ECurve) -> Bool {
     if(lhs.domain == rhs.domain) {
         return true
     }
@@ -80,7 +80,7 @@ func == (lhs: ECurve, rhs: ECurve) -> Bool {
     return lhs.G.x == rhs.G.x && lhs.G.y == rhs.G.y && lhs.a == rhs.a &&  lhs.b == rhs.b &&  lhs.n == rhs.n &&  lhs.h == rhs.h
 }
 
-@prefix func - (rhs: ECPoint) -> ECPoint {
+@prefix public func - (rhs: ECPoint) -> ECPoint {
     if rhs.isInfinity {
         return rhs
     }
@@ -97,7 +97,7 @@ func == (lhs: ECurve, rhs: ECurve) -> Bool {
     
 }
 
-func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
+public func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
     assert(lhs.curve == rhs.curve, "Can't add points on different curves")
     
     if lhs.isInfinity {
@@ -137,17 +137,17 @@ func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
 
 }
 
-func += (inout lhs: ECPoint, rhs: ECPoint) -> () {
+public func += (inout lhs: ECPoint, rhs: ECPoint) -> () {
     lhs = lhs + rhs
 }
 
 
-func *= (inout lhs: ECPoint, rhs: UInt256) -> () {
+public func *= (inout lhs: ECPoint, rhs: UInt256) -> () {
     lhs = rhs * lhs
 }
 
 extension ECPoint {
-    var double: ECPoint {
+    public var double: ECPoint {
         let a = curve.field.int(self.curve.a)
 
         assert(x, "lhs x set")
@@ -165,7 +165,7 @@ extension ECPoint {
     }
 }
 
-func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
+public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
     if rhs.isInfinity {
         return rhs
@@ -200,7 +200,7 @@ func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
 
 // Convenience method. Mostly so that doubling a point doesn't require lhs to
 // be cast in and out of UInt256.
-func * (lhs: Int, rhs: ECPoint) -> ECPoint {
+public func * (lhs: Int, rhs: ECPoint) -> ECPoint {
     
     let isInfinity = 1
     let isInfenity = 2
