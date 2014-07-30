@@ -14,7 +14,6 @@
 		A258B4081962E7A600CD0B09 /* ECurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4031962E7A600CD0B09 /* ECurve.swift */; };
 		A258B4091962E7A600CD0B09 /* FiniteField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4041962E7A600CD0B09 /* FiniteField.swift */; };
 		A258B40A1962E7A600CD0B09 /* FiniteFieldInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4051962E7A600CD0B09 /* FiniteFieldInteger.swift */; };
-		A258B40D1962E7FF00CD0B09 /* UInt256.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A258B40C1962E7FF00CD0B09 /* UInt256.framework */; };
 		A26F77DA196850EF00C75822 /* ECurveMac.h in Headers */ = {isa = PBXBuildFile; fileRef = A26F77D9196850EF00C75822 /* ECurveMac.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A26F77E0196850EF00C75822 /* ECurveMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A26F77D5196850EF00C75822 /* ECurveMac.framework */; };
 		A26F77F31968513800C75822 /* ECDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4011962E7A600CD0B09 /* ECDomain.swift */; };
@@ -73,7 +72,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A258B40D1962E7FF00CD0B09 /* UInt256.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
