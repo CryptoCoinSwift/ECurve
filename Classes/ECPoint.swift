@@ -46,6 +46,11 @@ public struct ECPoint : Printable {
         self.coordinate = .Affine(x: x, y:y)
     }
     
+    public init(coordinate: Coordinate, curve: ECurve) {
+        self.curve = curve
+        self.coordinate = coordinate
+    }
+    
     //    http://nmav.gnutls.org/2012/01/do-we-need-elliptic-curve-point.html
     //    https://bitcointalk.org/index.php?topic=237260.0
     //
@@ -64,9 +69,8 @@ public struct ECPoint : Printable {
         switch coordinate {
         case let .Affine(x,y):
             return x == nil && y == nil
-        case .Jacobian:
-            assert(false, "Not implemented")
-            return false
+        case let .Jacobian(X, Y, Z):
+            return X == curve.field.int(1) && Y == curve.field.int(1) && Z == curve.field.int(0) // Page 88 of EC guide
         }
     }
     

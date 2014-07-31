@@ -192,9 +192,32 @@ extension ECPoint {
             let y₃ = common * (x₁ - x₃) - y₁
             
             return curve[x₃, y₃]
-        case .Jacobian:
-            assert(false, "Not implemented")
-            return self
+        case let .Jacobian(X₁,Y₁,Z₁):
+            // Check that P != -P
+            // Negative of (X : Y : Z) is (X : -Y : Z)
+            assert(Y₁ != -Y₁, "Can't deal with P == -P")
+            
+            let X₁² = X₁ * X₁
+            let X₁⁴ = X₁² * X₁²
+            
+            let Y₁² = Y₁ * Y₁
+            let Y₁⁴ = Y₁² * Y₁²
+            
+            var D: FFInt
+            if(a == curve.field.int(0)) {
+                D = 3 * X₁²
+            } else {
+                let Z₁² = Z₁ * Z₁
+                let Z₁⁴ = Z₁² * Z₁²
+                D = 3 * X₁² + a * Z₁⁴
+            }
+            
+
+            let X₃ = D * D - 8 * X₁ * Y₁²
+            let Y₃ = D * (4 * X₁ * Y₁² - X₃) - 8 * Y₁⁴
+            let Z₃ = 2 * Y₁ * Z₁
+            
+            return ECPoint(coordinate: .Jacobian(X: X₃, Y: Y₃,Z: Z₃), curve: curve)
         }
     }
 }

@@ -77,8 +77,6 @@ class ECPointTests: XCTestCase {
         default:
             XCTAssertTrue(false, "Expected a Jacobian coordinate")
         }
-        
-
     }
     
     func testConvertToAffine() {
@@ -97,7 +95,7 @@ class ECPointTests: XCTestCase {
         }
         
         // Non trivial conversion
-        p.coordinate = .Jacobian(X: field.int(20) , Y: field.int(9), Z: field.int(2))
+        p = ECPoint(coordinate: .Jacobian(X: field.int(9) , Y: field.int(9), Z: field.int(2)), curve: curve)
         p.convertToAffine()
         
         switch p.coordinate {
@@ -109,6 +107,5 @@ class ECPointTests: XCTestCase {
         }
 
     }
-    
 
 }

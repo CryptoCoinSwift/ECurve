@@ -145,6 +145,20 @@ class ECurveTests: XCTestCase {
         XCTAssertTrue(double == result, result.description);
     }
     
+    
+    func testDoubleInJacobian() {
+        var P = curve[5,3]
+        let double = curve[5,8]
+        
+        P.convertToJacobian()
+        
+        var result = 2 * P
+        
+        result.convertToAffine()
+        
+        XCTAssertTrue(double == result, result.description);
+    }
+    
     func testDoubleOther() {
         let  P = curve[9,10]
         let result = 2 * P
