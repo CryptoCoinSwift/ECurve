@@ -30,8 +30,14 @@ class ECPointTests: XCTestCase {
         
         let g = ECPoint(x: EllipticCurveDomain.Secp256k1.gX, y: EllipticCurveDomain.Secp256k1.gY, curve: curve)
         
-        XCTAssertEqual(g.x!.value.toHexString, EllipticCurveDomain.Secp256k1.gX.value.toHexString, "Gx hex");
-        XCTAssertTrue(g.x! == EllipticCurveDomain.Secp256k1.gX, "Gx equality");
+        switch g.coordinate {
+        case let .Affine(x, y):
+            XCTAssertEqual(x!.value.toHexString, EllipticCurveDomain.Secp256k1.gX.value.toHexString, "Gx hex");
+            XCTAssertTrue(x! == EllipticCurveDomain.Secp256k1.gX, "Gx equality");
+
+        default:
+            assert(false, "Not good")
+        }
     }
     
     

@@ -12,14 +12,18 @@ import UInt256Mac
 
 public struct ECPoint : Printable {
     public let curve: ECurve
-    public let x: FFInt?
-    public let y: FFInt?
+
+    public enum Coordinate {
+        case Affine(x: FFInt?, y: FFInt?)
+        case Jacobian(X: FFInt, Y: FFInt, Z: FFInt)
+    }
+    
+    public var coordinate: Coordinate
     
     public init(x: FFInt?, y: FFInt?, curve: ECurve) {
         self.curve = curve
         
-        self.x = x
-        self.y = y
+        self.coordinate = .Affine(x: x, y:y)
     }
     
     //    http://nmav.gnutls.org/2012/01/do-we-need-elliptic-curve-point.html
@@ -37,18 +41,41 @@ public struct ECPoint : Printable {
     }
     
     public var isInfinity: Bool {
-        return x == nil && y == nil
+        switch coordinate {
+        case let .Affine(x,y):
+            return x == nil && y == nil
+        case .Jacobian:
+            assert(false, "Not implemented")
+            return false
+        }
     }
     
     public var description: String {
         if self.isInfinity {
           return "Infinity"
         } else {
-          return "(\(self.x!.value.description), \( self.y!.value.description ))"
+            switch coordinate {
+            case let .Affine(x,y):
+                return "(\(x!.value.description), \( y!.value.description ))"
+            case .Jacobian:
+                assert(false, "Not implemented")
+                return ""
+            }
+
         }
     }
 }
 
 public func == (lhs: ECPoint, rhs: ECPoint) -> Bool {
-    return lhs.curve == rhs.curve && lhs.x == rhs.x && lhs.y == rhs.y
+    
+    switch (lhs.coordinate,rhs.coordinate) {
+    case let (.Affine(x1,y1),.Affine(x2,y2) ):
+        return lhs.curve == rhs.curve && x1 == x2 && y1 == y2
+    case let (.Jacobian(X1,Y1,Z1),.Jacobian(X2,Y2,Z2)):
+        return lhs.curve == rhs.curve && X1 == X2 && Y1 == Y2 && Z1 == Z2
+    default:
+        assert(false, "Comparing different coordinate systems is not implemented")
+        return false
+    }
+
 }

@@ -243,8 +243,15 @@ class ECurveTests: XCTestCase {
         
         var double = curve[1252069803, 278016963]
         
-        XCTAssertTrue(double.curve.G.x!.value == 1244414049)
-        XCTAssertTrue(double.curve.G.y!.value ==  UInt256(decimalStringValue: "2415436385"))
+        switch double.curve.G.coordinate {
+        case let .Affine(x, y):
+            XCTAssertTrue(x!.value == 1244414049)
+            XCTAssertTrue(y!.value ==  UInt256(decimalStringValue: "2415436385"))
+        default:
+            assert(false, "Not good")
+        }
+        
+
         
         var result = 2 * curve.G
         XCTAssertTrue(result == double, result.description);
@@ -291,9 +298,18 @@ class ECurveTests: XCTestCase {
         let double = ECPoint(x: doubleX, y: doubleY, curve: curve)
 
         // Check if the points curve parameters are what they should be:
-        XCTAssertTrue(a.curve.G.x!.value.toHexString ==   "79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798", a.curve.G.x!.value.toHexString)
-        XCTAssertTrue(a.curve.G.y!.value.toHexString  == "483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8", a.curve.G.y!.value.toHexString)
+        
+        switch a.curve.G.coordinate {
+        case let .Affine(x, y):
+            XCTAssertTrue(x!.value.toHexString ==   "79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798", x!.value.toHexString)
+            XCTAssertTrue(y!.value.toHexString  == "483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8", y!.value.toHexString)
 
+        default:
+            assert(false, "Not good")
+        }
+
+        
+  
         let result = 2 * a
         
         XCTAssertTrue(result == double, result.description);

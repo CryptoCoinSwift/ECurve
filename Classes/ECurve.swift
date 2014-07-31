@@ -77,64 +77,91 @@ public func == (lhs: ECurve, rhs: ECurve) -> Bool {
         return true
     }
     
-    return lhs.G.x == rhs.G.x && lhs.G.y == rhs.G.y && lhs.a == rhs.a &&  lhs.b == rhs.b &&  lhs.n == rhs.n &&  lhs.h == rhs.h
+    switch (lhs.G.coordinate, rhs.G.coordinate) {
+    case let (.Affine(lhsX,lhsY), .Affine(rhsX,rhsY) ):
+        return lhsX == rhsX && rhsY == rhsY  && lhs.a == rhs.a &&  lhs.b == rhs.b &&  lhs.n == rhs.n &&  lhs.h == rhs.h
+
+    default:
+        assert(false, "Not implemented")
+        return false
+    }
+
+    
 }
 
 @prefix public func - (rhs: ECPoint) -> ECPoint {
-    if rhs.isInfinity {
+    switch rhs.coordinate {
+    case let .Affine(x,y):
+        if rhs.isInfinity {
+            return rhs
+        }
+        
+        assert(x, "x set")
+        let x₁ = x!
+        
+        assert(y, "y set")
+        let y₁ = y!
+        
+        let y₃ = -y₁
+        
+        return ECPoint(x: x₁, y: y₃, curve: rhs.curve)
+
+    case .Jacobian:
+        assert(false, "Not implemented")
         return rhs
     }
+
     
-    assert(rhs.x, "x set")
-    let x₁ = rhs.x!
-    
-    assert(rhs.y, "y set")
-    let y₁ = rhs.y!
-    
-    let y₃ = -y₁
-    
-    return ECPoint(x: x₁, y: y₃, curve: rhs.curve)
     
 }
 
 public func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
     assert(lhs.curve == rhs.curve, "Can't add points on different curves")
     
-    if lhs.isInfinity {
+    switch (lhs.coordinate, rhs.coordinate) {
+    case let (.Affine(lhsX,lhsY), .Affine(rhsX,rhsY) ):
+    
+        if lhs.isInfinity {
+            return rhs
+        }
+        
+        if rhs.isInfinity {
+            return lhs
+        }
+        
+        assert(lhsX, "lhs x set")
+        let x₁ = lhsX!
+        
+        assert(lhsY, "lhs y set")
+        let y₁ = lhsY!
+        
+        assert(rhsX, "rhs x set")
+        let x₂ = rhsX!
+        
+        assert(rhsY, "rhs y set")
+        let y₂ = rhsY!
+        
+        if lhs == rhs { // P == Q
+            return 2 * lhs
+        }
+        
+        if x₁ == x₂ && y₁ + y₂ == lhs.curve.field.int(0) { // P(x,y) == Q(x, -y)
+            return lhs.curve.infinity
+        }
+        
+        let common = (y₂ - y₁) / (x₂ - x₁)
+        let x₃ = common ^^ 2 - x₁ - x₂
+        let y₃ = common * (x₁ - x₃) - y₁
+        
+        return ECPoint(x: x₃, y: y₃, curve: lhs.curve)
+
+    case (.Jacobian,.Jacobian):
+        assert(false, "Not implemented")
+        return rhs
+    default:
+        assert(false, "Combining different coordinate systems not implemented'")
         return rhs
     }
-    
-    if rhs.isInfinity {
-        return lhs
-    }
-    
-    assert(lhs.x, "lhs x set")
-    let x₁ = lhs.x!
-    
-    assert(lhs.y, "lhs y set")
-    let y₁ = lhs.y!
-    
-    assert(rhs.x, "rhs x set")
-    let x₂ = rhs.x!
-    
-    assert(rhs.y, "rhs y set")
-    let y₂ = rhs.y!
-    
-    
-    if lhs == rhs { // P == Q
-        return 2 * lhs
-    }
-    
-    if lhs.x! == rhs.x! && lhs.y! + rhs.y! == lhs.curve.field.int(0) { // P(x,y) == Q(x, -y)
-        return lhs.curve.infinity
-    }
-    
-    let common = (y₂ - y₁) / (x₂ - x₁)
-    let x₃ = common ^^ 2 - x₁ - x₂
-    let y₃ = common * (x₁ - x₃) - y₁
-    
-    return ECPoint(x: x₃, y: y₃, curve: lhs.curve)
-
 }
 
 public func += (inout lhs: ECPoint, rhs: ECPoint) -> () {
@@ -149,19 +176,26 @@ public func *= (inout lhs: ECPoint, rhs: UInt256) -> () {
 extension ECPoint {
     public var double: ECPoint {
         let a = curve.field.int(self.curve.a)
-
-        assert(x, "lhs x set")
-        let x₁ = x!
-        
-        assert(y, "lhs y set")
-        let y₁ = y!
-
             
-        let common = (3 * x₁ ^^ 2 + a) / (2 * y₁)
-        let x₃ = common ^^ 2 - 2 * x₁
-        let y₃ = common * (x₁ - x₃) - y₁
-        
-        return curve[x₃, y₃]
+        switch coordinate {
+        case let .Affine(x,y):
+
+            assert(x, "lhs x set")
+            let x₁ = x!
+            
+            assert(y, "lhs y set")
+            let y₁ = y!
+
+                
+            let common = (3 * x₁ ^^ 2 + a) / (2 * y₁)
+            let x₃ = common ^^ 2 - 2 * x₁
+            let y₃ = common * (x₁ - x₃) - y₁
+            
+            return curve[x₃, y₃]
+        case .Jacobian:
+            assert(false, "Not implemented")
+            return self
+        }
     }
 }
 
@@ -187,13 +221,17 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
     let lhsBitLength = lhs.highestBit
     
+//    increment.convertToJacobian();
+//    tally.convertToJacobian();
+    
     for var i=0; i < lhsBitLength; i++  {
         if UInt256.singleBitAt(255 - i) & lhs != 0 {
             tally += increment
         }
-        increment *= 2
+        increment *= 2 // TODO: use a lookup table when available
     }
     
+//    tally.convertToAffine();
     
     return tally
 }
