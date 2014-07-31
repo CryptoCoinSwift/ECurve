@@ -65,5 +65,50 @@ class ECPointTests: XCTestCase {
         XCTAssertTrue(true, "")
     }
     
+    func testConvertToJacobian() {
+        var p = curve[5,8]
+        p.convertToJacobian()
+        
+        switch p.coordinate {
+        case let .Jacobian(X,Y,Z):
+            XCTAssertEqual(X,field.int(5), X.description);
+            XCTAssertEqual(Y,field.int(8), Y.description);
+            XCTAssertEqual(Z,field.int(1), Z.description);
+        default:
+            XCTAssertTrue(false, "Expected a Jacobian coordinate")
+        }
+        
+
+    }
+    
+    func testConvertToAffine() {
+        var p = curve[5,8]
+        p.convertToJacobian()
+
+        // Trivial conversion:
+        p.convertToAffine()
+        
+        switch p.coordinate {
+        case let .Affine(x,y):
+            XCTAssertEqual(x!,field.int(5), x!.description);
+            XCTAssertEqual(y!,field.int(8), y!.description);
+        default:
+            XCTAssertTrue(false, "Expected a Jacobian coordinate")
+        }
+        
+        // Non trivial conversion
+        p.coordinate = .Jacobian(X: field.int(20) , Y: field.int(9), Z: field.int(2))
+        p.convertToAffine()
+        
+        switch p.coordinate {
+        case let .Affine(x,y):
+            XCTAssertEqual(x!,field.int(5), x!.description);
+            XCTAssertEqual(y!,field.int(8), y!.description);
+        default:
+            XCTAssertTrue(false, "Expected a Jacobian coordinate")
+        }
+
+    }
+    
 
 }

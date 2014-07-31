@@ -20,6 +20,26 @@ public struct ECPoint : Printable {
     
     public var coordinate: Coordinate
     
+    public mutating func convertToJacobian() {
+        switch coordinate {
+        case let .Affine(x, y):
+            coordinate = Coordinate.Jacobian(X: x!, Y: y!, Z: self.curve.field.int(1))
+        case .Jacobian:
+            assert(false, "Already a Jacobian coordinate")
+        }
+    }
+    
+    public mutating func convertToAffine() {
+        switch coordinate {
+        case let .Jacobian(X, Y, Z):
+            let Z² = Z * Z
+            let Z³ = Z² * Z
+            coordinate = Coordinate.Affine(x: X / Z², y: Y / Z³)
+        case .Affine:
+            assert(false, "Already an affine coordinate")
+        }
+    }
+    
     public init(x: FFInt?, y: FFInt?, curve: ECurve) {
         self.curve = curve
         
