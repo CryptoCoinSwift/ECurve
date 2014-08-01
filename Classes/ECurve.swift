@@ -155,9 +155,30 @@ public func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
         
         return ECPoint(x: x₃, y: y₃, curve: lhs.curve)
 
-    case (.Jacobian,.Jacobian):
-        assert(false, "Not implemented")
-        return rhs
+    case let (.Jacobian(X₁, Y₁, Z₁),.Jacobian(X₂, Y₂,Z₂)):
+        // See 3.14 on page 89
+        
+        assert(Z₁ != lhs.curve.field.int(0), "Z₁ should not be 0")
+        assert(Z₂ == lhs.curve.field.int(1), "Z₂ must be 1")
+        assert(!(X₁ == X₂ && Y₁ == Y₂ && Z₁ == Z₂) , "Can't deal with P == Q")
+        assert(!(X₁ == X₂ && Y₁ == -Y₂ && Z₁ == Z₂), "Can't deal with P == -Q")
+
+    
+        let A = Z₁ * Z₁
+        let B = Z₁ * A
+        let C = X₂ * A
+        let D = Y₂ * B
+        let E = C - X₁
+        let F = D - Y₁
+        let G = E * E
+        let H = G * E
+        let I = X₁ * G
+        
+        let X₃ = F * F - H - 2 * I
+        let Y₃ = F * (I - X₃) - Y₁ * H
+        let Z₃ = Z₁ * E
+        
+        return ECPoint(coordinate: .Jacobian(X: X₃, Y: Y₃,Z: Z₃), curve: lhs.curve)
     default:
         assert(false, "Combining different coordinate systems not implemented'")
         return rhs

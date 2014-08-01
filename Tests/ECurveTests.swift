@@ -159,6 +159,21 @@ class ECurveTests: XCTestCase {
         XCTAssertTrue(double == result, result.description);
     }
     
+    func testAddInJacobian() {
+        var P = curve[5,3]
+        var Q = curve[9,10]
+        
+        P.convertToJacobian()
+        Q.convertToJacobian() // The right hand side of addition must have Z=1 so it needs to be "freshly" converted to Jacobian.
+
+        let sum = curve[9,1]
+        var result = P + Q
+        
+        result.convertToAffine()
+        
+        XCTAssertTrue(sum == result, result.description);
+    }
+    
     func testDoubleOther() {
         let  P = curve[9,10]
         let result = 2 * P
