@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A211A5E8198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist in Resources */ = {isa = PBXBuildFile; fileRef = A211A5E7198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist */; };
+		A211A5E9198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist in Resources */ = {isa = PBXBuildFile; fileRef = A211A5E7198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist */; };
+		A211A5EB198C0A5900C2D2F0 /* Secp256k1BasePointDoublings.plist in Resources */ = {isa = PBXBuildFile; fileRef = A211A5E7198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist */; };
+		A211A5EC198C0A5900C2D2F0 /* Secp256k1BasePointDoublings.plist in Resources */ = {isa = PBXBuildFile; fileRef = A211A5E7198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist */; };
 		A226907D1962E6E800291D7A /* ECurve.h in Headers */ = {isa = PBXBuildFile; fileRef = A226907C1962E6E800291D7A /* ECurve.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A22690831962E6E800291D7A /* ECurve.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A22690771962E6E800291D7A /* ECurve.framework */; };
 		A258B4061962E7A600CD0B09 /* ECDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4011962E7A600CD0B09 /* ECDomain.swift */; };
@@ -45,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A211A5E7198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Secp256k1BasePointDoublings.plist; path = Resources/Secp256k1BasePointDoublings.plist; sourceTree = "<group>"; };
 		A22690771962E6E800291D7A /* ECurve.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ECurve.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A226907B1962E6E800291D7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A226907C1962E6E800291D7A /* ECurve.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECurve.h; sourceTree = "<group>"; };
@@ -102,9 +107,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A211A5EA198BFE7100C2D2F0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A211A5E7198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		A226906D1962E6E800291D7A = {
 			isa = PBXGroup;
 			children = (
+				A211A5EA198BFE7100C2D2F0 /* Resources */,
 				A258B40B1962E7AA00CD0B09 /* ECurve */,
 				A22690861962E6E800291D7A /* ECurveTests */,
 				A22690791962E6E800291D7A /* Supporting Files */,
@@ -329,6 +343,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A211A5E8198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +351,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A211A5EB198C0A5900C2D2F0 /* Secp256k1BasePointDoublings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +359,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A211A5E9198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +367,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A211A5EC198C0A5900C2D2F0 /* Secp256k1BasePointDoublings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,6 +5,7 @@
 //  Created by Sjors Provoost on 26-06-14.
 
 import UInt256Mac
+import Foundation
 
 public struct ECurve {
     public let domain: EllipticCurveDomain?
@@ -267,22 +268,50 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
     let lhsBitLength = lhs.highestBit
     
-    increment.convertToJacobian()
     tally.convertToJacobian();
+    
+    var lookup: Array<ECPoint>?
+    
+    if increment.curve.domain == EllipticCurveDomain.Secp256k1 && rhs == increment.curve.G {
+        let plistPath = NSBundle(identifier: "com.cryptocoinswift.ECurveMac").pathForResource("Secp256k1BasePointDoublings", ofType: "plist")
+        
+        let plist: NSArray = NSArray(contentsOfFile: plistPath) as NSArray
+        
+        var tempLookup: Array<ECPoint> = Array()
+        
+        for coordinates: AnyObject in plist {
+            let coordinatesArray: NSArray = coordinates as NSArray
+            let xString: String = coordinatesArray[0] as String
+            let yString: String = coordinatesArray[1] as String
+            
+            // Putting a hex string or array of 8 UInt32's in the plist
+            // would be faster.
+            let x = UInt256(decimalStringValue: xString)
+            let y = UInt256(decimalStringValue: yString)
+            
+            tempLookup.append(rhs.curve[x, y])
+        }
+        
+        lookup = tempLookup
+    }
+
+    increment.convertToJacobian()
     
     for var i=0; i < lhsBitLength; i++  {
         if UInt256.singleBitAt(255 - i) & lhs != 0 {
             tally += increment
         }
         
-        if(false) { // TODO: use a lookup table when available
-
+        if lookup {
+            increment = lookup![i + 1]
             
         } else {
             increment.convertToAffine()   // Trivial because we only convert back and forth without changing it
             increment *= 2                // Not worth doing in Jacobian
-            increment.convertToJacobian() // Trivial
         }
+        
+        increment.convertToJacobian() // Trivial
+
     }
     
     tally.convertToAffine();
