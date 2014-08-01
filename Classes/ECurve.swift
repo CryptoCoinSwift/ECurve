@@ -264,7 +264,7 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
     var tally = P.curve.infinity
     
-    var increment = P
+    var increment: ECPoint;
     
     let lhsBitLength = lhs.highestBit
     
@@ -272,7 +272,7 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
     var lookup: Array<ECPoint>?
     
-    if increment.curve.domain == EllipticCurveDomain.Secp256k1 && rhs == increment.curve.G {
+    if rhs.curve.domain == EllipticCurveDomain.Secp256k1 && rhs == rhs.curve.G {
         let plistPath = NSBundle(identifier: "com.cryptocoinswift.ECurveMac").pathForResource("Secp256k1BasePointDoublings", ofType: "plist")
         
         let plist: NSArray = NSArray(contentsOfFile: plistPath) as NSArray
@@ -284,18 +284,23 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
             let xString: String = coordinatesArray[0] as String
             let yString: String = coordinatesArray[1] as String
             
-            // Putting a hex string or array of 8 UInt32's in the plist
-            // would be faster.
-            let x = UInt256(decimalStringValue: xString)
-            let y = UInt256(decimalStringValue: yString)
+            // Putting an array of 8 UInt32's in the plist
+            // might be faster.
+            let X = rhs.curve.field.int(UInt256(hexStringValue: xString))
+            let Y = rhs.curve.field.int(UInt256(hexStringValue: yString))
+            let Z: FFInt = rhs.curve.field.int(1)
             
-            tempLookup.append(rhs.curve[x, y])
+            tempLookup.append(ECPoint(coordinate: ECPoint.Coordinate.Jacobian(X: X, Y: Y, Z: Z), curve: rhs.curve))
         }
         
         lookup = tempLookup
+        
+        increment = tempLookup[0]
+    } else {
+        increment = P
+        increment.convertToJacobian()
     }
 
-    increment.convertToJacobian()
     
     for var i=0; i < lhsBitLength; i++  {
         if UInt256.singleBitAt(255 - i) & lhs != 0 {
@@ -308,9 +313,9 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
         } else {
             increment.convertToAffine()   // Trivial because we only convert back and forth without changing it
             increment *= 2                // Not worth doing in Jacobian
+            increment.convertToJacobian() // Trivial
         }
         
-        increment.convertToJacobian() // Trivial
 
     }
     
