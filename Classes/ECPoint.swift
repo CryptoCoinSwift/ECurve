@@ -23,7 +23,12 @@ public struct ECPoint : Printable {
     public mutating func convertToJacobian() {
         switch coordinate {
         case let .Affine(x, y):
-            coordinate = Coordinate.Jacobian(X: x!, Y: y!, Z: self.curve.field.int(1))
+            if let x_safe = x {
+                coordinate = Coordinate.Jacobian(X: x_safe, Y: y!, Z: self.curve.field.int(1))
+            } else {
+                coordinate = Coordinate.Jacobian(X: self.curve.field.int(1), Y: self.curve.field.int(1), Z: self.curve.field.int(0))
+            }
+            
         case .Jacobian:
             assert(false, "Already a Jacobian coordinate")
         }

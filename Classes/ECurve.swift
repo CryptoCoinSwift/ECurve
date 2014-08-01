@@ -118,16 +118,17 @@ public func == (lhs: ECurve, rhs: ECurve) -> Bool {
 public func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
     assert(lhs.curve == rhs.curve, "Can't add points on different curves")
     
+    if lhs.isInfinity {
+        return rhs
+    }
+    
+    if rhs.isInfinity {
+        return lhs
+    }
+    
     switch (lhs.coordinate, rhs.coordinate) {
     case let (.Affine(lhsX,lhsY), .Affine(rhsX,rhsY) ):
     
-        if lhs.isInfinity {
-            return rhs
-        }
-        
-        if rhs.isInfinity {
-            return lhs
-        }
         
         assert(lhsX, "lhs x set")
         let x₁ = lhsX!
@@ -265,17 +266,22 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
     let lhsBitLength = lhs.highestBit
     
-//    increment.convertToJacobian();
-//    tally.convertToJacobian();
+    increment.convertToJacobian();
+    tally.convertToJacobian();
+    
+    var increment_jacobian_z1 = increment // The RHS of addition must have Z = 1
     
     for var i=0; i < lhsBitLength; i++  {
         if UInt256.singleBitAt(255 - i) & lhs != 0 {
-            tally += increment
+            tally += increment_jacobian_z1
         }
         increment *= 2 // TODO: use a lookup table when available
+        increment_jacobian_z1 = increment
+        increment_jacobian_z1.convertToAffine()
+        increment_jacobian_z1.convertToJacobian()
     }
     
-//    tally.convertToAffine();
+    tally.convertToAffine();
     
     return tally
 }

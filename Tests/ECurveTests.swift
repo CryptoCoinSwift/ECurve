@@ -145,35 +145,6 @@ class ECurveTests: XCTestCase {
         XCTAssertTrue(double == result, result.description);
     }
     
-    
-    func testDoubleInJacobian() {
-        var P = curve[5,3]
-        let double = curve[5,8]
-        
-        P.convertToJacobian()
-        
-        var result = 2 * P
-        
-        result.convertToAffine()
-        
-        XCTAssertTrue(double == result, result.description);
-    }
-    
-    func testAddInJacobian() {
-        var P = curve[5,3]
-        var Q = curve[9,10]
-        
-        P.convertToJacobian()
-        Q.convertToJacobian() // The right hand side of addition must have Z=1 so it needs to be "freshly" converted to Jacobian.
-
-        let sum = curve[9,1]
-        var result = P + Q
-        
-        result.convertToAffine()
-        
-        XCTAssertTrue(sum == result, result.description);
-    }
-    
     func testDoubleOther() {
         let  P = curve[9,10]
         let result = 2 * P
@@ -209,6 +180,70 @@ class ECurveTests: XCTestCase {
         XCTAssertTrue(sum == double, sum.description);
         
     }
+    
+    
+    func testDoubleInJacobian() {
+        var P = curve[5,3]
+        let double = curve[5,8]
+        
+        P.convertToJacobian()
+        
+        var result = 2 * P
+        
+        result.convertToAffine()
+        
+        XCTAssertTrue(double == result, result.description);
+        
+        
+        P = curve[9,10]
+        P.convertToJacobian()
+
+        result = 2 * P
+        result.convertToAffine()
+
+        XCTAssertTrue(result == curve[5,8], result.description);
+
+    }
+    
+    func testAddInJacobian() {
+        var P = curve[5,3]
+        var Q = curve[9,10]
+        
+        P.convertToJacobian()
+        Q.convertToJacobian() // The right hand side of addition must have Z=1 so it needs to be "freshly" converted to Jacobian.
+
+        var sum = curve[9,1]
+        var result = P + Q
+        
+        result.convertToAffine()
+        
+        XCTAssertTrue(sum == result, result.description);
+
+        // More challenging example:
+        let p = UInt256(decimalStringValue: "4294967189") // 2^32 - 107
+
+        curve = ECurve(field: FiniteField.PrimeField(p: p), gX: FiniteField.PrimeField(p: p).int(1244414049), gY: FiniteField.PrimeField(p: p).int(UInt256(decimalStringValue: "2415436385")), a: 0, b: 7, n: UInt256(decimalStringValue: "429496719"), h: nil)
+
+        
+        P = curve[978329252, 1]
+        Q = curve[2015765350, 2147483445] // 2 * a
+        sum = curve[UInt256(decimalStringValue: "2661831627"), UInt256(decimalStringValue: "2993780686")]    // 3 * a
+
+        P.convertToJacobian()
+        Q.convertToJacobian()
+        
+        result = P + Q
+        
+        result.convertToAffine()
+        
+        XCTAssertTrue(sum == result, result.description);
+
+        
+        
+
+    }
+    
+
     
     func testMultiply() {
         let P = curve[9,10]
@@ -367,7 +402,7 @@ class ECurveTests: XCTestCase {
     }
 
     
-// Ambition:  < 1 second on iPhone 4S (currently 2.5 seconds on a MacBook Pro)
+// Ambition:  < 1 second on iPhone 4S (currently 3.2 seconds on a MacBook Pro)
     
     func testMultiplyBig() {
         curve = ECurve(domain: .Secp256k1)
