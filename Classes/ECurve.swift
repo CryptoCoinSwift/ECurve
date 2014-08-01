@@ -262,23 +262,27 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     let P = rhs
     
     var tally = P.curve.infinity
+    
     var increment = P
     
     let lhsBitLength = lhs.highestBit
     
-    increment.convertToJacobian();
+    increment.convertToJacobian()
     tally.convertToJacobian();
-    
-    var increment_jacobian_z1 = increment // The RHS of addition must have Z = 1
     
     for var i=0; i < lhsBitLength; i++  {
         if UInt256.singleBitAt(255 - i) & lhs != 0 {
-            tally += increment_jacobian_z1
+            tally += increment
         }
-        increment *= 2 // TODO: use a lookup table when available
-        increment_jacobian_z1 = increment
-        increment_jacobian_z1.convertToAffine()
-        increment_jacobian_z1.convertToJacobian()
+        
+        if(false) { // TODO: use a lookup table when available
+
+            
+        } else {
+            increment.convertToAffine()   // Trivial because we only convert back and forth without changing it
+            increment *= 2                // Not worth doing in Jacobian
+            increment.convertToJacobian() // Trivial
+        }
     }
     
     tally.convertToAffine();

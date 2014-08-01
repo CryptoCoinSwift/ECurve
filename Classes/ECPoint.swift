@@ -37,9 +37,13 @@ public struct ECPoint : Printable {
     public mutating func convertToAffine() {
         switch coordinate {
         case let .Jacobian(X, Y, Z):
-            let Z² = Z * Z
-            let Z³ = Z² * Z
-            coordinate = Coordinate.Affine(x: X / Z², y: Y / Z³)
+            if Z == curve.field.int(1) {
+                coordinate = Coordinate.Affine(x: X, y: Y)
+            } else {
+                let Z² = Z * Z
+                let Z³ = Z² * Z
+                coordinate = Coordinate.Affine(x: X / Z², y: Y / Z³)
+            }
         case .Affine:
             assert(false, "Already an affine coordinate")
         }
