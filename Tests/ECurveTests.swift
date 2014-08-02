@@ -407,17 +407,19 @@ class ECurveTests: XCTestCase {
         var lookup: Array<ECPoint> = []
         
         self.measureBlock() {
-            lookup = importLookupTable()
+            for i in 1...10 {
+                lookup = importLookupTable()
+            }
         }
         
-        let first: ECPoint = lookup[0]
+        var first: ECPoint = lookup[0]
+        first.convertToAffine()
         
-        XCTAssertEqual(first, basePoint ,lookup[0].description)
-
+        XCTAssertEqual(first, basePoint, first.description)
     }
 
     
-// Ambition:  < 1 second on iPhone 4S (currently 1.8 seconds on a MacBook Pro)
+// Ambition:  < 1 second on iPhone 4S (currently 0.2 seconds on a MacBook Pro)
     
     func testMultiplyBig() {
         curve = ECurve(domain: .Secp256k1)

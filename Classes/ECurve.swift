@@ -304,27 +304,46 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
 }
 
 public func importLookupTable () -> Array<ECPoint> {
+    // To export an array of coordinates from Ruby to a plist:
+    // lookup = [[1,2], [1,4], ...]
+    
+    // As hex strings:
+    // lookup.collect{|d| [d.first.to_s(16), d.last.to_s(16)] }.to_plist
+    
+    // As pairs of 8 UInt32's:
+    /*
+    class Bignum
+      def to_i32_a
+        self.to_s(16).rjust(64,'0').chars.each_slice(8).map(&:join).collect{|d|d.to_i(16)}
+      end
+    end
+    
+    lookup.collect{|d| [d.first.to_i32_a, d.last.to_i32_a] }.to_plist
+
+    */
+    
     let plistPath = NSBundle(identifier: "com.cryptocoinswift.ECurveMac").pathForResource("Secp256k1BasePointDoublings", ofType: "plist")
     
-    let plist: NSArray = NSArray(contentsOfFile: plistPath) as NSArray
+    let plist = NSArray(contentsOfFile: plistPath) as NSArray
     
-    var tempLookup: Array<ECPoint> = Array()
+    var lookup: Array<ECPoint> = Array()
     
-    for coordinates: AnyObject in plist {
-        let coordinatesArray: NSArray = coordinates as NSArray
-        let xString: String = coordinatesArray[0] as String
-        let yString: String = coordinatesArray[1] as String
+    let field = EllipticCurveDomain.Secp256k1.field
+    let one = field.int(1)
+    
+    for coordinates in plist {
+        let x  = coordinates[0] as NSArray
+        let y  = coordinates[1] as NSArray
         
-        // Putting an array of 8 UInt32's in the plist
-        // might be faster.
-        let X = EllipticCurveDomain.Secp256k1.field.int(UInt256(hexStringValue: xString))
-        let Y = EllipticCurveDomain.Secp256k1.field.int(UInt256(hexStringValue: yString))
-        let Z: FFInt = EllipticCurveDomain.Secp256k1.field.int(1)
         
-        tempLookup.append(ECPoint(coordinate: ECPoint.Coordinate.Jacobian(X: X, Y: Y, Z: Z), curve: ECurve(domain: EllipticCurveDomain.Secp256k1)  ))
+        let X = field.int(UInt256(x[0].unsignedIntValue, x[1].unsignedIntValue, x[2].unsignedIntValue, x[3].unsignedIntValue, x[4].unsignedIntValue, x[5].unsignedIntValue, x[6].unsignedIntValue, x[7].unsignedIntValue))
+        
+        let Y = field.int(UInt256(y[0].unsignedIntValue, y[1].unsignedIntValue, y[2].unsignedIntValue, y[3].unsignedIntValue, y[4].unsignedIntValue, y[5].unsignedIntValue, y[6].unsignedIntValue, y[7].unsignedIntValue))
+                
+        lookup.append(ECPoint(coordinate: ECPoint.Coordinate.Jacobian(X: X, Y: Y, Z: one), curve: ECurve(domain: EllipticCurveDomain.Secp256k1)  ))
     }
     
-    return tempLookup
+    return lookup
 }
 
 // Convenience method. Mostly so that doubling a point doesn't require lhs to
