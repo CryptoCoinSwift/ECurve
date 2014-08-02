@@ -10,7 +10,7 @@
 
 import UInt256Mac
 
-public struct ECPoint : Printable {
+public struct ECPoint : Printable, Equatable {
     public let curve: ECurve
 
     public enum Coordinate {

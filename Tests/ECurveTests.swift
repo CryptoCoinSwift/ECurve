@@ -400,6 +400,21 @@ class ECurveTests: XCTestCase {
         
         XCTAssertTrue(result == sum, result.description);
     }
+    
+    func testImportLookupTable() {
+        let basePoint = ECurve(domain: .Secp256k1).G
+        
+        var lookup: Array<ECPoint> = []
+        
+        self.measureBlock() {
+            lookup = importLookupTable()
+        }
+        
+        let first: ECPoint = lookup[0]
+        
+        XCTAssertEqual(first, basePoint ,lookup[0].description)
+
+    }
 
     
 // Ambition:  < 1 second on iPhone 4S (currently 1.8 seconds on a MacBook Pro)
