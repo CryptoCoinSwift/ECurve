@@ -280,22 +280,25 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
         increment.convertToJacobian()
     }
 
-    
-    for var i=0; i < lhsBitLength; i++  {
-        if UInt256.singleBitAt(255 - i) & lhs != 0 {
-            tally += increment
+    if lookup {
+        var i = 0
+        for increment in lookup! {
+            if UInt256.singleBitAt(255 - i) & lhs != 0 {
+                tally += increment
+            }
+            i++
         }
-        
-        if lookup {
-            increment = lookup![i + 1]
+
+    } else {
+        for var i=0; i < lhsBitLength; i++  {
+            if UInt256.singleBitAt(255 - i) & lhs != 0 {
+                tally += increment
+            }
             
-        } else {
             increment.convertToAffine()   // Trivial because we only convert back and forth without changing it
             increment *= 2                // Not worth doing in Jacobian
             increment.convertToJacobian() // Trivial
         }
-        
-
     }
     
     tally.convertToAffine();
