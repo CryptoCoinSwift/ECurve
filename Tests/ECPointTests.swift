@@ -7,8 +7,8 @@
 //  Example domain from: https://github.com/cryptocoinjs/ecurve/blob/master/test/curve.js
 
 import XCTest
-import ECurveMac
-import UInt256Mac
+import ECurve
+import UInt256
 
 class ECPointTests: XCTestCase {
     

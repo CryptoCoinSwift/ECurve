@@ -6,7 +6,7 @@
 
 // Perform integer calculations on a finite field. E.g. addition is always modulo.
 
-import UInt256Mac
+import UInt256
 
 public struct FFInt : Printable, Equatable {
     public let field: FiniteField

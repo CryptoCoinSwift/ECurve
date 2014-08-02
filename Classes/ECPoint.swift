@@ -8,7 +8,7 @@
 // http://cryptocoinjs.com/modules/crypto/ecurve/  (under Point)
 // Use Swift style syntax where possible. E.g. not point.add(point), but point + point
 
-import UInt256Mac
+import UInt256
 
 public struct ECPoint : Printable, Equatable {
     public let curve: ECurve

@@ -6,8 +6,8 @@
 //
 
 import XCTest
-import ECurveMac
-import UInt256Mac
+import ECurve
+import UInt256
 
 class ECurveTests: XCTestCase {
     

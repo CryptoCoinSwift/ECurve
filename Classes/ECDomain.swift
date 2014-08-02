@@ -25,7 +25,7 @@
 //           b: 7)
 //           ....)
 
-import UInt256Mac
+import UInt256
 
 public enum EllipticCurveDomain {
     case Secp256k1

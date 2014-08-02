@@ -18,8 +18,7 @@
 		A258B4081962E7A600CD0B09 /* ECurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4031962E7A600CD0B09 /* ECurve.swift */; };
 		A258B4091962E7A600CD0B09 /* FiniteField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4041962E7A600CD0B09 /* FiniteField.swift */; };
 		A258B40A1962E7A600CD0B09 /* FiniteFieldInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4051962E7A600CD0B09 /* FiniteFieldInteger.swift */; };
-		A26F77DA196850EF00C75822 /* ECurveMac.h in Headers */ = {isa = PBXBuildFile; fileRef = A26F77D9196850EF00C75822 /* ECurveMac.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A26F77E0196850EF00C75822 /* ECurveMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A26F77D5196850EF00C75822 /* ECurveMac.framework */; };
+		A26F77E0196850EF00C75822 /* ECurve.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A26F77D5196850EF00C75822 /* ECurve.framework */; };
 		A26F77F31968513800C75822 /* ECDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4011962E7A600CD0B09 /* ECDomain.swift */; };
 		A26F77F41968513800C75822 /* ECPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4021962E7A600CD0B09 /* ECPoint.swift */; };
 		A26F77F51968513800C75822 /* ECurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4031962E7A600CD0B09 /* ECurve.swift */; };
@@ -28,7 +27,11 @@
 		A2960AB2197E963A002EC55D /* ECPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FB1962E77D00CD0B09 /* ECPointTests.swift */; };
 		A2960AB3197E963A002EC55D /* ECurveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FC1962E77D00CD0B09 /* ECurveTests.swift */; };
 		A2960AB4197E963A002EC55D /* FiniteFieldIntegerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FD1962E77D00CD0B09 /* FiniteFieldIntegerTests.swift */; };
-		A2DCBEAB1968523000BD92DB /* UInt256Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2DCBEAA1968523000BD92DB /* UInt256Mac.framework */; };
+		A2D39BA0198D7C8600E2D317 /* UInt256.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2D39B9F198D7C8600E2D317 /* UInt256.framework */; };
+		A2D39BA1198D7CCC00E2D317 /* ECPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FB1962E77D00CD0B09 /* ECPointTests.swift */; };
+		A2D39BA2198D7CCC00E2D317 /* ECurveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FC1962E77D00CD0B09 /* ECurveTests.swift */; };
+		A2D39BA3198D7CCC00E2D317 /* FiniteFieldIntegerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B3FD1962E77D00CD0B09 /* FiniteFieldIntegerTests.swift */; };
+		A2D39BA5198D7D4B00E2D317 /* UInt256.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2D39BA4198D7D4B00E2D317 /* UInt256.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,11 +67,12 @@
 		A258B4041962E7A600CD0B09 /* FiniteField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FiniteField.swift; path = Classes/FiniteField.swift; sourceTree = "<group>"; };
 		A258B4051962E7A600CD0B09 /* FiniteFieldInteger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FiniteFieldInteger.swift; path = Classes/FiniteFieldInteger.swift; sourceTree = "<group>"; };
 		A258B40C1962E7FF00CD0B09 /* UInt256.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UInt256.framework; path = "../UInt256/build/Debug-iphoneos/UInt256.framework"; sourceTree = "<group>"; };
-		A26F77D5196850EF00C75822 /* ECurveMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ECurveMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A26F77D5196850EF00C75822 /* ECurve.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ECurve.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26F77D8196850EF00C75822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A26F77D9196850EF00C75822 /* ECurveMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECurveMac.h; sourceTree = "<group>"; };
 		A26F77DF196850EF00C75822 /* ECurveMacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECurveMacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26F77E5196850EF00C75822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = ECurveMacTests/Info.plist; sourceTree = "<group>"; };
+		A2D39B9F198D7C8600E2D317 /* UInt256.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UInt256.framework; path = "UInt256/build/Debug-iphoneos/UInt256.framework"; sourceTree = "<group>"; };
+		A2D39BA4198D7D4B00E2D317 /* UInt256.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UInt256.framework; path = UInt256/build/Debug/UInt256.framework; sourceTree = "<group>"; };
 		A2DCBEAA1968523000BD92DB /* UInt256Mac.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UInt256Mac.framework; path = UInt256/build/Debug/UInt256Mac.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2D39BA0198D7C8600E2D317 /* UInt256.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2DCBEAB1968523000BD92DB /* UInt256Mac.framework in Frameworks */,
+				A2D39BA5198D7D4B00E2D317 /* UInt256.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,7 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A26F77E0196850EF00C75822 /* ECurveMac.framework in Frameworks */,
+				A26F77E0196850EF00C75822 /* ECurve.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +138,7 @@
 			children = (
 				A22690771962E6E800291D7A /* ECurve.framework */,
 				A22690821962E6E800291D7A /* ECurveTests.xctest */,
-				A26F77D5196850EF00C75822 /* ECurveMac.framework */,
+				A26F77D5196850EF00C75822 /* ECurve.framework */,
 				A26F77DF196850EF00C75822 /* ECurveMacTests.xctest */,
 			);
 			name = Products;
@@ -176,6 +181,8 @@
 		A258B40E1962E80C00CD0B09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A2D39BA4198D7D4B00E2D317 /* UInt256.framework */,
+				A2D39B9F198D7C8600E2D317 /* UInt256.framework */,
 				A2DCBEAA1968523000BD92DB /* UInt256Mac.framework */,
 				A258B40C1962E7FF00CD0B09 /* UInt256.framework */,
 			);
@@ -185,7 +192,6 @@
 		A26F77D6196850EF00C75822 /* ECurveMac */ = {
 			isa = PBXGroup;
 			children = (
-				A26F77D9196850EF00C75822 /* ECurveMac.h */,
 				A26F77D7196850EF00C75822 /* Supporting Files */,
 			);
 			path = ECurveMac;
@@ -214,7 +220,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A26F77DA196850EF00C75822 /* ECurveMac.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +277,7 @@
 			);
 			name = ECurveMac;
 			productName = ECurveMac;
-			productReference = A26F77D5196850EF00C75822 /* ECurveMac.framework */;
+			productReference = A26F77D5196850EF00C75822 /* ECurve.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		A26F77DE196850EF00C75822 /* ECurveMacTests */ = {
@@ -390,6 +395,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2D39BA1198D7CCC00E2D317 /* ECPointTests.swift in Sources */,
+				A2D39BA2198D7CCC00E2D317 /* ECurveTests.swift in Sources */,
+				A2D39BA3198D7CCC00E2D317 /* FiniteFieldIntegerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,7 +532,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ECurve/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -542,7 +549,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = ECurve/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -635,7 +641,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ECurve/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -668,10 +673,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/UInt256/build/Debug",
-				);
 				FRAMEWORK_VERSION = A;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -682,7 +683,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				METAL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ECurve;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -697,17 +698,13 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/UInt256/build/Debug",
-				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = ECurveMac/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				METAL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ECurve;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -722,10 +719,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/UInt256/build/Debug",
-				);
 				FRAMEWORK_VERSION = A;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = ECurveMac/Info.plist;
@@ -733,7 +726,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				METAL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ECurve;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Ofast";
