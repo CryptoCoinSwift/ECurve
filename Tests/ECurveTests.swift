@@ -419,7 +419,7 @@ class ECurveTests: XCTestCase {
     }
 
     
-// Ambition:  < 1 second on iPhone 4S (currently 0.2 seconds on a MacBook Pro)
+// Ambition:  < 1 second on iPhone 4S (currently 0.25 seconds on a MacBook Pro, 4 seconds on iPad Mini)
     
     func testMultiplyBig() {
         curve = ECurve(domain: .Secp256k1)

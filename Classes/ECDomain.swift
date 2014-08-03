@@ -25,7 +25,9 @@
 //           b: 7)
 //           ....)
 
+#if os(OSX)
 import UInt256
+#endif
 
 public enum EllipticCurveDomain {
     case Secp256k1

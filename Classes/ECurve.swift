@@ -4,7 +4,9 @@
 //
 //  Created by Sjors Provoost on 26-06-14.
 
+#if os(OSX)
 import UInt256
+#endif
 import Foundation
 
 public struct ECurve {
@@ -325,7 +327,12 @@ public func importLookupTable () -> Array<ECPoint> {
 
     */
     
+#if os(OSX)
     let plistPath = NSBundle(identifier: "com.cryptocoinswift.ECurve").pathForResource("Secp256k1BasePointDoublings", ofType: "plist")
+#else
+    let plistPath = NSBundle.mainBundle().pathForResource("Secp256k1BasePointDoublings", ofType: "plist")
+
+#endif
     
     assert(plistPath, "Missing plist")
     
