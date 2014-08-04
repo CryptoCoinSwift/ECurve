@@ -92,11 +92,9 @@ public struct ECPoint : Printable, Equatable {
             switch coordinate {
             case let .Affine(x,y):
                 return "(\(x!.value.description), \( y!.value.description ))"
-            case .Jacobian:
-                assert(false, "Not implemented")
-                return ""
+            case let .Jacobian(X, Y, Z):
+                return "(\(X.value.description), \( Y.value.description ), \( Z.value.description ))"
             }
-
         }
     }
 }

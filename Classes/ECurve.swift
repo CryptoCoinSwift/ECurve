@@ -92,17 +92,17 @@ public func == (lhs: ECurve, rhs: ECurve) -> Bool {
     
 }
 
-@prefix public func - (rhs: ECPoint) -> ECPoint {
+prefix public func - (rhs: ECPoint) -> ECPoint {
     switch rhs.coordinate {
     case let .Affine(x,y):
         if rhs.isInfinity {
             return rhs
         }
         
-        assert(x, "x set")
+        assert(x != nil, "x set")
         let x₁ = x!
         
-        assert(y, "y set")
+        assert(y != nil, "y set")
         let y₁ = y!
         
         let y₃ = -y₁
@@ -133,16 +133,16 @@ public func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
     case let (.Affine(lhsX,lhsY), .Affine(rhsX,rhsY) ):
     
         
-        assert(lhsX, "lhs x set")
+        assert(lhsX != nil, "lhs x set")
         let x₁ = lhsX!
         
-        assert(lhsY, "lhs y set")
+        assert(lhsY != nil, "lhs y set")
         let y₁ = lhsY!
         
-        assert(rhsX, "rhs x set")
+        assert(rhsX != nil, "rhs x set")
         let x₂ = rhsX!
         
-        assert(rhsY, "rhs y set")
+        assert(rhsY != nil, "rhs y set")
         let y₂ = rhsY!
         
         if lhs == rhs { // P == Q
@@ -189,14 +189,14 @@ public func + (lhs: ECPoint, rhs: ECPoint) -> ECPoint {
     }
 }
 
-public func += (inout lhs: ECPoint, rhs: ECPoint) -> () {
-    lhs = lhs + rhs
-}
+//public func += (inout lhs: ECPoint, rhs: ECPoint) -> () {
+//    lhs = lhs + rhs
+//}
 
 
-public func *= (inout lhs: ECPoint, rhs: UInt256) -> () {
-    lhs = rhs * lhs
-}
+//public func *= (inout lhs: ECPoint, rhs: UInt256) -> () {
+//    lhs = rhs * lhs
+//}
 
 extension ECPoint {
     public var double: ECPoint {
@@ -205,10 +205,10 @@ extension ECPoint {
         switch coordinate {
         case let .Affine(x,y):
 
-            assert(x, "lhs x set")
+            assert(x != nil, "lhs x set")
             let x₁ = x!
             
-            assert(y, "lhs y set")
+            assert(y != nil, "lhs y set")
             let y₁ = y!
 
                 
@@ -272,33 +272,35 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
     tally.convertToJacobian();
     
-    var lookup: Array<ECPoint>?
+    var lookup: Array<Any>?
     
     if rhs.curve.domain == EllipticCurveDomain.Secp256k1 && rhs == rhs.curve.G {
         lookup = importLookupTable()
-        increment = lookup![0]
+        increment = lookup![0] as ECPoint
     } else {
         increment = P
         increment.convertToJacobian()
     }
 
-    if lookup {
+    if lookup != nil {
         var i = 0
-        for increment in lookup! {
+        for incrementId in lookup! {
+            let increment = incrementId as ECPoint
             if UInt256.singleBitAt(255 - i) & lhs != 0 {
-                tally += increment
+                tally = tally + increment
             }
             i++
         }
 
-    } else {
+    }
+    else {
         for var i=0; i < lhsBitLength; i++  {
             if UInt256.singleBitAt(255 - i) & lhs != 0 {
-                tally += increment
+                tally = tally + increment
             }
             
             increment.convertToAffine()   // Trivial because we only convert back and forth without changing it
-            increment *= 2                // Not worth doing in Jacobian
+            increment = 2 * increment                 // Not worth doing in Jacobian
             increment.convertToJacobian() // Trivial
         }
     }
@@ -308,7 +310,7 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     return tally
 }
 
-public func importLookupTable () -> Array<ECPoint> {
+public func importLookupTable () -> [Any] { // ECPoint array crashes compiler with -Ounchecked
     // To export an array of coordinates from Ruby to a plist:
     // lookup = [[1,2], [1,4], ...]
     
@@ -338,8 +340,8 @@ public func importLookupTable () -> Array<ECPoint> {
     
     let plist = NSArray(contentsOfFile: plistPath) as NSArray
     
-    var lookup: Array<ECPoint> = Array()
-    
+    var lookup: [Any] = []
+
     let field = EllipticCurveDomain.Secp256k1.field
     let one = field.int(1)
     
@@ -347,14 +349,16 @@ public func importLookupTable () -> Array<ECPoint> {
         let x  = coordinates[0] as NSArray
         let y  = coordinates[1] as NSArray
         
-        
         let X = field.int(UInt256(x[0].unsignedIntValue, x[1].unsignedIntValue, x[2].unsignedIntValue, x[3].unsignedIntValue, x[4].unsignedIntValue, x[5].unsignedIntValue, x[6].unsignedIntValue, x[7].unsignedIntValue))
         
         let Y = field.int(UInt256(y[0].unsignedIntValue, y[1].unsignedIntValue, y[2].unsignedIntValue, y[3].unsignedIntValue, y[4].unsignedIntValue, y[5].unsignedIntValue, y[6].unsignedIntValue, y[7].unsignedIntValue))
-                
-        lookup.append(ECPoint(coordinate: ECPoint.Coordinate.Jacobian(X: X, Y: Y, Z: one), curve: ECurve(domain: EllipticCurveDomain.Secp256k1)  ))
+        
+        let coordinate = ECPoint(coordinate: ECPoint.Coordinate.Jacobian(X: X, Y: Y, Z: one), curve: ECurve(domain: EllipticCurveDomain.Secp256k1)  );
+        
+        lookup.append(coordinate)
+        
+        
     }
-    
     return lookup
 }
 

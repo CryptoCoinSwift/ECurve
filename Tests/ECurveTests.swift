@@ -11,10 +11,11 @@ import UInt256
 
 class ECurveTests: XCTestCase {
     
-    var field = FiniteField.PrimeField(p: 11)
+    var field: FiniteField = FiniteField.PrimeField(p: 11)
     
-    var curve = ECurve(field: FiniteField.PrimeField(p: 11), gX: FiniteField.PrimeField(p: 11).int(8), gY: FiniteField.PrimeField(p: 11).int(6), a: UInt256(1), b: UInt256(0), n: UInt256(12), h: nil)
+    var curve: ECurve = ECurve(field: FiniteField.PrimeField(p: 11), gX: FiniteField.PrimeField(p: 11).int(8), gY: FiniteField.PrimeField(p: 11).int(6), a: UInt256(1), b: UInt256(0), n: UInt256(12), h: nil)
     
+
     // y^2 = x^3 + x (in terms of finite field arithmatic)
     // E.g. for the base point: (x = 8, y=6)
     // y^2 = y * y = 6 * 6 = 36 % 11 = 3
@@ -132,10 +133,10 @@ class ECurveTests: XCTestCase {
     func testAddZeroZero() {
         let P = curve[5,3]
         let Q = curve[9,10]
-        let sum = curve[9,1]
         
-        let result = curve[5,3] + curve[0,0]
-        XCTAssertTrue(result == curve[9,10], result.description);
+        let result = P + curve[0,0]
+        
+        XCTAssertTrue(result == Q, result.description);
     }
     
     func testDouble() {
@@ -400,19 +401,20 @@ class ECurveTests: XCTestCase {
         
         XCTAssertTrue(result == sum, result.description);
     }
-    
+
     func testImportLookupTable() {
         let basePoint = ECurve(domain: .Secp256k1).G
         
-        var lookup: Array<ECPoint> = []
+        var lookup:[Any] = [] // ECPoint crashes compiler with -Ounchecked
         
-        self.measureBlock() {
-            for i in 1...10 {
+//        self.measureBlock() { // Crashes the compiler
+//            for i in 1...10 {
                 lookup = importLookupTable()
-            }
-        }
+//            }
+//        }
         
-        var first: ECPoint = lookup[0]
+        var first: ECPoint = lookup[0] as ECPoint
+    
         first.convertToAffine()
         
         XCTAssertEqual(first, basePoint, first.description)
@@ -432,7 +434,6 @@ class ECurveTests: XCTestCase {
         let productY = FFInt(dec: "23739058578904784236915560265041168694780215705543362357495033621678991351768", curve.field)
 
         let product = ECPoint(x: productX, y: productY, curve: curve)
-
         
         let result = a * b
         

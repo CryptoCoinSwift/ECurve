@@ -64,7 +64,7 @@ public func == (lhs: FFInt, rhs: FFInt) -> Bool {
     return lhs.field == rhs.field && lhs.value == rhs.value
 }
 
-@prefix public  func - (rhs: FFInt) -> FFInt {
+prefix public  func - (rhs: FFInt) -> FFInt {
     let field = rhs.field
     switch field {
     case let .PrimeField(p):
@@ -113,7 +113,7 @@ public func - (lhs: FFInt, rhs: FFInt) -> FFInt {
     }
 }
 
-@infix public func ^^ (lhs: FFInt, rhs: Int) -> FFInt {
+ public func ^^ (lhs: FFInt, rhs: Int) -> FFInt {
     switch lhs.field {
     case let .PrimeField(p):
         assert(lhs.value < p.p, "Input value must be smaller than p")
