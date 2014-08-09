@@ -13,6 +13,28 @@
 		A211A5EC198C0A5900C2D2F0 /* Secp256k1BasePointDoublings.plist in Resources */ = {isa = PBXBuildFile; fileRef = A211A5E7198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist */; };
 		A226907D1962E6E800291D7A /* ECurve.h in Headers */ = {isa = PBXBuildFile; fileRef = A226907C1962E6E800291D7A /* ECurve.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A22690831962E6E800291D7A /* ECurve.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A22690771962E6E800291D7A /* ECurve.framework */; };
+		A22FAE041996539500B50398 /* ECurveFlat.h in Headers */ = {isa = PBXBuildFile; fileRef = A22FAE031996539500B50398 /* ECurveFlat.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A22FAE17199653B400B50398 /* Secp256k1BasePointDoublings.plist in Resources */ = {isa = PBXBuildFile; fileRef = A211A5E7198BFE3A00C2D2F0 /* Secp256k1BasePointDoublings.plist */; };
+		A22FAE18199653B400B50398 /* ECDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4011962E7A600CD0B09 /* ECDomain.swift */; };
+		A22FAE19199653B400B50398 /* ECPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4021962E7A600CD0B09 /* ECPoint.swift */; };
+		A22FAE1A199653B400B50398 /* ECurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4031962E7A600CD0B09 /* ECurve.swift */; };
+		A22FAE1B199653B400B50398 /* FiniteField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4041962E7A600CD0B09 /* FiniteField.swift */; };
+		A22FAE1C199653B400B50398 /* FiniteFieldInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4051962E7A600CD0B09 /* FiniteFieldInteger.swift */; };
+		A22FAE2D199653E900B50398 /* UInt256.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE1E199653E900B50398 /* UInt256.swift */; };
+		A22FAE2E199653E900B50398 /* UInt256+Printable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE1F199653E900B50398 /* UInt256+Printable.swift */; };
+		A22FAE2F199653E900B50398 /* UInt256+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE20199653E900B50398 /* UInt256+Equatable.swift */; };
+		A22FAE30199653E900B50398 /* UInt256+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE21199653E900B50398 /* UInt256+Comparable.swift */; };
+		A22FAE31199653E900B50398 /* UInt256+BitwiseOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE22199653E900B50398 /* UInt256+BitwiseOperations.swift */; };
+		A22FAE32199653E900B50398 /* UInt256+IntegerArithmetic.c in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE23199653E900B50398 /* UInt256+IntegerArithmetic.c */; };
+		A22FAE33199653E900B50398 /* UInt256+IntegerArithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE24199653E900B50398 /* UInt256+IntegerArithmetic.swift */; };
+		A22FAE34199653E900B50398 /* UInt256+Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE25199653E900B50398 /* UInt256+Sequence.swift */; };
+		A22FAE35199653E900B50398 /* UInt256+IntegerLiteralConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE26199653E900B50398 /* UInt256+IntegerLiteralConvertible.swift */; };
+		A22FAE36199653E900B50398 /* UInt256+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE27199653E900B50398 /* UInt256+Hashable.swift */; };
+		A22FAE37199653E900B50398 /* UInt256+RandomAccessIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE28199653E900B50398 /* UInt256+RandomAccessIndex.swift */; };
+		A22FAE38199653E900B50398 /* UInt256+ForwardIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE29199653E900B50398 /* UInt256+ForwardIndex.swift */; };
+		A22FAE39199653E900B50398 /* UInt256+ArrayBound.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE2A199653E900B50398 /* UInt256+ArrayBound.swift */; };
+		A22FAE3A199653E900B50398 /* UInt32+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE2B199653E900B50398 /* UInt32+Additions.swift */; };
+		A22FAE3B199653E900B50398 /* BaseConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FAE2C199653E900B50398 /* BaseConverter.swift */; };
 		A258B4061962E7A600CD0B09 /* ECDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4011962E7A600CD0B09 /* ECDomain.swift */; };
 		A258B4071962E7A600CD0B09 /* ECPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4021962E7A600CD0B09 /* ECPoint.swift */; };
 		A258B4081962E7A600CD0B09 /* ECurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A258B4031962E7A600CD0B09 /* ECurve.swift */; };
@@ -58,8 +80,26 @@
 		A226907C1962E6E800291D7A /* ECurve.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECurve.h; sourceTree = "<group>"; };
 		A22690821962E6E800291D7A /* ECurveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECurveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A22690881962E6E800291D7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = SOURCE_ROOT; };
+		A22FADFF1996539500B50398 /* ECurveFlat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ECurveFlat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A22FAE021996539500B50398 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A22FAE031996539500B50398 /* ECurveFlat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECurveFlat.h; sourceTree = "<group>"; };
+		A22FAE1E199653E900B50398 /* UInt256.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UInt256.swift; path = ../UInt256/Classes/UInt256.swift; sourceTree = "<group>"; };
+		A22FAE1F199653E900B50398 /* UInt256+Printable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt256+Printable.swift"; path = "../UInt256/Classes/UInt256+Printable.swift"; sourceTree = "<group>"; };
+		A22FAE20199653E900B50398 /* UInt256+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt256+Equatable.swift"; path = "../UInt256/Classes/UInt256+Equatable.swift"; sourceTree = "<group>"; };
+		A22FAE21199653E900B50398 /* UInt256+Comparable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt256+Comparable.swift"; path = "../UInt256/Classes/UInt256+Comparable.swift"; sourceTree = "<group>"; };
+		A22FAE22199653E900B50398 /* UInt256+BitwiseOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt256+BitwiseOperations.swift"; path = "../UInt256/Classes/UInt256+BitwiseOperations.swift"; sourceTree = "<group>"; };
+		A22FAE23199653E900B50398 /* UInt256+IntegerArithmetic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "UInt256+IntegerArithmetic.c"; path = "../UInt256/Classes/UInt256+IntegerArithmetic.c"; sourceTree = "<group>"; };
+		A22FAE24199653E900B50398 /* UInt256+IntegerArithmetic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt256+IntegerArithmetic.swift"; path = "../UInt256/Classes/UInt256+IntegerArithmetic.swift"; sourceTree = "<group>"; };
+		A22FAE25199653E900B50398 /* UInt256+Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt256+Sequence.swift"; path = "../UInt256/Classes/UInt256+Sequence.swift"; sourceTree = "<group>"; };
+		A22FAE26199653E900B50398 /* UInt256+IntegerLiteralConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt256+IntegerLiteralConvertible.swift"; path = "../UInt256/Classes/UInt256+IntegerLiteralConvertible.swift"; sourceTree = "<group>"; };
+		A22FAE27199653E900B50398 /* UInt256+Hashable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt256+Hashable.swift"; path = "../UInt256/Classes/UInt256+Hashable.swift"; sourceTree = "<group>"; };
+		A22FAE28199653E900B50398 /* UInt256+RandomAccessIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt256+RandomAccessIndex.swift"; path = "../UInt256/Classes/UInt256+RandomAccessIndex.swift"; sourceTree = "<group>"; };
+		A22FAE29199653E900B50398 /* UInt256+ForwardIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt256+ForwardIndex.swift"; path = "../UInt256/Classes/UInt256+ForwardIndex.swift"; sourceTree = "<group>"; };
+		A22FAE2A199653E900B50398 /* UInt256+ArrayBound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt256+ArrayBound.swift"; path = "../UInt256/Classes/UInt256+ArrayBound.swift"; sourceTree = "<group>"; };
+		A22FAE2B199653E900B50398 /* UInt32+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt32+Additions.swift"; path = "../UInt256/Classes/UInt32+Additions.swift"; sourceTree = "<group>"; };
+		A22FAE2C199653E900B50398 /* BaseConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseConverter.swift; path = ../UInt256/Classes/BaseConverter.swift; sourceTree = "<group>"; };
 		A23208CF1996418300BF5E38 /* ECurve doc.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "ECurve doc.playground"; sourceTree = "<group>"; };
-		A23208D0199641FD00BF5E38 /* FFInt doc.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "FFInt doc.playground"; sourceTree = "<group>"; };
+		A23208D0199641FD00BF5E38 /* FFInt.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = FFInt.playground; sourceTree = "<group>"; };
 		A258B3FB1962E77D00CD0B09 /* ECPointTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ECPointTests.swift; path = Tests/ECPointTests.swift; sourceTree = SOURCE_ROOT; };
 		A258B3FC1962E77D00CD0B09 /* ECurveTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ECurveTests.swift; path = Tests/ECurveTests.swift; sourceTree = SOURCE_ROOT; };
 		A258B3FD1962E77D00CD0B09 /* FiniteFieldIntegerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FiniteFieldIntegerTests.swift; path = Tests/FiniteFieldIntegerTests.swift; sourceTree = SOURCE_ROOT; };
@@ -95,6 +135,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A22FADFB1996539500B50398 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A26F77D1196850EF00C75822 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -125,13 +172,14 @@
 		A226906D1962E6E800291D7A = {
 			isa = PBXGroup;
 			children = (
-				A23208D0199641FD00BF5E38 /* FFInt doc.playground */,
+				A23208D0199641FD00BF5E38 /* FFInt.playground */,
 				A23208CF1996418300BF5E38 /* ECurve doc.playground */,
 				A211A5EA198BFE7100C2D2F0 /* Resources */,
 				A258B40B1962E7AA00CD0B09 /* ECurve */,
 				A22690861962E6E800291D7A /* ECurveTests */,
 				A22690791962E6E800291D7A /* Supporting Files */,
 				A26F77D6196850EF00C75822 /* ECurveMac */,
+				A22FAE001996539500B50398 /* ECurveFlat */,
 				A258B40E1962E80C00CD0B09 /* Frameworks */,
 				A22690781962E6E800291D7A /* Products */,
 			);
@@ -144,6 +192,7 @@
 				A22690821962E6E800291D7A /* ECurveTests.xctest */,
 				A26F77D5196850EF00C75822 /* ECurve.framework */,
 				A26F77DF196850EF00C75822 /* ECurveMacTests.xctest */,
+				A22FADFF1996539500B50398 /* ECurveFlat.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,6 +217,46 @@
 				A26F77E5196850EF00C75822 /* Info.plist */,
 			);
 			path = ECurveTests;
+			sourceTree = "<group>";
+		};
+		A22FAE001996539500B50398 /* ECurveFlat */ = {
+			isa = PBXGroup;
+			children = (
+				A22FAE1D199653CC00B50398 /* UInt256 */,
+				A22FAE031996539500B50398 /* ECurveFlat.h */,
+				A22FAE011996539500B50398 /* Supporting Files */,
+			);
+			path = ECurveFlat;
+			sourceTree = "<group>";
+		};
+		A22FAE011996539500B50398 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A22FAE021996539500B50398 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A22FAE1D199653CC00B50398 /* UInt256 */ = {
+			isa = PBXGroup;
+			children = (
+				A22FAE1E199653E900B50398 /* UInt256.swift */,
+				A22FAE1F199653E900B50398 /* UInt256+Printable.swift */,
+				A22FAE20199653E900B50398 /* UInt256+Equatable.swift */,
+				A22FAE21199653E900B50398 /* UInt256+Comparable.swift */,
+				A22FAE22199653E900B50398 /* UInt256+BitwiseOperations.swift */,
+				A22FAE23199653E900B50398 /* UInt256+IntegerArithmetic.c */,
+				A22FAE24199653E900B50398 /* UInt256+IntegerArithmetic.swift */,
+				A22FAE25199653E900B50398 /* UInt256+Sequence.swift */,
+				A22FAE26199653E900B50398 /* UInt256+IntegerLiteralConvertible.swift */,
+				A22FAE27199653E900B50398 /* UInt256+Hashable.swift */,
+				A22FAE28199653E900B50398 /* UInt256+RandomAccessIndex.swift */,
+				A22FAE29199653E900B50398 /* UInt256+ForwardIndex.swift */,
+				A22FAE2A199653E900B50398 /* UInt256+ArrayBound.swift */,
+				A22FAE2B199653E900B50398 /* UInt32+Additions.swift */,
+				A22FAE2C199653E900B50398 /* BaseConverter.swift */,
+			);
+			name = UInt256;
 			sourceTree = "<group>";
 		};
 		A258B40B1962E7AA00CD0B09 /* ECurve */ = {
@@ -220,6 +309,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A22FADFC1996539500B50398 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A22FAE041996539500B50398 /* ECurveFlat.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A26F77D2196850EF00C75822 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -265,6 +362,24 @@
 			productName = ECurveTests;
 			productReference = A22690821962E6E800291D7A /* ECurveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A22FADFE1996539500B50398 /* ECurveFlat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A22FAE151996539500B50398 /* Build configuration list for PBXNativeTarget "ECurveFlat" */;
+			buildPhases = (
+				A22FADFA1996539500B50398 /* Sources */,
+				A22FADFB1996539500B50398 /* Frameworks */,
+				A22FADFC1996539500B50398 /* Headers */,
+				A22FADFD1996539500B50398 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ECurveFlat;
+			productName = ECurveFlat;
+			productReference = A22FADFF1996539500B50398 /* ECurveFlat.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		A26F77D4196850EF00C75822 /* ECurveMac */ = {
 			isa = PBXNativeTarget;
@@ -318,6 +433,9 @@
 						CreatedOnToolsVersion = 6.0;
 						TestTargetID = A22690761962E6E800291D7A;
 					};
+					A22FADFE1996539500B50398 = {
+						CreatedOnToolsVersion = 6.0;
+					};
 					A26F77D4196850EF00C75822 = {
 						CreatedOnToolsVersion = 6.0;
 					};
@@ -343,6 +461,7 @@
 				A22690811962E6E800291D7A /* ECurveTests */,
 				A26F77D4196850EF00C75822 /* ECurveMac */,
 				A26F77DE196850EF00C75822 /* ECurveMacTests */,
+				A22FADFE1996539500B50398 /* ECurveFlat */,
 			);
 		};
 /* End PBXProject section */
@@ -361,6 +480,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A211A5EB198C0A5900C2D2F0 /* Secp256k1BasePointDoublings.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A22FADFD1996539500B50398 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A22FAE17199653B400B50398 /* Secp256k1BasePointDoublings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +529,33 @@
 				A2D39BA1198D7CCC00E2D317 /* ECPointTests.swift in Sources */,
 				A2D39BA2198D7CCC00E2D317 /* ECurveTests.swift in Sources */,
 				A2D39BA3198D7CCC00E2D317 /* FiniteFieldIntegerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A22FADFA1996539500B50398 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A22FAE35199653E900B50398 /* UInt256+IntegerLiteralConvertible.swift in Sources */,
+				A22FAE2E199653E900B50398 /* UInt256+Printable.swift in Sources */,
+				A22FAE19199653B400B50398 /* ECPoint.swift in Sources */,
+				A22FAE34199653E900B50398 /* UInt256+Sequence.swift in Sources */,
+				A22FAE18199653B400B50398 /* ECDomain.swift in Sources */,
+				A22FAE1C199653B400B50398 /* FiniteFieldInteger.swift in Sources */,
+				A22FAE39199653E900B50398 /* UInt256+ArrayBound.swift in Sources */,
+				A22FAE36199653E900B50398 /* UInt256+Hashable.swift in Sources */,
+				A22FAE2D199653E900B50398 /* UInt256.swift in Sources */,
+				A22FAE3B199653E900B50398 /* BaseConverter.swift in Sources */,
+				A22FAE31199653E900B50398 /* UInt256+BitwiseOperations.swift in Sources */,
+				A22FAE3A199653E900B50398 /* UInt32+Additions.swift in Sources */,
+				A22FAE32199653E900B50398 /* UInt256+IntegerArithmetic.c in Sources */,
+				A22FAE1A199653B400B50398 /* ECurve.swift in Sources */,
+				A22FAE2F199653E900B50398 /* UInt256+Equatable.swift in Sources */,
+				A22FAE1B199653B400B50398 /* FiniteField.swift in Sources */,
+				A22FAE38199653E900B50398 /* UInt256+ForwardIndex.swift in Sources */,
+				A22FAE37199653E900B50398 /* UInt256+RandomAccessIndex.swift in Sources */,
+				A22FAE33199653E900B50398 /* UInt256+IntegerArithmetic.swift in Sources */,
+				A22FAE30199653E900B50398 /* UInt256+Comparable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,6 +753,72 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
+		};
+		A22FAE0F1996539500B50398 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ECurveFlat/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A22FAE101996539500B50398 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = ECurveFlat/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		A22FAE111996539500B50398 /* Fast */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = ECurveFlat/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Fast;
 		};
 		A26F778E1968479D00C75822 /* Fast */ = {
 			isa = XCBuildConfiguration;
@@ -830,6 +1050,15 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		A22FAE151996539500B50398 /* Build configuration list for PBXNativeTarget "ECurveFlat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A22FAE0F1996539500B50398 /* Debug */,
+				A22FAE101996539500B50398 /* Release */,
+				A22FAE111996539500B50398 /* Fast */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		A26F77EE196850EF00C75822 /* Build configuration list for PBXNativeTarget "ECurveMac" */ = {
 			isa = XCConfigurationList;
