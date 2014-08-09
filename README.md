@@ -5,3 +5,5 @@ ECurve
 Based on [ECurve](https://github.com/cryptocoinjs/ecurve/) from the CryptoCoinJS project.
 
 A [playground](FFInt.playground/section-1.swift) for FFInt shows examples of [Finite Field](http://en.wikipedia.org/wiki/Finite_field) math.
+
+A [playground](ECurve doc.playground/section-1.swift) for ECurve shows examples of [Elliptic Curve](http://en.wikipedia.org/wiki/Elliptic_curve) math.
