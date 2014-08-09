@@ -73,6 +73,10 @@ public struct ECurve {
     
     // The compiler won't let me...
     // let ∞ = infinity
+    
+    public var description: String {
+        return "Curve over \(field) with base point (\(gX.value), \(gY.value)), a = \(a), b = \(b), order \(n) and cofactor \(h)"
+    }
 }
 
 public func == (lhs: ECurve, rhs: ECurve) -> Bool {
