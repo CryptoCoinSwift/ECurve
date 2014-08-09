@@ -58,6 +58,8 @@
 		A226907C1962E6E800291D7A /* ECurve.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECurve.h; sourceTree = "<group>"; };
 		A22690821962E6E800291D7A /* ECurveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECurveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A22690881962E6E800291D7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = SOURCE_ROOT; };
+		A23208CF1996418300BF5E38 /* ECurve doc.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "ECurve doc.playground"; sourceTree = "<group>"; };
+		A23208D0199641FD00BF5E38 /* FFInt doc.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "FFInt doc.playground"; sourceTree = "<group>"; };
 		A258B3FB1962E77D00CD0B09 /* ECPointTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ECPointTests.swift; path = Tests/ECPointTests.swift; sourceTree = SOURCE_ROOT; };
 		A258B3FC1962E77D00CD0B09 /* ECurveTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ECurveTests.swift; path = Tests/ECurveTests.swift; sourceTree = SOURCE_ROOT; };
 		A258B3FD1962E77D00CD0B09 /* FiniteFieldIntegerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FiniteFieldIntegerTests.swift; path = Tests/FiniteFieldIntegerTests.swift; sourceTree = SOURCE_ROOT; };
@@ -123,6 +125,8 @@
 		A226906D1962E6E800291D7A = {
 			isa = PBXGroup;
 			children = (
+				A23208D0199641FD00BF5E38 /* FFInt doc.playground */,
+				A23208CF1996418300BF5E38 /* ECurve doc.playground */,
 				A211A5EA198BFE7100C2D2F0 /* Resources */,
 				A258B40B1962E7AA00CD0B09 /* ECurve */,
 				A22690861962E6E800291D7A /* ECurveTests */,
