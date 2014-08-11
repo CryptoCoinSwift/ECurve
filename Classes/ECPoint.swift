@@ -97,6 +97,23 @@ public struct ECPoint : Printable, Equatable {
             }
         }
     }
+    
+    public var toData : NSData {
+        var bytes: [UInt8] = [0x04]
+            var result = NSMutableData(bytes: &bytes, length: bytes.count)
+            
+            switch coordinate {
+            case let .Affine(x,y):
+                result.appendData(x!.value.toData)
+                result.appendData(y!.value.toData)
+                
+            default:
+                assert(false, "Not implemented")
+                return NSData()
+            }
+            
+            return result as NSData
+    }
 }
 
 public func == (lhs: ECPoint, rhs: ECPoint) -> Bool {

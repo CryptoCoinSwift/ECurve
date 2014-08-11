@@ -77,7 +77,34 @@ public struct ECurve {
     public var description: String {
         return "Curve over \(field) with base point (\(gX.value), \(gY.value)), a = \(a), b = \(b), order \(n) and cofactor \(h)"
     }
+    
+    public func point (data: NSData) -> ECPoint? {
+        var firstByte: UInt8 = 0
+        data.getBytes(&firstByte, length: 1)
+        
+        if(firstByte == 4) {
+            var x: [UInt32] = [0,0,0,0,0,0,0,0]
+            var y: [UInt32] = [0,0,0,0,0,0,0,0]
+            
+            data.getBytes(&x, range: NSMakeRange(1, 32))
+            data.getBytes(&y, range: NSMakeRange(33, 32))
+            
+            let X = UInt256(x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7])
+            let Y = UInt256(y[0], y[1], y[2], y[3], y[4], y[5], y[6], y[7])
+            
+            return ECPoint(x: FFInt(X, self.field), y: FFInt(Y, self.field), curve: self)
+            
+        } else {
+            assert (false, "Wrong format")
+            return nil
+        }
+        
+        
+        
+    }
 }
+
+
 
 public func == (lhs: ECurve, rhs: ECurve) -> Bool {
     if(lhs.domain == rhs.domain) {
