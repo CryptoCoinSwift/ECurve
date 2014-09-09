@@ -367,9 +367,9 @@ public func importLookupTable () -> [Any] { // ECPoint array crashes compiler wi
 
 #endif
     
-    assert(plistPath, "Missing plist")
+    assert(plistPath != nil, "Missing plist")
     
-    let plist = NSArray(contentsOfFile: plistPath) as NSArray
+    let plist = NSArray(contentsOfFile: plistPath!) as NSArray
     
     var lookup: [Any] = []
 

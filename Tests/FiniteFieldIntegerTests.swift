@@ -22,8 +22,6 @@ class FFIntTests: XCTestCase {
 
     func testInit() {
         let a = FFInt(UInt256(5), FiniteField.PrimeField(p: 11))
-        
-        XCTAssertTrue(a != nil, "Should exist");
     }
     
     func testEquality() {
