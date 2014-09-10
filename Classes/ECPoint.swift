@@ -12,6 +12,8 @@
 import UInt256
 #endif
 
+import Foundation
+
 public struct ECPoint : Printable, Equatable {
     public let curve: ECurve
 
