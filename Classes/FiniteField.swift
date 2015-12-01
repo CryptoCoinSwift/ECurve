@@ -9,7 +9,7 @@
 import UInt256
 #endif
 
-public enum FiniteField : Printable {
+public enum FiniteField : CustomStringConvertible {
     case PrimeField(p: UInt256)
     
     public func intWithDec(dec: String) -> FFInt {

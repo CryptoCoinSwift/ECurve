@@ -52,7 +52,7 @@ public struct ECurve {
         self.gX = gX
         self.gY = gY
         
-
+        self.domain = nil
     }
     
     public var G: ECPoint {
@@ -112,7 +112,7 @@ public func == (lhs: ECurve, rhs: ECurve) -> Bool {
     }
     
     switch (lhs.G.coordinate, rhs.G.coordinate) {
-    case let (.Affine(lhsX,lhsY), .Affine(rhsX,rhsY) ):
+    case let (.Affine(lhsX,_), .Affine(rhsX,rhsY) ):
         return lhsX == rhsX && rhsY == rhsY  && lhs.a == rhs.a &&  lhs.b == rhs.b &&  lhs.n == rhs.n &&  lhs.h == rhs.h
 
     default:
@@ -254,7 +254,7 @@ extension ECPoint {
             assert(Y₁ != -Y₁, "Can't deal with P == -P")
             
             let X₁² = X₁ * X₁
-            let X₁⁴ = X₁² * X₁²
+            //let X₁⁴ = X₁² * X₁²
             
             let Y₁² = Y₁ * Y₁
             let Y₁⁴ = Y₁² * Y₁²
@@ -307,7 +307,7 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     
     if rhs.curve.domain == EllipticCurveDomain.Secp256k1 && rhs == rhs.curve.G {
         lookup = importLookupTable()
-        increment = lookup![0] as ECPoint
+        increment = lookup![0] as! ECPoint
     } else {
         increment = P
         increment.convertToJacobian()
@@ -316,7 +316,7 @@ public func * (lhs: UInt256, rhs: ECPoint) -> ECPoint {
     if lookup != nil {
         var i = 0
         for incrementId in lookup! {
-            let increment = incrementId as ECPoint
+            let increment = incrementId as! ECPoint
             if UInt256.singleBitAt(255 - i) & lhs != 0 {
                 tally = tally + increment
             }
@@ -361,7 +361,7 @@ public func importLookupTable () -> [Any] { // ECPoint array crashes compiler wi
     */
     
 #if os(OSX)
-    let plistPath = NSBundle(identifier: "com.cryptocoinswift.ECurve").pathForResource("Secp256k1BasePointDoublings", ofType: "plist")
+    let plistPath = NSBundle(identifier: "com.cryptocoinswift.ECurve")!.pathForResource("Secp256k1BasePointDoublings", ofType: "plist")
 #else
     let plistPath = NSBundle.mainBundle().pathForResource("Secp256k1BasePointDoublings", ofType: "plist")
 
@@ -369,7 +369,7 @@ public func importLookupTable () -> [Any] { // ECPoint array crashes compiler wi
     
     assert(plistPath != nil, "Missing plist")
     
-    let plist = NSArray(contentsOfFile: plistPath!) as NSArray
+    let plist = NSArray(contentsOfFile: plistPath!)! as NSArray
     
     var lookup: [Any] = []
 
@@ -377,8 +377,8 @@ public func importLookupTable () -> [Any] { // ECPoint array crashes compiler wi
     let one = field.int(1)
     
     for coordinates in plist {
-        let x  = coordinates[0] as NSArray
-        let y  = coordinates[1] as NSArray
+        let x  = coordinates[0] as! NSArray
+        let y  = coordinates[1] as! NSArray
         
         let X = field.int(UInt256(x[0].unsignedIntValue, x[1].unsignedIntValue, x[2].unsignedIntValue, x[3].unsignedIntValue, x[4].unsignedIntValue, x[5].unsignedIntValue, x[6].unsignedIntValue, x[7].unsignedIntValue))
         
@@ -396,11 +396,6 @@ public func importLookupTable () -> [Any] { // ECPoint array crashes compiler wi
 // Convenience method. Mostly so that doubling a point doesn't require lhs to
 // be cast in and out of UInt256.
 public func * (lhs: Int, rhs: ECPoint) -> ECPoint {
-    
-    let isInfinity = 1
-    let isInfenity = 2
-    
-    
     
     let lhsInt: UInt256 = UInt256(UInt32(lhs))
 
