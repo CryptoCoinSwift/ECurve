@@ -14,7 +14,7 @@ import UInt256
 
 import Foundation
 
-public struct ECPoint : Printable, Equatable {
+public struct ECPoint : CustomStringConvertible, Equatable {
     public let curve: ECurve
 
     public enum Coordinate {
@@ -102,7 +102,7 @@ public struct ECPoint : Printable, Equatable {
     
     public var toData : NSData {
         var bytes: [UInt8] = [0x04]
-            var result = NSMutableData(bytes: &bytes, length: bytes.count)
+            let result = NSMutableData(bytes: &bytes, length: bytes.count)
             
             switch coordinate {
             case let .Affine(x,y):

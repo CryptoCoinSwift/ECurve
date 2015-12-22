@@ -413,7 +413,7 @@ class ECurveTests: XCTestCase {
 //            }
 //        }
         
-        var first: ECPoint = lookup[0] as ECPoint
+        var first: ECPoint = lookup[0] as! ECPoint
     
         first.convertToAffine()
         
